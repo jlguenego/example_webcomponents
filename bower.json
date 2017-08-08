@@ -15,6 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "iron-dropdown": "^2.0.0"
+    "paper-button": "2.0.0"
   }
 }

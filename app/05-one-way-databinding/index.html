@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>My First Web Component</title>
+	<link async rel="import" href="jlg-hello.html">
+</head>
+
+<body>
+	<jlg-hello name="Jean-Louis"></jlg-hello>
+
+	<h2>Notes</h2>
+	<ul>
+		<li>In fact, the custom element is synchronized on the content of the name attributes.</li>
+	</ul>
+	<button onclick="updateAttr('Suzana')">Update</button>
+	<script>
+function updateAttr(name) {
+	document.querySelector('jlg-hello').setAttribute('name', name);
+}
+	</script>
+
+</body>
+
+</html>

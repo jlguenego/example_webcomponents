@@ -4,12 +4,19 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>My First Web Component</title>
-	<link rel="import" href="hello-world.html">
+	<link async rel="import" href="hello-world.html">
 </head>
 
 <body>
-	toto
+	<span>Before the hello-world</span>
 	<hello-world></hello-world>
+	<span>After the hello-world</span>
+
+	<h2>Notes</h2>
+	<ul>
+		<li>Try with and without the async attribute while using latency on the network.</li>
+	</ul>
+
 </body>
 
 </html>

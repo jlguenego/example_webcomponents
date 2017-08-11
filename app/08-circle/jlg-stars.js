@@ -4,8 +4,6 @@
 	class JLGStars extends CircleElement {
 		constructor() {
 			super();
-
-			this.note = 1;
 			this.modelName = undefined;
 		}
 
@@ -20,12 +18,13 @@
 		}
 
 		render() {
+			const note = circle.model[this.modelName];
 			let html = ``;
-			for (let i = 0; i < this.note; i++) {
+			for (let i = 0; i < note; i++) {
 				html += `<img src="img/yellow_star.png">`;
 			}
 
-			for (let i = this.note; i < 5; i++) {
+			for (let i = note; i < 5; i++) {
 				html += `<img src="img/white_star.png">`;
 			}
 
@@ -43,12 +42,6 @@
 		update(newNote) {
 			console.log('update', arguments);
 			circle.model[this.modelName] = newNote;
-		}
-
-		onDigest() {
-			console.log('JLGStars onDigest');
-			this.note = circle.model[this.modelName];
-			this.render();
 		}
 	}
 

@@ -3,8 +3,6 @@
 
     class Circle {
         constructor() {
-            const $ = document.querySelector.bind(document);
-            const $$ = document.querySelectorAll.bind(document);
             const circle = this;
             const handler = {
                 set(target, key, value) {
@@ -12,11 +10,6 @@
                     target[key] = value;
                     circle.digest();
                     return true;
-                },
-
-                get(target, key) {
-                    console.log(`Getting value ${key}`)
-                    return target[key];
                 },
             };
             this.model = new Proxy({}, handler);

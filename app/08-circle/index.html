@@ -4,8 +4,11 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>My First One way databinding</title>
-	<link async rel="import" href="jlg-stars.html">
-	<link async rel="import" href="jlg-expr.html">
+	<style>
+		jlg-stars {
+			display: block;
+		}
+	</style>
 </head>
 
 <body>
@@ -25,9 +28,12 @@
 	<ul>
 		<li>In fact, the custom element is synchronized on the content of the name attributes.</li>
 	</ul>
-	<button onclick="model.myNote = 4">Set note to 4</button>
-	<button onclick="model.myNote = 2">Set note to 2</button>
+	<button onclick="circle.model.myNote = 4">Set note to 4</button>
+	<button onclick="circle.model.myNote = 2">Set note to 2</button>
+	<script src="circle.js"></script>
 	<script src="main.js"></script>
+	<script src="jlg-expr.js"></script>
+	<script src="jlg-stars.js"></script>
 </body>
 
 </html>

@@ -4,7 +4,7 @@
 	class JLGStars extends HTMLElement {
 		constructor() {
 			super();
-			console.log('Hello constructor');
+			console.log('JLGStars constructor');
 
 			this.note = 1;
 			this.modelName = undefined;
@@ -12,6 +12,7 @@
 			this.root = this.attachShadow({
 				mode: 'closed'
 			});
+			window.digestRegistry.push(this);
 		}
 
 		static get observedAttributes() {

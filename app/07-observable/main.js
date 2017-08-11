@@ -17,19 +17,18 @@
         },
     };
 
-    window.model = new Proxy({}, handler);
-    model.myNote = 4;
-    model.myNote2 = 2;
-    console.log(model.myNote);
+    window.model = new Proxy({
+        myNote: 3,
+        myNote2: 4,
+    }, handler);
+    window.digestRegistry = [];
 
     function digest() {
         console.log('digest start');
-        $('#show-note').innerHTML = model.myNote;
-        $$('jlg-stars').forEach((elt, index) => {
+        window.digestRegistry.forEach((elt, index) => {
             if (elt.onDigest) {
                 elt.onDigest();
             }
-
         });
         console.log('digest end');
 

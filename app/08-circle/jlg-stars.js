@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	class JLGStars extends CircleElement {
+	class JLGStars extends circle.CircleElement {
 		constructor() {
 			super();
 			this.modelName = undefined;

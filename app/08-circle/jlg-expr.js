@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	class JLGExpr extends CircleElement {
+	class JLGExpr extends circle.CircleElement {
 
 		render() {
 			this.root.innerHTML = this.innerHTML.replace(/{{(.*?)}}/g, function (match, p1) {

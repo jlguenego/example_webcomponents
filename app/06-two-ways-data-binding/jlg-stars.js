@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	class JLGHello extends HTMLElement {
+	class JLGStars extends HTMLElement {
 		constructor() {
 			super();
 			console.log('Hello constructor');
@@ -9,7 +9,7 @@
 			this.note = 1;
 
 			this.root = this.attachShadow({
-				mode: 'open'
+				mode: 'closed'
 			});
 		}
 
@@ -34,8 +34,24 @@
 			}
 
 			this.root.innerHTML = html;
+			const images = this.root.querySelectorAll('img');
+			console.log('images', images);
+			const self = this;
+			images.forEach((img, i) => {
+				img.addEventListener('click', function () {
+					self.update(i + 1);
+				})
+			});
+		}
+
+		update(newNote) {
+			console.log('update', arguments);
+			this.note = newNote;
+			this.render();
+			this.setAttribute('note', this.note);
+			digest();
 		}
 	}
 
-	window.customElements.define('jlg-stars', JLGHello);
+	window.customElements.define('jlg-stars', JLGStars);
 })();

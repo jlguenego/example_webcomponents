@@ -19,22 +19,7 @@
 	</ul>
 	<button onclick="updateAttr(4)">Set note to 4</button>
 	<button onclick="updateAttr(2)">Set note to 2</button>
-	<script>
-		let note = 1;
-
-		function digest() {
-			document.querySelector('#show-note').innerHTML = note;
-			document.querySelector('jlg-stars').setAttribute('note', note);
-		}
-
-		digest();
-
-		function updateAttr(n) {
-			note = n;
-			digest();
-		}
-	</script>
-
+	<script src="main.js"></script>
 </body>
 
 </html>

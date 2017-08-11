@@ -10,19 +10,29 @@
 <body>
 	<jlg-stars note="3"></jlg-stars>
 	<p>
-		Note: 
+		Note: <span id="show-note"></span>
 	</p>
 
 	<h2>Notes</h2>
 	<ul>
 		<li>In fact, the custom element is synchronized on the content of the name attributes.</li>
 	</ul>
-	<button onclick="updateAttr('4')">Set note to 4</button>
-	<button onclick="updateAttr('2')">Set note to 2</button>
+	<button onclick="updateAttr(4)">Set note to 4</button>
+	<button onclick="updateAttr(2)">Set note to 2</button>
 	<script>
-function updateAttr(note) {
-	document.querySelector('jlg-stars').setAttribute('note', note);
-}
+		let note = 1;
+
+		function digest() {
+			document.querySelector('#show-note').innerHTML = note;
+			document.querySelector('jlg-stars').setAttribute('note', note);
+		}
+
+		digest();
+
+		function updateAttr(n) {
+			note = n;
+			digest();
+		}
 	</script>
 
 </body>

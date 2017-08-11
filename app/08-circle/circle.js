@@ -31,10 +31,30 @@
                 }
             });
             console.log('digest end');
-
         }
     }
 
     window.circle = new Circle();
+
+    class CircleElement extends HTMLElement {
+        constructor() {
+            super();
+
+            this.root = this.attachShadow({
+                mode: 'closed'
+            });
+            circle.digestRegistry.push(this);
+            this.render();
+        }
+
+        render() {}
+
+        onDigest() {
+            this.render();
+        }
+
+    }
+
+    window.CircleElement = CircleElement;
 
 })();

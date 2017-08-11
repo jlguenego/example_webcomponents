@@ -1,18 +1,12 @@
 (function () {
 	'use strict';
 
-	class JLGStars extends HTMLElement {
+	class JLGStars extends CircleElement {
 		constructor() {
 			super();
-			console.log('JLGStars constructor');
 
 			this.note = 1;
 			this.modelName = undefined;
-
-			this.root = this.attachShadow({
-				mode: 'closed'
-			});
-			circle.digestRegistry.push(this);
 		}
 
 		static get observedAttributes() {

@@ -21,7 +21,7 @@
 		attributeChangedCallback(name, oldValue, newValue) {
 			console.log('attributeChangedCallback', arguments);
 			this.modelName = newValue;
-			this.note = model[newValue];
+			this.note = model[this.modelName];
 			this.render();
 		}
 

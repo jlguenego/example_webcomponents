@@ -1,6 +1,7 @@
 (function () {
     'use strict';
-    var $ = document.querySelector.bind(document);
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
 
     const handler = {
         set(target, key, value) {
@@ -18,15 +19,18 @@
 
     window.model = new Proxy({}, handler);
     model.myNote = 4;
+    model.myNote2 = 2;
     console.log(model.myNote);
 
     function digest() {
         console.log('digest start');
         $('#show-note').innerHTML = model.myNote;
-        console.log('$(jlg-stars) %O', $('jlg-stars'));
-        if ($('jlg-stars').onDigest) {
-            $('jlg-stars').onDigest();
-        }
+        $$('jlg-stars').forEach((elt, index) => {
+            if (elt.onDigest) {
+                elt.onDigest();
+            }
+
+        });
         console.log('digest end');
 
     }

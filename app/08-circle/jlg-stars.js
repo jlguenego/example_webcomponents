@@ -19,9 +19,15 @@
 
 		render() {
 			const note = circle.model[this.modelName];
-			let html = ``;
+			let html = `
+<style>
+	:host {
+		display: block;
+	}
+</style>
+			`;
 			for (let i = 0; i < note; i++) {
-				html += `<img src="img/yellow_star.png">`;
+				html += `<img onmouseover="console.log('%O', this)" src="img/yellow_star.png">`;
 			}
 
 			for (let i = note; i < 5; i++) {
@@ -37,6 +43,10 @@
 					self.update(i + 1);
 				})
 			});
+		}
+
+		hello() {
+			console.log('hello !');
 		}
 
 		update(newNote) {

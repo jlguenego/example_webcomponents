@@ -1,8 +1,12 @@
 <template>
-	This is the body
+	This is the body...
+	<jlg-stars note="myNote"></jlg-stars>
+	myNote: <jlg-expr>{{myNote}}</jlg-expr>
 </template>
 
 <script>
-	class JLGBody extends circle.CircleElement {}
+	class JLGBody extends circle.Element {}
 	window.customElements.define('jlg-body', JLGBody);
 </script>
+<script src="jlg-stars.js"></script>
+<script src="jlg-expr.js"></script>

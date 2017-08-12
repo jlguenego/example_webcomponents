@@ -10,8 +10,7 @@
             this.render();
         }
         render() {
-            const doc = document.currentScript.ownerDocument;
-            var element = doc.querySelector('template');
+            const element = document.currentScript.ownerDocument.querySelector('template');
             if (element) {
                 this.root.innerHTML = element.innerHTML;
             }
@@ -41,7 +40,7 @@
             };
             this.model = new Proxy({}, handler);
             this.digestRegistry = {};
-            this.CircleElement = CircleElement;
+            this.Element = CircleElement;
         }
         digest(key) {
             console.log('digest start for', key);

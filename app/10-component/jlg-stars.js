@@ -9,7 +9,7 @@
 		}
 
 		render() {
-			const note = circle.model[this.note] || 0;
+			const note = this.getParent().model[this.note] || 0;
 			let html = `
 <style>
 	:host {
@@ -35,8 +35,7 @@
 
 		update(newNote) {
 			console.log('update', arguments);
-			console.log('getParent of jlg-star', this.getParent());
-			circle.model[this.note] = newNote;
+			this.getParent().model[this.note] = newNote;
 		}
 	}
 

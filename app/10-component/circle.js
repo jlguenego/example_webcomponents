@@ -7,6 +7,18 @@
             this.root = this.attachShadow({
                 mode: 'closed'
             });
+            const self = this;
+            this.model = new Proxy({}, {
+                set(target, key, value) {
+                    target[key] = value;
+                    self.digest(key);
+                    return true;
+                },
+            });
+            this.digestRegistry = {};
+        }
+        getParent() {
+            return this.getRootNode().host;
         }
         connectedCallback() {
             this.render();
@@ -14,39 +26,28 @@
         render() {
             const element = document.currentScript.ownerDocument.querySelector('template');
             if (element) {
-                this.root.innerHTML = element.innerHTML;
+                this.source = element.innerHTML;
+                this.root.innerHTML = this.parseSource();
             }
+        }
+        parseSource() {
+            return this.source.replace(/{{(.*?)}}/g, (match, name) => {
+                return this.model[name];
+            });
         }
         onDigest() {
             console.log('onDigest', this)
             this.render();
         }
         bindKey(key) {
-            if (circle.digestRegistry[key] === undefined) {
-                circle.digestRegistry[key] = [this];
+            const digestRegistry = this.getParent().digestRegistry;
+            if (digestRegistry[key] === undefined) {
+                digestRegistry[key] = [this];
             } else {
-                circle.digestRegistry[key].push(this);
+                digestRegistry[key].push(this);
             }
         }
-        getParent() {
-            return this.getRootNode().host;
-        }
-    }
-
-    class Circle {
-        constructor() {
-            const circle = this;
-            const handler = {
-                set(target, key, value) {
-                    target[key] = value;
-                    circle.digest(key);
-                    return true;
-                },
-            };
-            this.model = new Proxy({}, handler);
-            this.digestRegistry = {};
-            this.Element = CircleElement;
-        }
+        
         digest(key) {
             console.log('digest start for', key);
             let counter = 0;
@@ -56,7 +57,15 @@
                     elt.onDigest();
                 });
             }
+            counter++;
+            this.onDigest();
             console.log('digest end in %d steps for key %s', counter, key);
+        }
+    }
+
+    class Circle {
+        constructor() {
+            this.Element = CircleElement;
         }
     }
     window.circle = new Circle();

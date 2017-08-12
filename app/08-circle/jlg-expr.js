@@ -6,7 +6,7 @@
 		render() {
 			this.root.innerHTML = this.innerHTML.replace(/{{(.*?)}}/g, function (match, p1) {
 				console.log('replace', arguments);
-				return circle.model[p1];
+				return circle.model[p1] || '';
 			});
 		}
 	}

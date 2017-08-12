@@ -18,7 +18,7 @@
 		}
 
 		render() {
-			const note = circle.model[this.modelName];
+			const note = circle.model[this.modelName] || 0;
 			let html = `
 <style>
 	:host {

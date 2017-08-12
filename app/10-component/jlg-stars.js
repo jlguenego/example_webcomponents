@@ -6,7 +6,6 @@
 			super();
 			this.note = this.getAttribute('note');
 			this.bindKey(this.note);
-			this.render();
 		}
 
 		render() {

@@ -7,6 +7,8 @@
             this.root = this.attachShadow({
                 mode: 'closed'
             });
+        }
+        connectedCallback() {
             this.render();
         }
         render() {

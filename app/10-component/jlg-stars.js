@@ -35,6 +35,7 @@
 
 		update(newNote) {
 			console.log('update', arguments);
+			console.log('getParent of jlg-star', this.getParent());
 			circle.model[this.note] = newNote;
 		}
 	}

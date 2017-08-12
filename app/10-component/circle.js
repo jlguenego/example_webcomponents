@@ -28,6 +28,9 @@
                 circle.digestRegistry[key].push(this);
             }
         }
+        getParent() {
+            return this.getRootNode().host;
+        }
     }
 
     class Circle {

@@ -7,12 +7,19 @@
             this.root = this.attachShadow({
                 mode: 'closed'
             });
+            this.keys = [];
             circle.digestRegistry.push(this);
             this.render();
         }
         render() {}
         onDigest() {
+            console.log('onDigest', this)
             this.render();
+        }
+        bindKey(key) {
+            if (this.keys.indexOf(key) === -1) {
+                this.keys.push(key);
+            }
         }
     }
 
@@ -21,9 +28,8 @@
             const circle = this;
             const handler = {
                 set(target, key, value) {
-                    console.log(`Setting value ${key} as ${value}`)
                     target[key] = value;
-                    circle.digest();
+                    circle.digest(key);
                     return true;
                 },
             };
@@ -31,14 +37,16 @@
             this.digestRegistry = [];
             this.CircleElement = CircleElement;
         }
-        digest() {
-            console.log('digest start');
+        digest(key) {
+            console.log('digest start for', key);
             let counter = 0;
             this.digestRegistry.forEach((elt, index) => {
-                elt.onDigest();
-                counter++;
+                if (elt.keys.indexOf(key) > -1) {
+                    counter++;
+                    elt.onDigest();
+                }
             });
-            console.log('digest end in %d steps', counter);
+            console.log('digest end in %d steps for key %s', counter, key);
         }
     }
     window.circle = new Circle();

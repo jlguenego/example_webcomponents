@@ -7,8 +7,6 @@
             this.root = this.attachShadow({
                 mode: 'closed'
             });
-            this.keys = [];
-            circle.digestRegistry.push(this);
             this.render();
         }
         render() {}
@@ -17,8 +15,10 @@
             this.render();
         }
         bindKey(key) {
-            if (this.keys.indexOf(key) === -1) {
-                this.keys.push(key);
+            if (circle.digestRegistry[key] === undefined) {
+                circle.digestRegistry[key] = [this];
+            } else {
+                circle.digestRegistry[key].push(this);
             }
         }
     }
@@ -34,18 +34,18 @@
                 },
             };
             this.model = new Proxy({}, handler);
-            this.digestRegistry = [];
+            this.digestRegistry = {};
             this.CircleElement = CircleElement;
         }
         digest(key) {
             console.log('digest start for', key);
             let counter = 0;
-            this.digestRegistry.forEach((elt, index) => {
-                if (elt.keys.indexOf(key) > -1) {
+            if (this.digestRegistry[key]) {
+                this.digestRegistry[key].forEach((elt, index) => {
                     counter++;
                     elt.onDigest();
-                }
-            });
+                });
+            }
             console.log('digest end in %d steps for key %s', counter, key);
         }
     }

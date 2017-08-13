@@ -20,7 +20,6 @@
 				console.log('replace', arguments);
 				return model[p1];
 			});
-			let html = 'toto';
 
 			this.root.innerHTML = str;
 		}

@@ -38,8 +38,8 @@
             console.log('render %O', this);
         }
 
-        onDigest() {
-            console.log('onDigest', this);
+        onDigest(key) {
+            console.log('onDigest', key, this);
             this.render();
         }
         bindKey(key) {
@@ -57,11 +57,11 @@
             if (this.digestRegistry[key]) {
                 this.digestRegistry[key].forEach((elt, index) => {
                     counter++;
-                    elt.onDigest();
+                    elt.onDigest(key);
                 });
             }
             counter++;
-            this.onDigest();
+            this.onDigest(key);
             console.log('digest end in %d steps for key %s', counter, key);
         }
     }

@@ -29,11 +29,7 @@
 			this.root.innerHTML = html;
 			
 		}
-
-		hello() {
-			console.log('hello !');
-		}
-
+		
 		update(newNote) {
 			console.log('update', arguments);
 			this.getParent().model[this.note] = newNote;

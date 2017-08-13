@@ -4,18 +4,26 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>Refactoring in a library</title>
-	<link async rel="import" href="jlg-app.html">
+	<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="jlg-app.html">
 </head>
 
 <body>
 	<jlg-app></jlg-app>
-	
+
 
 	<h2>Notes</h2>
 	<ul>
 		<li>Component are visual and intelligent, and can include component.</li>
 	</ul>
-	
+	<script>
+		var node = document.createTextNode('user agent: ' + navigator.userAgent);
+		var para = document.createElement("p");
+		para.appendChild(node);
+		document.body.appendChild(para);
+	</script>
+
+
 </body>
 
 </html>

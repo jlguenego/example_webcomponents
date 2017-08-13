@@ -22,15 +22,11 @@
             return this.getRootNode().host;
         }
         connectedCallback() {
-            console.log('connectedCallback start %O', this);
             if (this.templateSelector) {
                 this.element = document.currentScript.ownerDocument.querySelector(this.templateSelector);
-                const src = this.element.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
+                this.root.innerHTML = this.element.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
                     return `<jlg-expr>${name}</jlg-expr>`;
                 });
-
-                this.root.innerHTML = src;
-
             }
             this.render();
         }

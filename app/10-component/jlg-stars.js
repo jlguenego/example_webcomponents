@@ -25,13 +25,10 @@
 			for (let i = note; i < 5; i++) {
 				html += `<img onclick="this.getRootNode().host.update(${i+1})" src="img/white_star.png">`;
 			}
-
 			this.root.innerHTML = html;
-			
 		}
-		
+
 		update(newNote) {
-			console.log('update', arguments);
 			this.getParent().model[this.note] = newNote;
 		}
 	}

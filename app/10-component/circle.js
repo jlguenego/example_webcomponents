@@ -16,27 +16,31 @@
                 },
             });
             this.digestRegistry = {};
+
         }
         getParent() {
             return this.getRootNode().host;
         }
         connectedCallback() {
+            this.element = document.currentScript.ownerDocument.querySelector('template');
+            if (this.element) {
+                const src = this.element.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
+                    return `<jlg-expr>${name}</jlg-expr>`;
+                });
+                console.log('srcxxx', src);
+                console.log('this %O', this);
+
+                this.root.innerHTML = src;
+
+            }
             this.render();
         }
         render() {
-            const element = document.currentScript.ownerDocument.querySelector('template');
-            if (element) {
-                this.source = element.innerHTML;
-                this.root.innerHTML = this.parseSource();
-            }
+            console.log('render %O', this);
         }
-        parseSource() {
-            return this.source.replace(/{{(.*?)}}/g, (match, name) => {
-                return this.model[name];
-            });
-        }
+
         onDigest() {
-            console.log('onDigest', this)
+            console.log('onDigest', this);
             this.render();
         }
         bindKey(key) {
@@ -47,7 +51,7 @@
                 digestRegistry[key].push(this);
             }
         }
-        
+
         digest(key) {
             console.log('digest start for', key);
             let counter = 0;
@@ -68,5 +72,26 @@
             this.Element = CircleElement;
         }
     }
+
+
     window.circle = new Circle();
+
+    class JLGExpr extends circle.Element {
+        constructor() {
+            super();
+            this.key = this.innerHTML;
+            this.bindKey(this.key);
+        }
+
+        connectedCallback() {
+            this.render();
+        }
+
+        render() {
+            super.render();
+            this.root.innerHTML = this.getParent().model[this.key] || '';
+        }
+    }
+
+    window.customElements.define('jlg-expr', JLGExpr);
 })();

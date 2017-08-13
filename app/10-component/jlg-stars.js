@@ -8,6 +8,10 @@
 			this.bindKey(this.note);
 		}
 
+		connectedCallback() {
+            this.render();
+        }
+
 		render() {
 			const note = this.getParent().model[this.note] || 0;
 			let html = `

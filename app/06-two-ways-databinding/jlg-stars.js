@@ -38,9 +38,13 @@
 			console.log('images', images);
 			const self = this;
 			images.forEach((img, i) => {
-				img.addEventListener('click', function () {
+				let eventname = 'click';
+				if ('ontouchstart' in document.documentElement) {
+					eventname = 'touchstart';
+				}
+				img.addEventListener(eventname, function () {
 					self.update(i + 1);
-				})
+				});
 			});
 		}
 

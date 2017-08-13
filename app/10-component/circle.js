@@ -16,19 +16,18 @@
                 },
             });
             this.digestRegistry = {};
-
+            this.templateSelector = 'template';
         }
         getParent() {
             return this.getRootNode().host;
         }
         connectedCallback() {
-            this.element = document.currentScript.ownerDocument.querySelector('template');
-            if (this.element) {
+            console.log('connectedCallback start %O', this);
+            if (this.templateSelector) {
+                this.element = document.currentScript.ownerDocument.querySelector(this.templateSelector);
                 const src = this.element.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
                     return `<jlg-expr>${name}</jlg-expr>`;
                 });
-                console.log('srcxxx', src);
-                console.log('this %O', this);
 
                 this.root.innerHTML = src;
 
@@ -73,7 +72,6 @@
         }
     }
 
-
     window.circle = new Circle();
 
     class JLGExpr extends circle.Element {
@@ -81,10 +79,7 @@
             super();
             this.key = this.innerHTML;
             this.bindKey(this.key);
-        }
-
-        connectedCallback() {
-            this.render();
+            delete this.templateSelector;
         }
 
         render() {

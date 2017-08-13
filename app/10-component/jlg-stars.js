@@ -6,11 +6,8 @@
 			super();
 			this.note = this.getAttribute('note');
 			this.bindKey(this.note);
+			delete this.templateSelector;
 		}
-
-		connectedCallback() {
-            this.render();
-        }
 
 		render() {
 			const note = this.getParent().model[this.note] || 0;

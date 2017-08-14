@@ -3,14 +3,33 @@
 
     const doc = document.currentScript.ownerDocument;
 
+    function isChrome() {
+        console.log('navigator.userAgent', navigator.userAgent);
+        const result = navigator.userAgent.match(/Chrome/) !== null;
+        console.log('result', result);
+        return result;
+    }
+
     function manageExpr(elt) {
-        const walk = document.createTreeWalker(elt,NodeFilter.SHOW_TEXT,null,false);
+        const walk = document.createTreeWalker(elt, NodeFilter.SHOW_TEXT, null, false);
         let node;
         while (node = walk.nextNode()) {
             console.log('node', node);
+            if (node.data.match(/{{(.*?)}}/g)) {
+                console.log('matched !!!', node);
+
+            }
+            // var replacementNode = document.createElement('span');
+            // replacementNode.innerHTML = linkify(n.textContent);
+            // n.parentNode.insertBefore(replacementNode, n);
+            // n.parentNode.removeChild(n);
+
+            // node.innerHTML = node.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
+            //     return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
+            // });
         }
     }
-      
+
 
     class CircleElement extends HTMLElement {
         constructor() {
@@ -34,14 +53,12 @@
                 mode: 'closed'
             });
             if (this.templateSelector) {
-                const t = doc.querySelector(this.templateSelector);
+                const myDoc = (isChrome()) ? document.currentScript.ownerDocument : doc;
+                const t = myDoc.querySelector(this.templateSelector);
                 const clone = document.importNode(t.content, true);
                 manageExpr(clone);
                 this.root.innerHTML = '';
                 this.root.appendChild(clone);
-                // this.root.innerHTML = t.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
-                //     return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
-                // });
             }
             this.render();
         }

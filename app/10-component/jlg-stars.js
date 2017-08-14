@@ -8,12 +8,12 @@
 		constructor() {
 			super();
 			console.log('JLGStars this.outerHTML ' + this.outerHTML);
-			this.noteName = this.getAttribute('note');
 			delete this.templateSelector;
 		}
 
 		connectedCallback() {
 			super.connectedCallback();
+			this.noteName = this.getAttribute('note');
 			this.bindKey(this.noteName);
 			this.onDigest(this.noteName);
 		}
@@ -66,7 +66,7 @@
 		digest(key) {
 			// For double data bindings uncomment this
 			console.log('this.noteName', this.noteName);
-			// this.getParent().model[this.noteName] = this.model.note;
+			this.getParent().model[this.noteName] = this.model.note;
 		}
 
 	}

@@ -31,6 +31,11 @@
 
 
     class CircleElement extends HTMLElement {
+        static register() {
+            const classname = this.toString().split ('(' || /s+/)[0].split (' ' || /s+/)[1];
+            console.log('classname: ' + classname);
+            // window.customElements.define(camel2Spinal(), JLGApp);
+        }
         constructor() {
             super();
             const self = this;

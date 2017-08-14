@@ -20,7 +20,7 @@
         array.forEach((node) => {
             const replacementNode = document.createElement('span');
             replacementNode.innerHTML = node.data.replace(/{{(.*?)}}/g, (match, name) => {
-                return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
+                return `<jlg-expr>${name}</jlg-expr>`;
             });
             const parentNode = node.parentNode;
             parentNode.insertBefore(replacementNode, node);

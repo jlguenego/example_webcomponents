@@ -1,6 +1,8 @@
 (function () {
     'use strict';
-    var $ = document.querySelector.bind(document);
+    const $ = document.querySelector.bind(document);
+    // const $$ = document.querySelectorAll.bind(document);
+    
     let note;
 
     function digest() {

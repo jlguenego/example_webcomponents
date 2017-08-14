@@ -8,18 +8,20 @@
 		constructor() {
 			super();
 			console.log('JLGStars this.outerHTML ' + this.outerHTML);
-
+			this.model.note = 0;
 			delete this.templateSelector;
 		}
 
 		connectedCallback() {
-			this.note = this.getAttribute('note');
-			this.bindKey(this.note);
 			super.connectedCallback();
+			this.noteName = this.getAttribute('note');
+			this.model.note = this.getParent().model[this.noteName] || 0;
+			this.bindKey(this.noteName);
+			this.render();
 		}
 
 		render() {
-			const note = this.getParent().model[this.note] || 0;
+			
 			let eventname = 'onclick'
 			if ('ontouchstart' in document.documentElement) {
 				eventname = 'ontouchstart';
@@ -34,19 +36,33 @@
 	}
 </style>
 			`;
-			for (let i = 0; i < note; i++) {
+			for (let i = 0; i < this.model.note; i++) {
 				html += `<img ${eventname}="this.getRootNode().host.update(${i+1})" src="img/yellow_star.png">`;
 			}
 
-			for (let i = note; i < 5; i++) {
+			for (let i = this.model.note; i < 5; i++) {
 				html += `<img ${eventname}="this.getRootNode().host.update(${i+1})" src="img/white_star.png">`;
 			}
 			this.root.innerHTML = html;
 		}
 
 		update(newNote) {
-			this.getParent().model[this.note] = newNote;
+			console.log('update', newNote);
+			this.model.note = newNote;
+			// this.getParent().model[this.noteName] = newNote;
+			this.render();
 		}
+
+		onDigest(key) {
+			console.log('onDigest', key, this);
+			this.model.note = this.getParent().model[this.noteName] || 0;
+            this.render();
+		}
+		
+		digest(key) {
+			// this.getParent().model[this.noteName] = this.model.note;
+        }
+
 	}
 
 	window.customElements.define(JLGStars.tag, JLGStars);

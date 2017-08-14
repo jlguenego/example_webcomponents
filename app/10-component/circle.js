@@ -36,6 +36,7 @@
             const self = this;
             this.model = new Proxy({}, {
                 set(target, key, value) {
+                    console.log('handler: key=%s, value=%s', key, value);
                     target[key] = value;
                     self.digest(key, self);
                     return true;

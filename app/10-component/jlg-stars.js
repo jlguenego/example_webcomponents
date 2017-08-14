@@ -7,6 +7,7 @@
 		}
 		constructor() {
 			super();
+			console.log('JLGStars this.outerHTML ' + this.outerHTML);
 			this.note = this.getAttribute('note');
 			this.bindKey(this.note);
 			delete this.templateSelector;

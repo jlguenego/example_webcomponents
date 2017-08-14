@@ -1,0 +1,13 @@
+<template id="jlg-header">
+	This is the header
+	<hr>
+</template>
+
+<script>
+	class JLGHeader extends circle.Element {
+		static get tag() {
+			return 'jlg-header';
+		}
+	}
+	window.customElements.define(JLGHeader.tag, JLGHeader);
+</script>

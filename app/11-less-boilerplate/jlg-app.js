@@ -12,13 +12,8 @@
     //     }
     // };
 
-    const doc = document.currentScript.ownerDocument;
-
 	class JLGApp extends circle.Element {
         static get tag() {return 'jlg-app'}
-        constructor() {
-            super(doc);
-        }
     }
 	window.customElements.define(JLGApp.tag, JLGApp);
 

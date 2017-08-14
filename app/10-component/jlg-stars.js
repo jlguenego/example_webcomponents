@@ -15,9 +15,8 @@
 		connectedCallback() {
 			super.connectedCallback();
 			this.noteName = this.getAttribute('note');
-			this.model.note = this.getParent().model[this.noteName] || 0;
 			this.bindKey(this.noteName);
-			this.render();
+			this.onDigest();
 		}
 
 		render() {

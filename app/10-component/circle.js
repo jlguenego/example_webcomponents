@@ -87,10 +87,10 @@
                     elt.onDigest(key);
                 });
             }
-            if (caller !== this) {
+            // if (caller !== this) {
                 counter++;
                 this.onDigest(key);
-            }
+            // }
 
             console.log('digest end in %d steps for key %s', counter, key);
         }

@@ -8,24 +8,27 @@
 		constructor() {
 			super();
 			console.log('JLGStars this.outerHTML ' + this.outerHTML);
-			
+
 			delete this.templateSelector;
 		}
 
 		connectedCallback() {
-            this.note = this.getAttribute('note');
+			this.note = this.getAttribute('note');
 			this.bindKey(this.note);
 			super.connectedCallback();
-        }
+		}
 
 		render() {
 			const note = this.getParent().model[this.note] || 0;
 			let eventname = 'onclick'
 			if ('ontouchstart' in document.documentElement) {
-					eventname = 'ontouchstart';
-				}
+				eventname = 'ontouchstart';
+			}
 			let html = `
 <style>
+	jlg-stars {
+		display: block;
+	}			
 	:host {
 		display: block;
 	}

@@ -1,6 +1,17 @@
 (function () {
     'use strict';
 
+    const doc = document.currentScript.ownerDocument;
+
+    function manageExpr(elt) {
+        const walk = document.createTreeWalker(elt,NodeFilter.SHOW_TEXT,null,false);
+        let node;
+        while (node = walk.nextNode()) {
+            console.log('node', node);
+        }
+    }
+      
+
     class CircleElement extends HTMLElement {
         constructor() {
             super();
@@ -23,10 +34,14 @@
                 mode: 'closed'
             });
             if (this.templateSelector) {
-                const t = document.currentScript.ownerDocument.querySelector(this.templateSelector);
-                this.root.innerHTML = t.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
-                    return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
-                });
+                const t = doc.querySelector(this.templateSelector);
+                const clone = document.importNode(t.content, true);
+                manageExpr(clone);
+                this.root.innerHTML = '';
+                this.root.appendChild(clone);
+                // this.root.innerHTML = t.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
+                //     return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
+                // });
             }
             this.render();
         }

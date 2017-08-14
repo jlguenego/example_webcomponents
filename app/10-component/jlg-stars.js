@@ -47,8 +47,6 @@
 		update(newNote) {
 			console.log('update', newNote);
 			this.model.note = newNote;
-			// this.getParent().model[this.noteName] = newNote;
-			this.render();
 		}
 
 		onDigest(key) {
@@ -66,7 +64,12 @@
 		digest(key) {
 			// For double data bindings uncomment this
 			console.log('this.noteName', this.noteName);
-			this.getParent().model[this.noteName] = this.model.note;
+			if (this.model.note === this.getParent().model[this.noteName] && this.model.note !== undefined) {
+				this.render();
+				return;
+			}
+			// this.getParent().model[this.noteName] = this.model.note;
+			this.render();
 		}
 
 	}

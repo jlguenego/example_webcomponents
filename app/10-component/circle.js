@@ -3,8 +3,9 @@
 
     const doc = document.currentScript.ownerDocument;
 
-    function isChrome() {
-        const result = navigator.userAgent.match(/Chrome/) !== null;
+    function isFirefox() {
+        console.log('navigator.userAgent', navigator.userAgent);
+        const result = navigator.userAgent.match(/Firefox/) !== null;
         return result;
     }
 
@@ -51,7 +52,7 @@
                 mode: 'closed'
             });
             if (this.templateSelector) {
-                const myDoc = (isChrome()) ? document.currentScript.ownerDocument : doc;
+                const myDoc = (isFirefox()) ? doc : document.currentScript.ownerDocument;
                 const t = myDoc.querySelector(this.templateSelector);
                 const clone = document.importNode(t.content, true);
                 manageExpr(clone);

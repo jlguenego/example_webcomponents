@@ -16,6 +16,9 @@
 	:host {
 		display: block;
 	}
+	jlg-stars {
+		display: block;
+	}
 </style>
 			`;
 			for (let i = 0; i < note; i++) {

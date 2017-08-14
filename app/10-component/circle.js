@@ -23,8 +23,8 @@
                 mode: 'closed'
             });
             if (this.templateSelector) {
-                this.element = document.currentScript.ownerDocument.querySelector(this.templateSelector);
-                this.root.innerHTML = this.element.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
+                const t = document.currentScript.ownerDocument.querySelector(this.templateSelector);
+                this.root.innerHTML = t.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
                     return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
                 });
             }

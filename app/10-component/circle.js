@@ -17,7 +17,7 @@
                 },
             });
             this.digestRegistry = {};
-            console.log('this.tag', this.constructor.tag);
+            console.log('this.tag ' + this.constructor.tag);
             this.templateSelector = '#' + this.constructor.tag;
             console.log('CircleElement constructor end: ' + this.constructor.name);
         }
@@ -29,7 +29,7 @@
             if (this.templateSelector) {
                 this.element = document.currentScript.ownerDocument.querySelector(this.templateSelector);
                 this.root.innerHTML = this.element.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
-                    return `<jlg-expr>${name}</jlg-expr>`;
+                    return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
                 });
             }
             this.render();
@@ -76,18 +76,27 @@
     window.circle = new Circle();
 
     class JLGExpr extends circle.Element {
+        static get tag() {
+            return 'jlg-expr';
+        }
         constructor() {
             super();
+            console.log('JLGExpr constructor specific start');
+            console.log('JLGExpr this.outerHTML ' + this.outerHTML);
             this.key = this.innerHTML;
             this.bindKey(this.key);
             delete this.templateSelector;
+            this.render();
+            console.log('JLGExpr constructor specific end');
         }
 
         render() {
+            console.log('JLGExpr render start');
             super.render();
             this.root.innerHTML = this.getParent().model[this.key] || '';
+             console.log('JLGExpr render end');
         }
     }
 
-    window.customElements.define('jlg-expr', JLGExpr);
+    window.customElements.define(JLGExpr.tag, JLGExpr);
 })();

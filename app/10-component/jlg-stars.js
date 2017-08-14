@@ -2,6 +2,9 @@
 	'use strict';
 
 	class JLGStars extends circle.Element {
+		static get tag() {
+			return 'jlg-stars';
+		}
 		constructor() {
 			super();
 			this.note = this.getAttribute('note');
@@ -33,5 +36,5 @@
 		}
 	}
 
-	window.customElements.define('jlg-stars', JLGStars);
+	window.customElements.define(JLGStars.tag, JLGStars);
 })();

@@ -6,22 +6,16 @@
 	<title>Refactoring in a library</title>
 	<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 	<link rel="import" href="jlg-app.html">
+	<style>
+body {
+	line-height: 10px;
+	font-size: 10px;
+}
+	</style>
 </head>
 
 <body>
 	<jlg-app></jlg-app>
-
-
-	<h2>Notes</h2>
-	<ul>
-		<li>Component are visual and intelligent, and can include component.</li>
-	</ul>
-	<script>
-		var node = document.createTextNode('user agent: ' + navigator.userAgent);
-		var para = document.createElement("p");
-		para.appendChild(node);
-		document.body.appendChild(para);
-	</script>
 
 
 </body>

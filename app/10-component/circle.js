@@ -4,6 +4,7 @@
     class CircleElement extends HTMLElement {
         constructor() {
             super();
+            console.log('CircleElement constructor start: ' + this.constructor.name);
             this.root = this.attachShadow({
                 mode: 'closed'
             });
@@ -16,12 +17,15 @@
                 },
             });
             this.digestRegistry = {};
-            this.templateSelector = 'template';
+            console.log('this.tag', this.constructor.tag);
+            this.templateSelector = '#' + this.constructor.tag;
+            console.log('CircleElement constructor end: ' + this.constructor.name);
         }
         getParent() {
             return this.getRootNode().host;
         }
         connectedCallback() {
+            console.log('CircleElement connectedCallback start: ' + this.constructor.name);
             if (this.templateSelector) {
                 this.element = document.currentScript.ownerDocument.querySelector(this.templateSelector);
                 this.root.innerHTML = this.element.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
@@ -29,6 +33,7 @@
                 });
             }
             this.render();
+            console.log('CircleElement connectedCallback end: ' + this.constructor.name);            
         }
         render() {
             console.log('render %O', this);

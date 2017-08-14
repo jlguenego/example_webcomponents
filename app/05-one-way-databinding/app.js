@@ -1,12 +1,13 @@
 (function () {
 	'use strict';
 
+	const doc = document.currentScript.ownerDocument;	
+
 	class JLGHello extends HTMLElement {
 		constructor() {
 			super();
 			console.log('Hello constructor');
 			
-			const doc = document.currentScript.ownerDocument;
 			this.template = doc.querySelector('#hw').innerHTML;
 			this.name = '';
 

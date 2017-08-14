@@ -21,7 +21,11 @@
 			const note = circle.model[this.modelName] || 0;
 			let html = `
 <style>
+/* Only chrome supports well :host */
 	:host {
+		display: block;	
+	}
+	jlg-stars {
 		display: block;
 	}
 </style>
@@ -35,7 +39,7 @@
 			}
 
 			this.root.innerHTML = html;
-			
+
 		}
 
 		hello() {

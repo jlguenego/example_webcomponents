@@ -17,16 +17,14 @@
             console.log('node', node);
             if (node.data.match(/{{(.*?)}}/g)) {
                 console.log('matched !!!', node);
-
+                const replacementNode = document.createElement('span');
+                replacementNode.innerHTML = node.data.replace(/{{(.*?)}}/g, (match, name) => {
+                    return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
+                });
+                const parentNode = node.parentNode;
+                parentNode.insertBefore(replacementNode, node);
+                parentNode.removeChild(node);
             }
-            // var replacementNode = document.createElement('span');
-            // replacementNode.innerHTML = linkify(n.textContent);
-            // n.parentNode.insertBefore(replacementNode, n);
-            // n.parentNode.removeChild(n);
-
-            // node.innerHTML = node.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
-            //     return `<jlg-expr expr="coucou">${name}</jlg-expr>`;
-            // });
         }
     }
 

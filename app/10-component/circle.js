@@ -5,9 +5,7 @@
         constructor() {
             super();
             console.log('CircleElement constructor start: ' + this.constructor.name);
-            this.root = this.attachShadow({
-                mode: 'closed'
-            });
+
             const self = this;
             this.model = new Proxy({}, {
                 set(target, key, value) {
@@ -26,6 +24,9 @@
         }
         connectedCallback() {
             console.log('CircleElement connectedCallback start: ' + this.constructor.name);
+            this.root = this.attachShadow({
+                mode: 'closed'
+            });
             if (this.templateSelector) {
                 this.element = document.currentScript.ownerDocument.querySelector(this.templateSelector);
                 this.root.innerHTML = this.element.innerHTML.replace(/{{(.*?)}}/g, (match, name) => {
@@ -33,7 +34,7 @@
                 });
             }
             this.render();
-            console.log('CircleElement connectedCallback end: ' + this.constructor.name);            
+            console.log('CircleElement connectedCallback end: ' + this.constructor.name);
         }
         render() {
             console.log('render %O', this);
@@ -83,18 +84,24 @@
             super();
             console.log('JLGExpr constructor specific start');
             console.log('JLGExpr this.outerHTML ' + this.outerHTML);
+
+            delete this.templateSelector;
+            
+            console.log('JLGExpr constructor specific end');
+        }
+
+        connectedCallback() {
+            super.connectedCallback();
             this.key = this.innerHTML;
             this.bindKey(this.key);
-            delete this.templateSelector;
             this.render();
-            console.log('JLGExpr constructor specific end');
         }
 
         render() {
             console.log('JLGExpr render start');
             super.render();
             this.root.innerHTML = this.getParent().model[this.key] || '';
-             console.log('JLGExpr render end');
+            console.log('JLGExpr render end');
         }
     }
 

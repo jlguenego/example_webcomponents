@@ -4,7 +4,6 @@
     class CircleElement extends HTMLElement {
         constructor() {
             super();
-            console.log('CircleElement constructor start: ' + this.constructor.name);
             const self = this;
             this.model = new Proxy({}, {
                 set(target, key, value) {
@@ -14,15 +13,12 @@
                 },
             });
             this.digestRegistry = {};
-            console.log('this.tag ' + this.constructor.tag);
             this.templateSelector = '#' + this.constructor.tag;
-            console.log('CircleElement constructor end: ' + this.constructor.name);
         }
         getParent() {
             return this.getRootNode().host;
         }
         connectedCallback() {
-            console.log('CircleElement connectedCallback start: ' + this.constructor.name);
             this.root = this.attachShadow({
                 mode: 'closed'
             });
@@ -33,7 +29,6 @@
                 });
             }
             this.render();
-            console.log('CircleElement connectedCallback end: ' + this.constructor.name);
         }
         render() {
             console.log('render %O', this);
@@ -81,12 +76,7 @@
         }
         constructor() {
             super();
-            console.log('JLGExpr constructor specific start');
-            console.log('JLGExpr this.outerHTML ' + this.outerHTML);
-
             delete this.templateSelector;
-            
-            console.log('JLGExpr constructor specific end');
         }
 
         connectedCallback() {
@@ -97,10 +87,8 @@
         }
 
         render() {
-            console.log('JLGExpr render start');
             super.render();
             this.root.innerHTML = this.getParent().model[this.key] || '';
-            console.log('JLGExpr render end');
         }
     }
 

@@ -21,7 +21,7 @@
 		}
 
 		render() {
-			
+
 			let eventname = 'onclick'
 			if ('ontouchstart' in document.documentElement) {
 				eventname = 'ontouchstart';
@@ -55,13 +55,16 @@
 
 		onDigest(key) {
 			console.log('onDigest', key, this);
+			if (this.model.note === this.getParent().model[this.noteName]) {
+				return;
+			}
 			this.model.note = this.getParent().model[this.noteName] || 0;
-            this.render();
+			this.render();
 		}
-		
-		digest(key) {
-			// this.getParent().model[this.noteName] = this.model.note;
-        }
+
+		digest(key, caller) {
+			this.getParent().model[this.noteName] = this.model.note;
+		}
 
 	}
 

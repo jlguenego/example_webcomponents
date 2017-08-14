@@ -1,12 +1,14 @@
 <template id="jlg-body">
 	<div>
 		This is the body...
-		 <jlg-stars note="goodNote"></jlg-stars>
+		<jlg-stars note="goodNote"></jlg-stars>
 		<jlg-stars note="goodNote"></jlg-stars>
 		<jlg-stars note="goodNote2"></jlg-stars>
-		myNote:	{{goodNote}}<br/>
-		myNote2: {{goodNote2}}<br/>
-		myNote:	{{goodNote}}<br/>
+		<span>
+			myNote: {{goodNote}}<br>
+			myNote2: {{goodNote2}}<br> 
+			myNote: {{goodNote}}<br>
+		</span>
 		<button onclick="this.getRootNode().host.model.goodNote = 3">goodNote = 3</button>
 	</div>
 </template>

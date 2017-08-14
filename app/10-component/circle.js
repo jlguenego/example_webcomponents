@@ -5,7 +5,6 @@
         constructor() {
             super();
             console.log('CircleElement constructor start: ' + this.constructor.name);
-
             const self = this;
             this.model = new Proxy({}, {
                 set(target, key, value) {

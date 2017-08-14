@@ -61,8 +61,9 @@
 			this.render();
 		}
 
-		digest(key, caller) {
-			// this.getParent().model[this.noteName] = this.model.note;
+		digest(key) {
+			// For double data bindings uncomment this
+			this.getParent().model[this.noteName] = this.model.note;
 		}
 
 	}

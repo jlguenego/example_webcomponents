@@ -78,7 +78,7 @@
             }
         }
 
-        digest(key, caller) {
+        digest(key) {
             console.log('digest start for', key);
             let counter = 0;
             if (this.digestRegistry[key]) {
@@ -87,10 +87,8 @@
                     elt.onDigest(key);
                 });
             }
-            // if (caller !== this) {
-                counter++;
-                this.onDigest(key);
-            // }
+            counter++;
+            this.onDigest(key);
 
             console.log('digest end in %d steps for key %s', counter, key);
         }

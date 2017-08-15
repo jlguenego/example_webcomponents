@@ -15,14 +15,11 @@
 
 <script>
 	class JLGBody extends circle.Element {
-		static get tag() {
-			return 'jlg-body';
-		}
 		constructor() {
 			super();
 			this.model.goodNote = 4;
 		}
 	}
-	window.customElements.define(JLGBody.tag, JLGBody);
+	JLGBody.register();
 </script>
 <script src="jlg-stars.js"></script>

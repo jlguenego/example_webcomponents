@@ -4,10 +4,6 @@
 </template>
 
 <script>
-	class JLGHeader extends circle.Element {
-		static get tag() {
-			return 'jlg-header';
-		}
-	}
-	window.customElements.define(JLGHeader.tag, JLGHeader);
+	class JLGHeader extends circle.Element {}
+	JLGHeader.register();
 </script>

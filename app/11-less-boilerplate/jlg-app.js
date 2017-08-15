@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    class JlgApp extends circle.Element {
+    class JLGApp extends circle.Element {
     }
-    JlgApp.register();
+    JLGApp.register();
 
 
 })();

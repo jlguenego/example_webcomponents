@@ -2,9 +2,6 @@
 	'use strict';
 
 	class JLGStars extends circle.Element {
-		static get tag() {
-			return 'jlg-stars';
-		}
 		constructor() {
 			super();
 			console.log('JLGStars this.outerHTML ' + this.outerHTML);

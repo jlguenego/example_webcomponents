@@ -4,7 +4,8 @@
     const doc = document.currentScript.ownerDocument;
 
     function camel2Spinal(str) {
-        return str.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+        str = str.replace(/^([A-Z]+)([A-Z][a-z])/g, '$1-$2');
+        return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
     }
 
     function isFirefox() {
@@ -39,11 +40,7 @@
             return camel2Spinal(this.name);
         }
         static register() {
-            const classname = this.name;
-            console.log('classname: ' + classname);
-            console.log('camel2Spinal(classname): ' + camel2Spinal(classname));
-
-            window.customElements.define(camel2Spinal(classname), this);
+            window.customElements.define(this.tag, this);
         }
         constructor() {
             super();
@@ -69,10 +66,13 @@
             if (this.templateSelector) {
                 const myDoc = (isFirefox()) ? doc : document.currentScript.ownerDocument;
                 const t = myDoc.querySelector(this.templateSelector);
-                const clone = document.importNode(t.content, true);
-                manageExpr(clone);
-                this.root.innerHTML = '';
-                this.root.appendChild(clone);
+                if (t) {
+                    const clone = document.importNode(t.content, true);
+                    manageExpr(clone);
+                    this.root.innerHTML = '';
+                    this.root.appendChild(clone);
+                }
+
             }
             this.render();
         }
@@ -118,9 +118,6 @@
     window.circle = new Circle();
 
     class JLGExpr extends circle.Element {
-        static get tag() {
-            return 'jlg-expr';
-        }
         constructor() {
             super();
             delete this.templateSelector;

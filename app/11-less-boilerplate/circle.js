@@ -33,6 +33,13 @@
         });
     }
 
+    function isTwoWaysDatabindingNotation(value) {
+        return value.match(/^\[\[(.*?)\]\]$/);
+    }
+
+    function isOneWaysDatabindingNotation(value) {
+        return value.match(/^\[(.*?)\]$/);
+    }
 
     class CircleElement extends HTMLElement {
         static get tag() {
@@ -55,6 +62,27 @@
             this.digestRegistry = {};
             this.templateSelector = '#' + this.constructor.tag;
         }
+        get databinding() {
+            let result = {};
+            for (let i = 0; i < this.attributes.length; i++) {
+                const key = this.attributes[i].name;
+                console.log('key', key);
+                const value = this.attributes[i].value;
+                console.log('value', value);
+                if (isTwoWaysDatabindingNotation(value)) {
+                    result[key] = '=';
+                } else if (isOneWaysDatabindingNotation(value)) {
+                    result[key] = '>';
+                // } else {
+                //     result[key] = '@';
+                }
+            }
+            return result;
+        }
+        getDatabinding(attr) {
+            console.log('attr', attr);
+            return this.getAttribute(attr).replace(/\[|\]/g, '');
+        }
         getParent() {
             return this.getRootNode().host;
         }
@@ -74,7 +102,7 @@
             }
             // databinding
             for (let attr in this.databinding) {
-                const modelVar = this.getAttribute(attr);
+                const modelVar = this.getDatabinding(attr);
                 this.bindKey(modelVar);
                 this.onDigest(modelVar);
             }
@@ -91,7 +119,7 @@
             console.log('onDigest', key, this);
             // databinding
             for (let attr in this.databinding) {
-                const modelVar = this.getAttribute(attr);
+                const modelVar = this.getDatabinding(attr);
                 console.log('modelVar', modelVar);
                 if (modelVar === key) {
                     if (this.model[attr] !== this.getParent().model[key]) {
@@ -124,7 +152,7 @@
             // databinding
             for (let attr in this.databinding) {
                 console.log('attr', attr);
-                const modelVar = this.getAttribute(attr);
+                const modelVar = this.getDatabinding(attr);
                 if (attr === key && this.databinding[attr] === '=') {
                     if (this.getParent().model[modelVar] !== this.model[attr]) {
                         this.getParent().model[modelVar] = this.model[attr];

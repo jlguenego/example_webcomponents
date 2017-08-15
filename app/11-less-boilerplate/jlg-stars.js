@@ -3,12 +3,6 @@
 
 	class JLGStars extends circle.Element {
 
-		get databinding() {
-			return {
-				'note': '>'
-			}
-		}
-
 		render() {
 			console.log('about to render JLGStars with note = ', this.model.note);
 			const note = this.model.note || 0;

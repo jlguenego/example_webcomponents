@@ -2,11 +2,6 @@
 	'use strict';
 
 	class JLGStars extends circle.Element {
-		constructor() {
-			super();
-			console.log('JLGStars this.outerHTML ' + this.outerHTML);
-			delete this.templateSelector;
-		}
 
 		connectedCallback() {
 			super.connectedCallback();

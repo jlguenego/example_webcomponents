@@ -63,16 +63,13 @@
             this.root = this.attachShadow({
                 mode: 'closed'
             });
-            if (this.templateSelector) {
-                const myDoc = (isFirefox()) ? doc : document.currentScript.ownerDocument;
-                const t = myDoc.querySelector(this.templateSelector);
-                if (t) {
-                    const clone = document.importNode(t.content, true);
-                    manageExpr(clone);
-                    this.root.innerHTML = '';
-                    this.root.appendChild(clone);
-                }
-
+            const myDoc = (isFirefox()) ? doc : document.currentScript.ownerDocument;
+            const t = myDoc.querySelector(this.templateSelector);
+            if (t) {
+                const clone = document.importNode(t.content, true);
+                manageExpr(clone);
+                this.root.innerHTML = '';
+                this.root.appendChild(clone);
             }
             this.render();
         }
@@ -118,11 +115,6 @@
     window.circle = new Circle();
 
     class JLGExpr extends circle.Element {
-        constructor() {
-            super();
-            delete this.templateSelector;
-        }
-
         connectedCallback() {
             super.connectedCallback();
             this.key = this.innerHTML;

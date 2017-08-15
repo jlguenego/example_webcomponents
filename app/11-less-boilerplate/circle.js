@@ -9,7 +9,6 @@
     }
 
     function isFirefox() {
-        console.log('navigator.userAgent', navigator.userAgent);
         const result = navigator.userAgent.match(/Firefox/) !== null;
         return result;
     }
@@ -44,6 +43,8 @@
         }
         constructor() {
             super();
+            console.log('CircleElement constructor start: ', this.constructor.name);
+
             const self = this;
             this.model = new Proxy({}, {
                 set(target, key, value) {
@@ -55,11 +56,14 @@
             });
             this.digestRegistry = {};
             this.templateSelector = '#' + this.constructor.tag;
+            console.log('CircleElement constructor end: ', this.constructor.name);
         }
         getParent() {
             return this.getRootNode().host;
         }
         connectedCallback() {
+            console.log('connectedCallback start: ', this.constructor.name);
+
             this.root = this.attachShadow({
                 mode: 'closed'
             });
@@ -71,14 +75,33 @@
                 this.root.innerHTML = '';
                 this.root.appendChild(clone);
             }
-            this.render();
+            // databinding
+            for (let attr in this.databinding) {
+                const modelVar = this.getAttribute(attr);
+                this.bindKey(modelVar);
+                this.onDigest(modelVar);
+            }
+            if (!this.databinding) {
+                console.log('no databinding');
+                this.render();
+            }
+            // end databinding
+            console.log('connectedCallback end: ', this.constructor.name);
         }
-        render() {
-            console.log('render %O', this);
-        }
+        render() {}
 
         onDigest(key) {
             console.log('onDigest', key, this);
+            // databinding
+            for (let attr in this.databinding) {
+                const modelVar = this.getAttribute(attr);
+                if (modelVar === key) {
+                    if (this.model[attr] !== this.getParent().model[key]) {
+                        this.model[attr] = this.getParent().model[key];
+                    }
+                }
+            }
+            // end databinding
             this.render();
         }
         bindKey(key) {
@@ -99,9 +122,17 @@
                     elt.onDigest(key);
                 });
             }
-            counter++;
-            this.onDigest(key);
-
+            // databinding
+            for (let attr in this.databinding) {
+                const modelVar = this.getAttribute(attr);
+                if (modelVar === key && this.databinding[attr] === '=') {
+                    if (this.getParent().model[key] !== this.model[attr]) {
+                        this.getParent().model[key] = this.model[attr];
+                    }
+                }
+            }
+            // end databinding
+            this.render();
             console.log('digest end in %d steps for key %s', counter, key);
         }
     }
@@ -111,7 +142,6 @@
             this.Element = CircleElement;
         }
     }
-
     window.circle = new Circle();
 
     class JLGExpr extends circle.Element {
@@ -128,5 +158,5 @@
         }
     }
 
-    window.customElements.define(JLGExpr.tag, JLGExpr);
+    JLGExpr.register();
 })();

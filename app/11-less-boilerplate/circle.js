@@ -3,16 +3,36 @@
 
     const doc = document.currentScript.ownerDocument;
 
+    /**
+     * Translate a string from CamelCase to spinal-case.
+     * Note: works well with SPECIALCamelCase as well.
+     * 
+     * @param {string} str - CamelCase string
+     * @returns spinal-case equivalent string.
+     */
     function camel2Spinal(str) {
+        // handle case like JLGExpr becoming jlg-expr
         str = str.replace(/^([A-Z]+)([A-Z][a-z])/g, '$1-$2');
+        // then do the traditional conversion to spinal case.
         return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
     }
 
+    /**
+     * check if the user agent is Firefox
+     * 
+     * @returns true if user agent is Firefox, false otherwise.
+     */
     function isFirefox() {
         const result = navigator.userAgent.match(/Firefox/) !== null;
         return result;
     }
 
+    /**
+     * We want the user be able to easily insert expression like in AngularJS.
+     * But internally, the {{myModelVar}} must be converted to <jlg-expr expr="[myModelVar]"></jlg-expr>
+     * 
+     * @param {any} elt 
+     */
     function manageExpr(elt) {
         const walk = document.createTreeWalker(elt, NodeFilter.SHOW_TEXT, null, false);
         let node;
@@ -25,7 +45,7 @@
         array.forEach((node) => {
             const replacementNode = document.createElement('span');
             replacementNode.innerHTML = node.data.replace(/{{(.*?)}}/g, (match, name) => {
-                return `<jlg-expr>${name}</jlg-expr>`;
+                return `<jlg-expr expr="[${name}]"></jlg-expr>`;
             });
             const parentNode = node.parentNode;
             parentNode.insertBefore(replacementNode, node);
@@ -33,14 +53,35 @@
         });
     }
 
+    /**
+     * Tests if the notation is a 2 ways data binding.
+     * Notation is for the time being: [[...]]
+     * 
+     * @param {any} value 
+     * @returns 
+     */
     function isTwoWaysDatabindingNotation(value) {
         return value.match(/^\[\[(.*?)\]\]$/);
     }
 
+    /**
+     * Tests if the notation is a 1 way data binding.
+     * Notation is for the time being: [...]
+     * 
+     * @param {any} value 
+     * @returns 
+     */
     function isOneWaysDatabindingNotation(value) {
         return value.match(/^\[(.*?)\]$/);
     }
 
+    /**
+     * A component in circle must extends the circle.Element class
+     * which is a pointer on the CircleElement class.
+     * 
+     * @class CircleElement
+     * @extends {HTMLElement}
+     */
     class CircleElement extends HTMLElement {
         static get tag() {
             return camel2Spinal(this.name);
@@ -165,6 +206,13 @@
         }
     }
 
+    /**
+     * The Circle class is the exposed class of the library.
+     * The circle.js produces a global variable window.circle which is the hook
+     * to all functionalities of this library.
+     * 
+     * @class Circle
+     */
     class Circle {
         constructor() {
             this.Element = CircleElement;
@@ -172,19 +220,16 @@
     }
     window.circle = new Circle();
 
+    /**
+     * JLGExpr is the component that allows displaying expressions.
+     * 
+     * @class JLGExpr
+     * @extends {circle.Element}
+     */
     class JLGExpr extends circle.Element {
-        connectedCallback() {
-            super.connectedCallback();
-            this.key = this.innerHTML;
-            this.bindKey(this.key);
-            this.render();
-        }
-
         render() {
-            super.render();
-            this.root.innerHTML = this.getParent().model[this.key] || '';
+            this.root.innerHTML = this.model.expr || '';
         }
     }
-
     JLGExpr.register();
 })();

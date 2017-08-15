@@ -12,7 +12,7 @@
 
 		render() {
 			console.log('about to render JLGStars with note = ', this.model.note);
-			const note = this.model.note;
+			const note = this.model.note || 0;
 			let eventname = 'onclick'
 			if ('ontouchstart' in document.documentElement) {
 				eventname = 'ontouchstart';

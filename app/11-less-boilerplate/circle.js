@@ -43,8 +43,6 @@
         }
         constructor() {
             super();
-            console.log('CircleElement constructor start: ', this.constructor.name);
-
             const self = this;
             this.model = new Proxy({}, {
                 set(target, key, value) {
@@ -56,7 +54,6 @@
             });
             this.digestRegistry = {};
             this.templateSelector = '#' + this.constructor.tag;
-            console.log('CircleElement constructor end: ', this.constructor.name);
         }
         getParent() {
             return this.getRootNode().host;
@@ -95,8 +92,10 @@
             // databinding
             for (let attr in this.databinding) {
                 const modelVar = this.getAttribute(attr);
+                console.log('modelVar', modelVar);
                 if (modelVar === key) {
                     if (this.model[attr] !== this.getParent().model[key]) {
+                        console.log('about to set this.model.%s on %s', attr, this.getParent().model[key]);
                         this.model[attr] = this.getParent().model[key];
                     }
                 }

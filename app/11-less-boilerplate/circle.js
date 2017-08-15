@@ -3,6 +3,10 @@
 
     const doc = document.currentScript.ownerDocument;
 
+    function camel2Spinal(str) {
+        return str.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+    }
+
     function isFirefox() {
         console.log('navigator.userAgent', navigator.userAgent);
         const result = navigator.userAgent.match(/Firefox/) !== null;
@@ -31,10 +35,15 @@
 
 
     class CircleElement extends HTMLElement {
+        static get tag() {
+            return camel2Spinal(this.name);
+        }
         static register() {
-            const classname = this.toString().split ('(' || /s+/)[0].split (' ' || /s+/)[1];
+            const classname = this.name;
             console.log('classname: ' + classname);
-            // window.customElements.define(camel2Spinal(), JLGApp);
+            console.log('camel2Spinal(classname): ' + camel2Spinal(classname));
+
+            window.customElements.define(camel2Spinal(classname), this);
         }
         constructor() {
             super();

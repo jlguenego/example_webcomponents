@@ -1,13 +1,9 @@
 (function () {
     'use strict';
 
-    class JLGApp extends circle.Element {
-        static get tag() {
-            return 'jlg-app'
-        }
+    class JlgApp extends circle.Element {
     }
-    window.customElements.define(JLGApp.tag, JLGApp);
-    JLGApp.register();
+    JlgApp.register();
 
 
 })();

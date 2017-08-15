@@ -11,7 +11,7 @@
      * @returns spinal-case equivalent string.
      */
     function camel2Spinal(str) {
-        // handle case like JLGExpr becoming jlg-expr
+        // handle case like JLGStars becoming jlg-stars
         str = str.replace(/^([A-Z]+)([A-Z][a-z])/g, '$1-$2');
         // then do the traditional conversion to spinal case.
         return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
@@ -29,7 +29,7 @@
 
     /**
      * We want the user be able to easily insert expression like in AngularJS.
-     * But internally, the {{myModelVar}} must be converted to <jlg-expr expr="[myModelVar]"></jlg-expr>
+     * But internally, the {{myModelVar}} must be converted to <circle-expr expr="[myModelVar]"></circle-expr>
      * 
      * @param {any} elt 
      */
@@ -45,7 +45,7 @@
         array.forEach((node) => {
             const replacementNode = document.createElement('span');
             replacementNode.innerHTML = node.data.replace(/{{(.*?)}}/g, (match, name) => {
-                return `<jlg-expr expr="[${name}]"></jlg-expr>`;
+                return `<circle-expr expr="[${name}]"></circle-expr>`;
             });
             const parentNode = node.parentNode;
             parentNode.insertBefore(replacementNode, node);
@@ -221,15 +221,15 @@
     window.circle = new Circle();
 
     /**
-     * JLGExpr is the component that allows displaying expressions.
+     * CircleExpr is the component that allows displaying expressions.
      * 
-     * @class JLGExpr
+     * @class CircleExpr
      * @extends {circle.Element}
      */
-    class JLGExpr extends circle.Element {
+    class CircleExpr extends CircleElement {
         render() {
             this.root.innerHTML = this.model.expr || '';
         }
     }
-    JLGExpr.register();
+    CircleExpr.register();
 })();

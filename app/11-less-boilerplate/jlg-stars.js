@@ -3,10 +3,9 @@
 
 	class JLGStars extends circle.Element {
 
-		constructor() {
-			super();
-			this.databinding = {
-				'note': '='
+		get databinding() {
+			return {
+				'note': '>'
 			}
 		}
 

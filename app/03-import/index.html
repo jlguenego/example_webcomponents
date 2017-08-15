@@ -4,7 +4,8 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>My First personal HTML import</title>
-	<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<!-- Firefox and Safari needs the polyfill webcomponents-lite.js -->
+	 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script> 
 	<link async rel="import" href="hello-world.html">
 </head>
 
@@ -16,7 +17,32 @@
 	<h2>Notes</h2>
 	<ul>
 		<li>Try with and without the async attribute while using latency on the network.</li>
+		<li>Open devtools, then
+			<ul>
+				<li>open element, </li>
+				<li>click on the 'link' element in the DOM. </li>
+				<li>Look at the properties associated. You see that the import attribute.</li>
+				<li> Example: this is the body innerElement of the imported document:<br>
+					<code id="code"></code>
+				</li>
+			</ul>
+		</li>
 	</ul>
+	<script>
+
+		function whenHelloWorldIsLoaded() {
+			const text = document.querySelector('link').import.querySelector('p').innerHTML;
+			document.querySelector('#code').innerHTML = text;
+			console.log('document.querySelector(link)', text);
+		}
+
+		if (document.querySelector('link').hasAttribute('async')) {
+			document.querySelector('link').addEventListener('load', whenHelloWorldIsLoaded);
+		} else {
+			whenHelloWorldIsLoaded();
+		}
+		
+	</script>
 
 </body>
 

@@ -33,7 +33,7 @@
      * 
      * @param {any} elt 
      */
-    function manageExpr(elt) {
+    function parseExpr(elt) {
         const walk = document.createTreeWalker(elt, NodeFilter.SHOW_TEXT, null, false);
         let node;
         let array = [];
@@ -131,7 +131,7 @@
             const t = myDoc.querySelector(this.templateSelector);
             if (t) {
                 const clone = document.importNode(t.content, true);
-                manageExpr(clone);
+                parseExpr(clone);
                 this.root.innerHTML = '';
                 this.root.appendChild(clone);
             }

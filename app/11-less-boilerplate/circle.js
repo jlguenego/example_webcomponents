@@ -94,7 +94,6 @@
             const self = this;
             this.model = new Proxy({}, {
                 set(target, key, value) {
-                    console.log('handler: key=%s, value=%s', key, value);
                     target[key] = value;
                     self.digest(key, self);
                     return true;
@@ -107,9 +106,7 @@
             let result = {};
             for (let i = 0; i < this.attributes.length; i++) {
                 const key = this.attributes[i].name;
-                console.log('key', key);
                 const value = this.attributes[i].value;
-                console.log('value', value);
                 if (isTwoWaysDatabindingNotation(value)) {
                     result[key] = '=';
                 } else if (isOneWaysDatabindingNotation(value)) {
@@ -121,15 +118,12 @@
             return result;
         }
         getDatabinding(attr) {
-            console.log('attr', attr);
             return this.getAttribute(attr).replace(/\[|\]/g, '');
         }
         getParent() {
             return this.getRootNode().host;
         }
         connectedCallback() {
-            console.log('connectedCallback start: ', this.constructor.name);
-
             this.root = this.attachShadow({
                 mode: 'closed'
             });
@@ -148,23 +142,18 @@
                 this.onDigest(modelVar);
             }
             if (!this.databinding) {
-                console.log('no databinding');
                 this.render();
             }
             // end databinding
-            console.log('connectedCallback end: ', this.constructor.name);
         }
         render() {}
 
         onDigest(key) {
-            console.log('onDigest', key, this);
             // databinding
             for (let attr in this.databinding) {
                 const modelVar = this.getDatabinding(attr);
-                console.log('modelVar', modelVar);
                 if (modelVar === key) {
                     if (this.model[attr] !== this.getParent().model[key]) {
-                        console.log('about to set this.model.%s on %s', attr, this.getParent().model[key]);
                         this.model[attr] = this.getParent().model[key];
                     }
                 }
@@ -182,7 +171,6 @@
         }
 
         digest(key) {
-            console.log('%s digest start for', this.constructor.name, key);
             let counter = 0;
             if (this.digestRegistry[key]) {
                 this.digestRegistry[key].forEach((elt, index) => {
@@ -192,7 +180,6 @@
             }
             // databinding
             for (let attr in this.databinding) {
-                console.log('attr', attr);
                 const modelVar = this.getDatabinding(attr);
                 if (attr === key && this.databinding[attr] === '=') {
                     if (this.getParent().model[modelVar] !== this.model[attr]) {
@@ -202,7 +189,6 @@
             }
             // end databinding
             this.render();
-            console.log('digest end in %d steps for key %s', counter, key);
         }
     }
 

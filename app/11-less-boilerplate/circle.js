@@ -113,7 +113,7 @@
         }
 
         digest(key) {
-            console.log('digest start for', key);
+            console.log('%s digest start for', this.constructor.name, key);
             let counter = 0;
             if (this.digestRegistry[key]) {
                 this.digestRegistry[key].forEach((elt, index) => {
@@ -123,10 +123,11 @@
             }
             // databinding
             for (let attr in this.databinding) {
+                console.log('attr', attr);
                 const modelVar = this.getAttribute(attr);
-                if (modelVar === key && this.databinding[attr] === '=') {
-                    if (this.getParent().model[key] !== this.model[attr]) {
-                        this.getParent().model[key] = this.model[attr];
+                if (attr === key && this.databinding[attr] === '=') {
+                    if (this.getParent().model[modelVar] !== this.model[attr]) {
+                        this.getParent().model[modelVar] = this.model[attr];
                     }
                 }
             }

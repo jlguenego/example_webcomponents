@@ -63,26 +63,32 @@
         });
     }
 
-    /**
-     * Tests if the notation is a 2 ways data binding.
-     * Notation is for the time being: [[...]]
-     * 
-     * @param {any} value 
-     * @returns 
-     */
-    function isTwoWaysDatabindingNotation(value) {
-        return value.match(/^\[\[(.*?)\]\]$/);
-    }
 
-    /**
-     * Tests if the notation is a 1 way data binding.
-     * Notation is for the time being: [...]
-     * 
-     * @param {any} value 
-     * @returns 
-     */
-    function isOneWaysDatabindingNotation(value) {
-        return value.match(/^\[(.*?)\]$/);
+
+
+
+    class DBNotation {
+        /**
+         * Tests if the notation is a 2 ways data binding.
+         * Notation is for the time being: [[...]]
+         * 
+         * @param {any} value 
+         * @returns 
+         */
+        static isTwoWays(value) {
+            return value.match(/^\[\[.*\]\]$/);
+        }
+
+        /**
+         * Tests if the notation is a 1 way data binding.
+         * Notation is for the time being: [...]
+         * 
+         * @param {any} value 
+         * @returns 
+         */
+        static isOneWay(value) {
+            return value.match(/^\[.*\]$/);
+        }
     }
 
     /**
@@ -117,12 +123,12 @@
             for (let i = 0; i < this.attributes.length; i++) {
                 const key = this.attributes[i].name;
                 const value = this.attributes[i].value;
-                if (isTwoWaysDatabindingNotation(value)) {
+                if (DBNotation.isTwoWays(value)) {
                     result[key] = '=';
-                } else if (isOneWaysDatabindingNotation(value)) {
+                } else if (DBNotation.isOneWay(value)) {
                     result[key] = '<';
-                // } else {
-                //     result[key] = '@';
+                    // } else {
+                    //     result[key] = '@';
                 }
             }
             return result;

@@ -4,9 +4,11 @@
     const doc = document.currentScript.ownerDocument;
 
     function isFirefox() {
-        console.log('navigator.userAgent', navigator.userAgent);
-        const result = navigator.userAgent.match(/Firefox/) !== null;
-        return result;
+        return navigator.userAgent.match(/Firefox/) !== null;
+    }
+
+    function isEdge() {
+        return navigator.userAgent.match(/Edge/) !== null;
     }
 
     function manageExpr(elt) {
@@ -53,7 +55,7 @@
                 mode: 'closed'
             });
             if (this.templateSelector) {
-                const myDoc = (isFirefox()) ? doc : document.currentScript.ownerDocument;
+                const myDoc = (isFirefox() || isEdge()) ? doc : document.currentScript.ownerDocument;
                 const t = myDoc.querySelector(this.templateSelector);
                 const clone = document.importNode(t.content, true);
                 manageExpr(clone);

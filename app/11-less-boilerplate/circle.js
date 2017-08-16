@@ -23,8 +23,16 @@
      * @returns true if user agent is Firefox, false otherwise.
      */
     function isFirefox() {
-        const result = navigator.userAgent.match(/Firefox/) !== null;
-        return result;
+        return navigator.userAgent.match(/Firefox/) !== null;
+    }
+
+    /**
+     * check if the user agent is Microsoft Edge
+     * 
+     * @returns true if user agent is Edge, false otherwise.
+     */
+    function isEdge() {
+        return navigator.userAgent.match(/Edge/) !== null;
     }
 
     /**
@@ -127,7 +135,8 @@
             this.root = this.attachShadow({
                 mode: 'closed'
             });
-            const myDoc = (isFirefox()) ? doc : document.currentScript.ownerDocument;
+            // to find the template, Firefox works differently.
+            const myDoc = (isFirefox() || isEdge()) ? doc : document.currentScript.ownerDocument;
             const t = myDoc.querySelector(this.templateSelector);
             if (t) {
                 const clone = document.importNode(t.content, true);

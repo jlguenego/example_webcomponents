@@ -68,7 +68,7 @@
 				this.render();
 				return;
 			}
-			// this.getParent().model[this.noteName] = this.model.note;
+			this.getParent().model[this.noteName] = this.model.note;
 			this.render();
 		}
 

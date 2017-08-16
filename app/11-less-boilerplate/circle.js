@@ -89,6 +89,14 @@
         static extractModelVar(value) {
             return value.replace(/\[|\]/g, '');
         }
+
+        static get scope() {
+            return {
+                TWO_WAYS: '=',
+                ONE_WAY: '<',
+                LITTERAL: '@'
+            }
+        }
     }
 
     class Databinding {
@@ -99,11 +107,11 @@
                 const key = circleElement.attributes[i].name;
                 const value = circleElement.attributes[i].value;
                 if (DBNotation.isTwoWays(value)) {
-                    this.scope[key] = '=';
+                    this.scope[key] = DBNotation.scope.TWO_WAYS;
                 } else if (DBNotation.isOneWay(value)) {
-                    this.scope[key] = '<';
+                    this.scope[key] = DBNotation.scope.ONE_WAY;
                 } else {
-                    this.scope[key] = '@';
+                    this.scope[key] = DBNotation.scope.LITTERAL;
                 }
             }
         }
@@ -115,7 +123,7 @@
         connectedCallBack() {
             let isEmpty = true;
             for (let attr in this.scope) {
-                if (this.scope[attr] === '@') {
+                if (this.scope[attr] === DBNotation.scope.LITTERAL) {
                     this.elt.model[attr] = this.elt.getAttribute(attr);
                     continue;
                 }
@@ -131,7 +139,7 @@
 
         onDigest(key) {
             for (let attr in this.scope) {
-                if (this.scope[attr] === '@') {
+                if (this.scope[attr] === DBNotation.scope.LITTERAL) {
                     continue;
                 }
                 const modelVar = this.getModelVar(attr);
@@ -145,12 +153,12 @@
 
         digest(key) {
             for (let attr in this.scope) {
-                if (this.scope[attr] === '@') {
+                if (this.scope[attr] === DBNotation.scope.LITTERAL) {
                     this.elt.setAttribute(attr, this.elt.model[attr]);
                     continue;
                 }
                 const modelVar = this.getModelVar(attr);
-                if (attr === key && this.scope[attr] === '=') {
+                if (attr === key && this.scope[attr] === DBNotation.scope.TWO_WAYS) {
                     if (this.elt.getParent().model[modelVar] !== this.elt.model[attr]) {
                         this.elt.getParent().model[modelVar] = this.elt.model[attr];
                     }

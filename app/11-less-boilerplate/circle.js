@@ -141,7 +141,7 @@
             this.templateSelector = '#' + this.constructor.tag;
         }
         get databinding() {
-            return new Databinding(this).scope;
+            return new Databinding(this);
         }
         getDatabinding(attr) {
             return DBNotation.extractModelVar(this.getAttribute(attr));
@@ -163,12 +163,12 @@
                 this.root.appendChild(clone);
             }
             // databinding
-            for (let attr in this.databinding) {
+            for (let attr in this.databinding.scope) {
                 const modelVar = this.getDatabinding(attr);
                 this.bindKey(modelVar);
                 this.onDigest(modelVar);
             }
-            if (!this.databinding) {
+            if (!this.databinding.scope) {
                 this.render();
             }
             // end databinding
@@ -177,7 +177,7 @@
 
         onDigest(key) {
             // databinding
-            for (let attr in this.databinding) {
+            for (let attr in this.databinding.scope) {
                 const modelVar = this.getDatabinding(attr);
                 if (modelVar === key) {
                     if (this.model[attr] !== this.getParent().model[key]) {
@@ -206,9 +206,9 @@
                 });
             }
             // databinding
-            for (let attr in this.databinding) {
+            for (let attr in this.databinding.scope) {
                 const modelVar = this.getDatabinding(attr);
-                if (attr === key && this.databinding[attr] === '=') {
+                if (attr === key && this.databinding.scope[attr] === '=') {
                     if (this.getParent().model[modelVar] !== this.model[attr]) {
                         this.getParent().model[modelVar] = this.model[attr];
                     }

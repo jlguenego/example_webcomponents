@@ -1,6 +1,8 @@
 (function () {
     'use strict';
 
+    // Firefox and Edge does not understand well currentScript after init.
+    // So we keep this pointer for later.
     const doc = document.currentScript.ownerDocument;
 
     /**

@@ -95,6 +95,24 @@
         }
     }
 
+    class Databinding {
+        constructor(circleElement) {
+            this.scope = {};
+            for (let i = 0; i < circleElement.attributes.length; i++) {
+                const key = circleElement.attributes[i].name;
+                const value = circleElement.attributes[i].value;
+                if (DBNotation.isTwoWays(value)) {
+                    this.scope[key] = '=';
+                } else if (DBNotation.isOneWay(value)) {
+                    this.scope[key] = '<';
+                    // } else {
+                    //     result[key] = '@';
+                }
+            }
+           
+        }
+    }
+
     /**
      * A component in circle must extends the circle.Element class
      * which is a pointer on the CircleElement class.
@@ -123,19 +141,7 @@
             this.templateSelector = '#' + this.constructor.tag;
         }
         get databinding() {
-            let result = {};
-            for (let i = 0; i < this.attributes.length; i++) {
-                const key = this.attributes[i].name;
-                const value = this.attributes[i].value;
-                if (DBNotation.isTwoWays(value)) {
-                    result[key] = '=';
-                } else if (DBNotation.isOneWay(value)) {
-                    result[key] = '<';
-                    // } else {
-                    //     result[key] = '@';
-                }
-            }
-            return result;
+            return new Databinding(this).scope;
         }
         getDatabinding(attr) {
             return DBNotation.extractModelVar(this.getAttribute(attr));

@@ -102,8 +102,8 @@
                     this.scope[key] = '=';
                 } else if (DBNotation.isOneWay(value)) {
                     this.scope[key] = '<';
-                    // } else {
-                    //     result[key] = '@';
+                } else {
+                    this.scope[key] = '@';
                 }
             }
         }
@@ -115,6 +115,10 @@
         connectedCallBack() {
             let isEmpty = true;
             for (let attr in this.scope) {
+                if (this.scope[attr] === '@') {
+                    this.elt.model[attr] = this.elt.getAttribute(attr);
+                    continue;
+                }
                 isEmpty = false;
                 const modelVar = this.getModelVar(attr);
                 this.elt.bindKey(modelVar);
@@ -127,6 +131,9 @@
 
         onDigest(key) {
             for (let attr in this.scope) {
+                if (this.scope[attr] === '@') {
+                    continue;
+                }
                 const modelVar = this.getModelVar(attr);
                 if (modelVar === key) {
                     if (this.elt.model[attr] !== this.elt.getParent().model[key]) {
@@ -138,6 +145,10 @@
 
         digest(key) {
             for (let attr in this.scope) {
+                if (this.scope[attr] === '@') {
+                    this.elt.setAttribute(attr, this.elt.model[attr]);
+                    continue;
+                }
                 const modelVar = this.getModelVar(attr);
                 if (attr === key && this.scope[attr] === '=') {
                     if (this.elt.getParent().model[modelVar] !== this.elt.model[attr]) {

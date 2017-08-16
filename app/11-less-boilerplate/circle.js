@@ -108,7 +108,7 @@
             }
         }
 
-        getDatabinding(attr) {
+        getModelVar(attr) {
             return DBNotation.extractModelVar(this.elt.getAttribute(attr));
         }
 
@@ -116,7 +116,7 @@
             let isEmpty = true;
             for (let attr in this.scope) {
                 isEmpty = false;
-                const modelVar = this.getDatabinding(attr);
+                const modelVar = this.getModelVar(attr);
                 this.elt.bindKey(modelVar);
                 this.elt.onDigest(modelVar);
             }
@@ -127,7 +127,7 @@
 
         onDigest(key) {
             for (let attr in this.scope) {
-                const modelVar = this.getDatabinding(attr);
+                const modelVar = this.getModelVar(attr);
                 if (modelVar === key) {
                     if (this.elt.model[attr] !== this.elt.getParent().model[key]) {
                         this.elt.model[attr] = this.elt.getParent().model[key];
@@ -138,7 +138,7 @@
 
         digest(key) {
             for (let attr in this.scope) {
-                const modelVar = this.getDatabinding(attr);
+                const modelVar = this.getModelVar(attr);
                 if (attr === key && this.scope[attr] === '=') {
                     if (this.elt.getParent().model[modelVar] !== this.elt.model[attr]) {
                         this.elt.getParent().model[modelVar] = this.elt.model[attr];

@@ -63,10 +63,6 @@
         });
     }
 
-
-
-
-
     class DBNotation {
         /**
          * Tests if the notation is a 2 ways data binding.
@@ -97,6 +93,7 @@
 
     class Databinding {
         constructor(circleElement) {
+            this.elt = circleElement;
             this.scope = {};
             for (let i = 0; i < circleElement.attributes.length; i++) {
                 const key = circleElement.attributes[i].name;
@@ -109,7 +106,45 @@
                     //     result[key] = '@';
                 }
             }
-           
+        }
+
+        getDatabinding(attr) {
+            return DBNotation.extractModelVar(this.elt.getAttribute(attr));
+        }
+
+        connectedCallBack() {
+            let isEmpty = true;
+            for (let attr in this.scope) {
+                isEmpty = false;
+                const modelVar = this.getDatabinding(attr);
+                this.elt.bindKey(modelVar);
+                this.elt.onDigest(modelVar);
+            }
+            if (isEmpty) {
+                this.elt.render();
+            }
+        }
+
+        onDigest(key) {
+            for (let attr in this.scope) {
+                const modelVar = this.getDatabinding(attr);
+                if (modelVar === key) {
+                    if (this.elt.model[attr] !== this.elt.getParent().model[key]) {
+                        this.elt.model[attr] = this.elt.getParent().model[key];
+                    }
+                }
+            }
+        }
+
+        digest(key) {
+            for (let attr in this.scope) {
+                const modelVar = this.getDatabinding(attr);
+                if (attr === key && this.scope[attr] === '=') {
+                    if (this.elt.getParent().model[modelVar] !== this.elt.model[attr]) {
+                        this.elt.getParent().model[modelVar] = this.elt.model[attr];
+                    }
+                }
+            }
         }
     }
 
@@ -139,13 +174,9 @@
             });
             this.digestRegistry = {};
             this.templateSelector = '#' + this.constructor.tag;
+            this.databinding = new Databinding(this);
         }
-        get databinding() {
-            return new Databinding(this);
-        }
-        getDatabinding(attr) {
-            return DBNotation.extractModelVar(this.getAttribute(attr));
-        }
+
         getParent() {
             return this.getRootNode().host;
         }
@@ -162,30 +193,12 @@
                 this.root.innerHTML = '';
                 this.root.appendChild(clone);
             }
-            // databinding
-            for (let attr in this.databinding.scope) {
-                const modelVar = this.getDatabinding(attr);
-                this.bindKey(modelVar);
-                this.onDigest(modelVar);
-            }
-            if (!this.databinding.scope) {
-                this.render();
-            }
-            // end databinding
+            this.databinding.connectedCallBack();
         }
         render() {}
 
         onDigest(key) {
-            // databinding
-            for (let attr in this.databinding.scope) {
-                const modelVar = this.getDatabinding(attr);
-                if (modelVar === key) {
-                    if (this.model[attr] !== this.getParent().model[key]) {
-                        this.model[attr] = this.getParent().model[key];
-                    }
-                }
-            }
-            // end databinding
+            this.databinding.onDigest(key);
             this.render();
         }
         bindKey(key) {
@@ -205,16 +218,7 @@
                     elt.onDigest(key);
                 });
             }
-            // databinding
-            for (let attr in this.databinding.scope) {
-                const modelVar = this.getDatabinding(attr);
-                if (attr === key && this.databinding.scope[attr] === '=') {
-                    if (this.getParent().model[modelVar] !== this.model[attr]) {
-                        this.getParent().model[modelVar] = this.model[attr];
-                    }
-                }
-            }
-            // end databinding
+            this.databinding.digest(key);
             this.render();
         }
     }

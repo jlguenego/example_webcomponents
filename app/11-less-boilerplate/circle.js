@@ -120,7 +120,7 @@
                 if (isTwoWaysDatabindingNotation(value)) {
                     result[key] = '=';
                 } else if (isOneWaysDatabindingNotation(value)) {
-                    result[key] = '>';
+                    result[key] = '<';
                 // } else {
                 //     result[key] = '@';
                 }

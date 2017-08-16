@@ -89,6 +89,10 @@
         static isOneWay(value) {
             return value.match(/^\[.*\]$/);
         }
+
+        static extractModelVar(value) {
+            return value.replace(/\[|\]/g, '');
+        }
     }
 
     /**
@@ -134,7 +138,7 @@
             return result;
         }
         getDatabinding(attr) {
-            return this.getAttribute(attr).replace(/\[|\]/g, '');
+            return DBNotation.extractModelVar(this.getAttribute(attr));
         }
         getParent() {
             return this.getRootNode().host;

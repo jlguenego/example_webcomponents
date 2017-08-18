@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^4.4.1",
+    "eslint-config-google": "^0.9.1",
     "express": "^4.15.4",
     "serve-index": "^1.9.0"
   }

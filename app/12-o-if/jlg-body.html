@@ -1,17 +1,11 @@
 <template id="jlg-body">
 	<div>
-		This is the body...
-		<jlg-stars note="[[goodNote]]"></jlg-stars>
-		<jlg-stars note="[[goodNote]]"></jlg-stars>
-		<jlg-stars note="[[goodNote2]]"></jlg-stars>
-		<jlg-stars note="[goodNote]"></jlg-stars>
-		<jlg-stars note="5"></jlg-stars>
-		<span>
-			myNote: {{goodNote}}<br>
-			myNote2: {{goodNote2}}<br> 
-			myNote: {{goodNote}}<br>
-		</span>
-		<button onclick="this.getRootNode().host.model.goodNote = 3">goodNote = 3</button>
+		This is the body...<br>
+		<button onclick="this.getRootNode().host.toggle()">Show/Hide</button><br>
+		{{showContent}}
+		<o-if>
+			<jlg-stars note="4"></jlg-stars>
+		</o-if>
 	</div>
 </template>
 
@@ -19,7 +13,10 @@
 	class JLGBody extends circle.Element {
 		constructor() {
 			super();
-			this.model.goodNote = 4;
+			this.model.showContent = false;
+		}
+		toggle() {
+			this.model.showContent = !this.model.showContent;
 		}
 	}
 	JLGBody.register();

@@ -264,7 +264,7 @@
      */
     class CircleExpr extends CircleElement {
         render() {
-            this.root.innerHTML = this.model.expr || '';
+            this.root.innerHTML = (this.model.expr === undefined) ? '' : this.model.expr.toString();
         }
     }
     CircleExpr.register();

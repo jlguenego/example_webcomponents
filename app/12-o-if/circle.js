@@ -191,9 +191,10 @@
 				set(target, key, value) {
 
 					target[key] = value;
+					digestId++;
 					console.log('%d: %s: update %s to %s', digestId, self.constructor.name, key, value);
 					self.digest(key, digestId);
-					digestId++;
+					
 					return true;
 				},
 			});

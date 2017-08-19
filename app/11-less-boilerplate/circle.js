@@ -45,9 +45,8 @@
      */
     function parseExpr(elt) {
         const walk = document.createTreeWalker(elt, NodeFilter.SHOW_TEXT, null, false);
-        let node;
         let array = [];
-        while (node = walk.nextNode()) {
+        for (let node = walk.nextNode(); node !== null; node = walk.nextNode()) {
             if (node.data.match(/{{(.*?)}}/g)) {
                 array.push(node);
             }
@@ -187,6 +186,7 @@
             this.model = new Proxy({}, {
                 set(target, key, value) {
                     target[key] = value;
+                    console.log('%s: update %s to %s', self.constructor.name, key, value);
                     self.digest(key, self);
                     return true;
                 },

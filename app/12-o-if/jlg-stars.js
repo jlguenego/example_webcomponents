@@ -4,7 +4,7 @@
 	class JLGStars extends circle.Element {
 
 		render() {
-			console.log('about to render JLGStars with note = ', this.model.note);
+			console.log('about to render JLGStars with note = ', this.model.note, circle.stackTrace());
 			const note = this.model.note || 0;
 			let eventname = 'onclick'
 			if ('ontouchstart' in document.documentElement) {

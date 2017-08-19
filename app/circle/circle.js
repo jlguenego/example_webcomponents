@@ -124,11 +124,12 @@
 		connectedCallBack() {
 			let isEmpty = true;
 			for (let attr in this.scope) {
+				isEmpty = false;
 				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
 					this.elt.model[attr] = this.elt.getAttribute(attr);
 					continue;
 				}
-				isEmpty = false;
+				
 				const modelVar = this.getModelVar(attr);
 				this.elt.bindKey(modelVar);
 				this.elt.onDigest(modelVar, digestId);
@@ -194,7 +195,7 @@
 					digestId++;
 					console.log('%d: %s: update %s to %s', digestId, self.constructor.name, key, value);
 					self.digest(key, digestId);
-					
+
 					return true;
 				},
 			});
@@ -215,7 +216,8 @@
 				mode: 'closed'
 			});
 			// to find the template, Firefox works differently.
-			const myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ? doc : document.currentScript.ownerDocument;
+			const myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
+				doc : document.currentScript.ownerDocument;
 			const t = myDoc.querySelector(this.templateSelector);
 			if (t) {
 				const clone = document.importNode(t.content, true);
@@ -260,6 +262,11 @@
 	class Circle {
 		constructor() {
 			this.Element = CircleElement;
+		}
+
+		stackTrace() {
+			var err = new Error();
+			return err.stack;
 		}
 	}
 	window.circle = new Circle();

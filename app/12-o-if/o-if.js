@@ -1,11 +1,6 @@
 (function() {
 	'use strict';
 
-	function stackTrace() {
-		var err = new Error();
-		return err.stack;
-	}
-
 	// Unfortunately, custom built-in element are not yet implemented.
 
 	class OIf extends circle.Element {

@@ -129,7 +129,7 @@
 					this.elt.model[attr] = this.elt.getAttribute(attr);
 					continue;
 				}
-				
+
 				const modelVar = this.getModelVar(attr);
 				this.elt.bindKey(modelVar);
 				this.elt.onDigest(modelVar, digestId);
@@ -168,6 +168,7 @@
 					}
 				}
 			}
+			this.elt.render(digestId);
 		}
 	}
 
@@ -248,7 +249,6 @@
 				});
 			}
 			this.databinding.digest(key);
-			this.render(digestId);
 		}
 	}
 
@@ -279,7 +279,7 @@
 	 */
 	class CircleExpr extends CircleElement {
 		render() {
-			this.root.innerHTML = this.model.expr || '';
+			this.root.innerHTML = (this.model.expr === undefined) ? '' : this.model.expr;
 		}
 	}
 	CircleExpr.register();

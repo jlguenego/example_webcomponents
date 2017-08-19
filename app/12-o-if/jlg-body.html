@@ -3,7 +3,7 @@
 		This is the body...<br>
 		<button onclick="this.getRootNode().host.toggle()">Show/Hide</button><br>
 		{{showContent}}
-		<o-if>
+		<o-if cond="[showContent]">
 			<jlg-stars note="4"></jlg-stars>
 		</o-if>
 	</div>

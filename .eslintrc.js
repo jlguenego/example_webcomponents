@@ -26,5 +26,6 @@ module.exports = {
 	globals: {
 		circle: true,
 		Promise: true,
+		Proxy: true,
 	}
 };

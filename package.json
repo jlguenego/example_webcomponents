@@ -14,5 +14,11 @@
     "eslint-config-google": "^0.9.1",
     "express": "^4.15.4",
     "serve-index": "^1.9.0"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-debug": "^3.1.0",
+    "gulp-eslint": "^4.0.0",
+    "gulp-if": "^2.0.2"
   }
 }

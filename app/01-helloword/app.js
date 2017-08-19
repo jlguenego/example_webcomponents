@@ -8,7 +8,7 @@
 			const shadowRoot = this.attachShadow({
 				mode: 'open'
 			});
-			shadowRoot.innerHTML = `<h1>Hello World</h1>`;
+			shadowRoot.innerHTML = '<h1>Hello World</h1>';
 		}
 	}
 

@@ -1,8 +1,6 @@
 (function() {
 	'use strict';
 
-	let digestId = 0;
-
 	// Firefox and Edge does not understand well currentScript after init.
 	// So we keep this pointer for later.
 	const doc = document.currentScript.ownerDocument;
@@ -132,10 +130,10 @@
 
 				const modelVar = this.getModelVar(attr);
 				this.elt.bindKey(modelVar);
-				this.elt.onDigest(modelVar, digestId);
+				this.elt.onDigest(modelVar);
 			}
 			if (isEmpty) {
-				this.elt.render(digestId);
+				this.elt.render();
 			}
 		}
 
@@ -152,7 +150,7 @@
 					}
 				}
 			}
-			this.elt.render(digestId);
+			this.elt.render();
 		}
 
 		digest(key) {
@@ -168,7 +166,7 @@
 					}
 				}
 			}
-			this.elt.render(digestId);
+			this.elt.render();
 		}
 	}
 
@@ -193,9 +191,9 @@
 				set(target, key, value) {
 
 					target[key] = value;
-					digestId++;
-					console.log('%d: %s: update %s to %s', digestId, self.constructor.name, key, value);
-					self.digest(key, digestId);
+					circle.digestId++;
+					console.log('%d: %s: update %s to %s', circle.digestId, self.constructor.name, key, value);
+					self.digest(key);
 
 					return true;
 				},
@@ -228,9 +226,10 @@
 			}
 			this.databinding.connectedCallBack();
 		}
-		render(digestId) {}
 
-		onDigest(key, digestId) {
+		render() {}
+
+		onDigest(key) {
 			this.databinding.onDigest(key);
 		}
 		bindKey(key) {
@@ -242,10 +241,10 @@
 			}
 		}
 
-		digest(key, digestId) {
+		digest(key) {
 			if (this.digestRegistry[key]) {
 				this.digestRegistry[key].forEach((elt, index) => {
-					elt.onDigest(key, digestId);
+					elt.onDigest(key);
 				});
 			}
 			this.databinding.digest(key);
@@ -262,6 +261,7 @@
 	class Circle {
 		constructor() {
 			this.Element = CircleElement;
+			this.digestId = 0;
 		}
 
 		stackTrace() {

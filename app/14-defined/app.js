@@ -20,7 +20,13 @@
 		}
 	}
 
+	console.log('hello-world definition', window.customElements.get('hello-world'));
+
 	setTimeout(() => {
 		window.customElements.define('hello-world', HelloWorld);
 	}, 2000);
+
+	window.customElements.whenDefined('hello-world').then(() => {
+		console.log('hello-world definition', window.customElements.get('hello-world'));
+	});
 })();

@@ -1,0 +1,46 @@
+<template id="jlg-body">
+	<div>
+		This is the body...<br>
+		<button onclick="this.getRootNode().host.toggle()">Show/Hide in the frame</button><br>
+		boolean: {{showContent}} <br>
+		<div id="home">
+			<div id="tobeMoved">
+				<jlg-stars note="4"></jlg-stars><br>
+			</div>
+		</div>
+		<iframe src="about:blank"></iframe>
+	</div>
+</template>
+
+<script>
+	class JLGBody extends circle.Element {
+		constructor() {
+			super();
+			this.model.showContent = false;
+		}
+		toggle() {
+			this.model.showContent = !this.model.showContent;
+		}
+
+		render() {
+			if (!this.root) {
+				return;
+			}
+			const frame = this.root.querySelector('iframe');
+			const frameDoc = frame.contentDocument;
+			if (this.model.showContent) {
+				const div = this.root.querySelector('#tobeMoved');
+				frameDoc.body.appendChild(div);
+			} else {
+				const div = frameDoc.querySelector('#tobeMoved');
+				if (!div) {
+					return;
+				}
+				this.root.querySelector('#home').appendChild(div);
+			}
+		}
+	}
+	JLGBody.register();
+
+</script>
+<script src="jlg-stars.js"></script>

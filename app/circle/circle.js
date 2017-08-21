@@ -210,10 +210,11 @@
 			// o-if
 			this.originalContent = this.innerHTML;
 			this.innerHTML = '';
-
-			this.root = this.attachShadow({
-				mode: 'closed'
-			});
+			if (this.root === undefined) {
+				this.root = this.attachShadow({
+					mode: 'closed'
+				});
+			}
 			// to find the template, Firefox works differently.
 			const myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
 				doc : document.currentScript.ownerDocument;
@@ -225,6 +226,7 @@
 				this.root.appendChild(clone);
 			}
 			this.databinding.connectedCallBack();
+			console.log('connectedCallback end', this.constructor.name);
 		}
 
 		render() {}

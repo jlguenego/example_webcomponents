@@ -210,11 +210,9 @@
 			// o-if
 			this.originalContent = this.innerHTML;
 			this.innerHTML = '';
-			if (this.root === undefined) {
-				this.root = this.attachShadow({
-					mode: 'closed'
-				});
-			}
+			this.root = this.root || this.attachShadow({
+				mode: 'closed'
+			});
 			// to find the template, Firefox works differently.
 			const myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
 				doc : document.currentScript.ownerDocument;

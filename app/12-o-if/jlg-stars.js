@@ -3,6 +3,15 @@
 
 	class JLGStars extends circle.Element {
 
+		connectedCallback() {
+			console.log('JLGStars connectedCallback');
+			super.connectedCallback();
+		}
+
+		disconnectedCallback() {
+			console.log('JLGStars disconnectedCallback');
+		}
+
 		render() {
 			console.log('about to render JLGStars with note = ', this.model.note, circle.stackTrace());
 			const note = this.model.note || 0;

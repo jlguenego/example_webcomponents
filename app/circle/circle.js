@@ -1,6 +1,19 @@
 (function() {
 	'use strict';
 
+	// window.console = {
+	// 	log: function() {
+	// 		var args = Array.prototype.slice.call(arguments);
+	// 		var str = args.join(' ');
+	// 		var node = document.createTextNode('log: ' + str);
+	// 		var para = document.createElement('span');
+	// 		para.appendChild(node);
+	// 		para.appendChild(document.createElement('br'));
+	// 		document.body.appendChild(para);
+	// 		// alert(str);
+	// 	}
+	// };
+
 	// Firefox and Edge does not understand well currentScript after init.
 	// So we keep this pointer for later.
 	const doc = document.currentScript.ownerDocument;
@@ -44,6 +57,7 @@
 	 * @param {any} elt 
 	 */
 	function parseExpr(elt) {
+		console.log('parseExpr');
 		const walk = document.createTreeWalker(elt, NodeFilter.SHOW_TEXT, null, false);
 		let array = [];
 		for (let node = walk.nextNode(); node !== null; node = walk.nextNode()) {
@@ -54,6 +68,7 @@
 		array.forEach((node) => {
 			const replacementNode = document.createElement('span');
 			replacementNode.innerHTML = node.data.replace(/{{(.*?)}}/g, (match, name) => {
+				console.log('parseExpr replace ' + name);
 				return `<circle-expr expr="[${name}]"></circle-expr>`;
 			});
 			const parentNode = node.parentNode;
@@ -94,7 +109,7 @@
 				TWO_WAYS: '=',
 				ONE_WAY: '<',
 				LITTERAL: '@'
-			}
+			};
 		}
 	}
 
@@ -102,9 +117,12 @@
 		constructor(circleElement) {
 			this.elt = circleElement;
 			this.scope = {};
-			for (let i = 0; i < circleElement.attributes.length; i++) {
-				const key = circleElement.attributes[i].name;
-				const value = circleElement.attributes[i].value;
+		}
+
+		initScope() {
+			for (let i = 0; i < this.elt.attributes.length; i++) {
+				const key = this.elt.attributes[i].name;
+				const value = this.elt.attributes[i].value;
 				if (DBNotation.isTwoWays(value)) {
 					this.scope[key] = DBNotation.scope.TWO_WAYS;
 				} else if (DBNotation.isOneWay(value)) {
@@ -120,6 +138,7 @@
 		}
 
 		connectedCallBack() {
+			this.initScope();
 			let isEmpty = true;
 			for (let attr in this.scope) {
 				isEmpty = false;
@@ -279,6 +298,7 @@
 	 */
 	class CircleExpr extends CircleElement {
 		render() {
+			console.log('this.model.expr', this.model.expr);
 			this.root.innerHTML = (this.model.expr === undefined) ? '' : this.model.expr;
 		}
 	}

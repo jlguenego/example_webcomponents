@@ -1,0 +1,33 @@
+<html>
+
+<head></head>
+
+<body>
+	<template id="jlg-definition">
+		<style>
+			table {
+				background-color: #eee;
+			}
+			td, th {
+				border: 1px solid black;
+			}
+		</style>
+		<table>
+			<tr>
+				<th>Term</th>
+				<th>Definition</th>
+			</tr>
+			<tr>
+				<td>
+					<slot name="jlg-term">NEED TERM</slot>
+				</td>
+				<td>
+					<slot name="jlg-definition">NEED DEF</slot>
+				</td>
+			</tr>
+		</table>
+	</template>
+	<script src="jlg-definition.js"></script>
+</body>
+
+</html>

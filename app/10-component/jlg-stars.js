@@ -35,11 +35,11 @@
 </style>
 			`;
 			for (let i = 0; i < this.model.note; i++) {
-				html += `<img ${eventname}="this.getRootNode().host.update(${i+1})" src="img/yellow_star.png">`;
+				html += `<img ${eventname}="this.getRootNode().host.update(${i+1})" src="../img/yellow_star.png">`;
 			}
 
 			for (let i = this.model.note; i < 5; i++) {
-				html += `<img ${eventname}="this.getRootNode().host.update(${i+1})" src="img/white_star.png">`;
+				html += `<img ${eventname}="this.getRootNode().host.update(${i+1})" src="../img/white_star.png">`;
 			}
 			this.root.innerHTML = html;
 		}

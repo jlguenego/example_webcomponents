@@ -1,7 +1,9 @@
 (function () {
     'use strict';
 
-    circle.model.myNote = 3;
-    circle.model.myNote2 = 4;
+    document.addEventListener('DOMContentLoaded', () => {
+		circle.model.myNote = 3;
+		circle.model.myNote2 = 4;
+	});
 
 })();

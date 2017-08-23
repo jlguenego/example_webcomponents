@@ -174,16 +174,15 @@
 		}
 
 		digest(key) {
-			for (let attr in this.scope) {
-				if (attr === key && this.scope[attr] === DBNotation.scope.LITTERAL) {
-					console.log('about to set attribute literal %s to %s', attr, this.elt.model[attr]);
-					this.elt.setAttribute(attr, this.elt.model[attr]);
-					continue;
+			if (key in this.scope) {
+				if (this.scope[key] === DBNotation.scope.LITTERAL) {
+					console.log('about to set attribute literal %s to %s', key, this.elt.model[key]);
+					this.elt.setAttribute(key, this.elt.model[key]);
 				}
-				const modelVar = this.getModelVar(attr);
-				if (attr === key && this.scope[attr] === DBNotation.scope.TWO_WAYS) {
-					if (this.elt.getParent().model[modelVar] !== this.elt.model[attr]) {
-						this.elt.getParent().model[modelVar] = this.elt.model[attr];
+				if (this.scope[key] === DBNotation.scope.TWO_WAYS) {
+					const modelVar = this.getModelVar(key);
+					if (this.elt.getParent().model[modelVar] !== this.elt.model[key]) {
+						this.elt.getParent().model[modelVar] = this.elt.model[key];
 					}
 				}
 			}

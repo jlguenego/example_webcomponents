@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<title>My First personal HTML import</title>
 	<!-- Firefox and Safari needs the polyfill webcomponents-lite.js -->
-	 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script> 
+	<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 	<link async rel="import" href="hello-world.html">
 </head>
 
@@ -29,7 +29,6 @@
 		</li>
 	</ul>
 	<script>
-
 		function whenHelloWorldIsLoaded() {
 			const text = document.querySelector('link').import.querySelector('p').innerHTML;
 			document.querySelector('#code').innerHTML = text;
@@ -41,7 +40,7 @@
 		} else {
 			whenHelloWorldIsLoaded();
 		}
-		
+
 	</script>
 
 </body>

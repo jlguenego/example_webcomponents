@@ -12,11 +12,25 @@
 			<span slot="jlg-term">HTML</span>
 			<span slot="jlg-definition">Hyper Text Markup Language</span>
 	</jlg-definition>
+	<button onclick="update()">Toggle definition</button>
 	<h2>Notes</h2>
 	<ul>
 		<li>Slot allows the user to pass to shadow dom html elements.</li>
 	</ul>
 	<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<script>
+
+var toggle = true;
+function update() {
+	toggle = !toggle;
+	if (!toggle) {
+		document.querySelector('[slot="jlg-definition"]').innerHTML = 'This is the basic language of the web !';
+	} else {
+		document.querySelector('[slot="jlg-definition"]').innerHTML = 'Hyper Text Markup Language';
+	}
+}	
+	
+	</script>
 </body>
 
 </html>

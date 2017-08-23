@@ -1,8 +1,10 @@
 <template id="jlg-body">
 	<div>
 		This is the body...<br>
-		<o-for list="[names]" i="name">
-			<span>Name: {{name}}
+		<o-for list="[names]" iterator="name">
+			<template>
+				<span>Name: {{name}}
+			</template>
 		</o-for>
 	</div>
 </template>

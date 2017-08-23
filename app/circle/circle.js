@@ -143,6 +143,7 @@
 			for (let attr in this.scope) {
 				isEmpty = false;
 				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
+					console.log('about to get attribute literal %s to %s', attr,  this.elt.getAttribute(attr));
 					this.elt.model[attr] = this.elt.getAttribute(attr);
 					continue;
 				}
@@ -174,7 +175,8 @@
 
 		digest(key) {
 			for (let attr in this.scope) {
-				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
+				if (attr === key && this.scope[attr] === DBNotation.scope.LITTERAL) {
+					console.log('about to set attribute literal %s to %s', attr, this.elt.model[attr]);
 					this.elt.setAttribute(attr, this.elt.model[attr]);
 					continue;
 				}
@@ -225,6 +227,9 @@
 		getParent() {
 			return this.getRootNode().host;
 		}
+		parseExpr(node) {
+			parseExpr(node);
+		}
 		connectedCallback() {
 			// o-if
 			this.originalContent = this.cloneNode(true);
@@ -238,7 +243,7 @@
 			const t = myDoc.querySelector(this.templateSelector);
 			if (t) {
 				const clone = document.importNode(t.content, true);
-				parseExpr(clone);
+				this.parseExpr(clone);
 				this.root.innerHTML = '';
 				this.root.appendChild(clone);
 			}
@@ -252,6 +257,7 @@
 			this.databinding.onDigest(key);
 		}
 		bindKey(key) {
+			console.log('bindKey %O', this.getParent());
 			const digestRegistry = this.getParent().digestRegistry;
 			if (digestRegistry[key] === undefined) {
 				digestRegistry[key] = [this];

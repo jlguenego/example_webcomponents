@@ -1,0 +1,19 @@
+<template id="jlg-body">
+	<div>
+		This is the body...<br>
+		<o-for expr="name in names">
+			<span>Name: {{name}}
+		</o-for>
+	</div>
+</template>
+
+<script>
+	class JLGBody extends circle.Element {
+		constructor() {
+			super();
+			this.model.names = ['Paris', 'Nancy', 'Lunéville'];
+		}
+	}
+	JLGBody.register();
+</script>
+<script src="jlg-stars.js"></script>

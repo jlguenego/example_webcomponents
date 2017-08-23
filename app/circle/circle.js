@@ -227,7 +227,7 @@
 		}
 		connectedCallback() {
 			// o-if
-			this.originalContent = this.innerHTML;
+			this.originalContent = this.cloneNode(true);
 			this.innerHTML = '';
 			this.root = this.root || this.attachShadow({
 				mode: 'closed'

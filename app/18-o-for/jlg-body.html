@@ -1,7 +1,7 @@
 <template id="jlg-body">
 	<div>
 		This is the body...<br>
-		<o-for expr="name in names">
+		<o-for list="[names]" i="name">
 			<span>Name: {{name}}
 		</o-for>
 	</div>

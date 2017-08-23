@@ -7,16 +7,23 @@
 
 		constructor() {
 			super();
-			console.log('o-if constructor');
+			console.log('o-for constructor');
 		}
 
 		connectedCallback() {
-			console.log('o-if connectedCallback');
+			console.log('o-for connectedCallback');
 			super.connectedCallback();
 		}
 
 		render(digestId) {
+			console.log('about to render o-for');
+			const array = this.model.list || [];
+			let html = '';
+			for (let item of array) {
+				html += this.originalContent;
+			}
 			
+			this.root.innerHTML = html;
 		}
 	}
 

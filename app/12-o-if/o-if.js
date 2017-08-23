@@ -19,7 +19,7 @@
 			if (this.model.cond) {
 				console.log('render on');
 				this.root.innerHTML = '';
-				this.root.innerHTML = this.originalContent;
+				this.root.innerHTML = this.originalContent.innerHTML;
 			} else {
 				console.log('render off');
 				this.root.innerHTML = '';

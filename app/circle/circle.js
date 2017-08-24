@@ -1,19 +1,6 @@
 (function() {
 	'use strict';
 
-	// window.console = {
-	// 	log: function() {
-	// 		var args = Array.prototype.slice.call(arguments);
-	// 		var str = args.join(' ');
-	// 		var node = document.createTextNode('log: ' + str);
-	// 		var para = document.createElement('span');
-	// 		para.appendChild(node);
-	// 		para.appendChild(document.createElement('br'));
-	// 		document.body.appendChild(para);
-	// 		// alert(str);
-	// 	}
-	// };
-
 	// Firefox and Edge does not understand well currentScript after init.
 	// So we keep this pointer for later.
 	const doc = document.currentScript.ownerDocument;
@@ -33,8 +20,7 @@
 	}
 
 	function parseAbsoluteKey(key) {
-		const result = key.replace(/\.([^.]+)/g, '[\'$1\']');
-		return result;
+		return key.replace(/\.([^.]+)/g, '[\'$1\']');
 	}
 
 	/**

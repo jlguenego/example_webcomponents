@@ -9,7 +9,7 @@
 			<div>{{cities[0].name}}</div>
 			<div>{{cities[1].population}}</div>
 
-			<o-for list="[cities]" iterator="city">
+			<o-for iterator="city" list="[cities]" >
 				<template>
 					<div>City: {{city.name}}</div>
 				</template>

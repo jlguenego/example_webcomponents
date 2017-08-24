@@ -19,6 +19,9 @@
 			console.log('about to render o-for', this);
 			const iterator = this.model.iterator;
 			console.log('iterator', iterator);
+			if (iterator === undefined) {
+				return;
+			}
 			const array = this.model.list || [];
 			let html = '';
 			for (let i = 0; i < array.length; i++) {

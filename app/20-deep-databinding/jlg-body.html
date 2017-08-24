@@ -9,15 +9,17 @@
 			<div>{{cities[0].name}}</div>
 			<div>{{cities[1].population}}</div>
 
-			<button onclick="circle.getComponent(this).hello()">Hello</button>
-			<button onclick="circle.getComponent(this, 'jlg-app').hello()">Hello from jlg-app</button>
+			<button onclick="circle.wc(this).hello()">Hello</button>
+			<button onclick="circle.wc(this, 'jlg-app').hello()">Hello from jlg-app</button>
 
 			<o-for iterator="city" list="[cities]" >
 				<template>
 					<div>
+						<!-- <span>index: {{$index}}</span> -->
 						<span>City name: {{city.name}}</span>
-						<span>City population: {{city.population}}/span>
-						<span><button onclick="circle.getComponent(this, 'jlg-body').delete()">Delete</button></span>
+						<span>City population: {{city.population}}</span>
+						<span><button onclick="circle.wc(this, 'jlg-body').delete(circle.wc(this).index)">Delete</button></span>
+						<span><button onclick="console.log(circle.wc(this).index);">Log</button></span>
 					</div>
 				</template>
 			</o-for>
@@ -47,6 +49,10 @@
 
 			hello() {
 				alert('hello !!!');
+			}
+
+			delete(index) {
+				this.model.cities.splice(index, 1);
 			}
 		}
 		JLGBody.register();

@@ -220,7 +220,15 @@
 					},
 			
 					deleteProperty(target, key) {
-						// TODO: later...
+						const absoluteKey = (parentKey) ? `${parentKey}['${key}']` : key;
+						delete target[key];
+						if (Array.isArray(target)) {
+							target.length--;
+						}
+						circle.digestId++;
+						console.log('%d: %s: delete %s',
+							circle.digestId, self.constructor.name, absoluteKey, circle.stackTrace());
+						self.digest(parentKey);
 						return true;
 					}
 				};
@@ -319,7 +327,7 @@
 			return err.stack;
 		}
 
-		getComponent(element, tag) {
+		wc(element, tag) {
 			if (tag === undefined) {
 				return element.getRootNode().host;				
 			}

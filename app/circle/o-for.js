@@ -23,9 +23,11 @@
 				return;
 			}
 			const array = this.model.list || [];
+			console.log('array', array);
 			let html = '';
+			console.log('new length: ', array.length);
 			for (let i = 0; i < array.length; i++) {
-				html += `<o-for-item ${iterator}="[list[${i}]]" ></o-for-item>`;
+				html += `<o-for-item  ${iterator}="[list[${i}]]" index="${i}" ></o-for-item>`;
 
 			}
 
@@ -53,6 +55,10 @@
 			this.parseExpr(clone);
 			this.root.innerHTML = '';
 			this.root.appendChild(clone);
+		}
+
+		get index() {
+			return this.model.index;
 		}
 	}
 

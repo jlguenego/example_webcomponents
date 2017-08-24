@@ -143,7 +143,7 @@
 			for (let attr in this.scope) {
 				isEmpty = false;
 				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
-					console.log('about to get attribute literal %s to %s', attr,  this.elt.getAttribute(attr));
+					console.log('about to get attribute literal %s to %s', attr, this.elt.getAttribute(attr));
 					this.elt.model[attr] = this.elt.getAttribute(attr);
 					continue;
 				}
@@ -207,17 +207,35 @@
 		constructor() {
 			super();
 			const self = this;
-			this.model = new Proxy({}, {
-				set(target, key, value) {
 
-					target[key] = value;
-					circle.digestId++;
-					console.log('%d: %s: update %s to %s', circle.digestId, self.constructor.name, key, value);
-					self.digest(key);
+			function handler(parentKey) {
+				return {
+					set(target, key, value) {
+						const absoluteKey = (parentKey) ? parentKey + '.' + key : key;
+						if (Array.isArray(target) && key === 'length') {
+							return true;
+						}
+						if (value !== null && typeof value === 'object') {
+							target[key] = new Proxy(value, handler());
+						} else {
+							target[key] = value;
+						}
+						circle.digestId++;
+						console.log('%d: %s: update %s to %s',
+							circle.digestId, self.constructor.name, absoluteKey, value);
+						self.digest(absoluteKey);
 
-					return true;
-				},
-			});
+						return true;
+					},
+
+					deleteProperty(target, key) {
+						// TODO
+						return true;
+					}
+				};
+			}
+
+			this.model = new Proxy({}, handler());
 			this.digestRegistry = {};
 			this.templateSelector = '#' + this.constructor.tag;
 			this.databinding = new Databinding(this);

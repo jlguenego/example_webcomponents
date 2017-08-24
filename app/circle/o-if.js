@@ -13,6 +13,7 @@
 		connectedCallback() {
 			console.log('o-if connectedCallback');
 			super.connectedCallback();
+			this.innerHTML = '';
 		}
 
 		render(digestId) {

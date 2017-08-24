@@ -1,9 +1,9 @@
 <template id="jlg-body">
 	<div>
 		This is the body...<br>
-		<o-for list="[names]" iterator="name">
+		<o-for list="[cities]" iterator="city">
 			<template>
-				<span>Name: {{name}}
+				<div>City: {{city}}</div>
 			</template>
 		</o-for>
 	</div>
@@ -13,7 +13,7 @@
 	class JLGBody extends circle.Element {
 		constructor() {
 			super();
-			this.model.names = ['Paris', 'Nancy', 'Lunéville'];
+			this.model.cities = ['Paris', 'Nancy', 'Lunéville'];
 		}
 	}
 	JLGBody.register();

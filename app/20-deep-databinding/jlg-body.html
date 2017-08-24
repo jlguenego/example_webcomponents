@@ -1,16 +1,23 @@
-<template id="jlg-body">
+<body>
+	<template id="jlg-body">
 	<div>
 		This is the body...<br>
-		{{cities}}
+		<!-- <div>{{cities}}</div>
+		<div>{{cities[0]}}</div> -->
+		<div>{{person.lastname}}</div>
+		<div>{{person.firstname}}</div>
 	</div>
 </template>
 
-<script>
-	class JLGBody extends circle.Element {
-		constructor() {
-			super();
-			this.model.cities = ['Paris', 'Nancy', 'Lunéville'];
+	<script>
+		class JLGBody extends circle.Element {
+			constructor() {
+				super();
+				this.model.cities = ['Paris', 'Nancy', 'Lunéville'];
+				this.model.person = {lastname: 'John', firstanme: 'Doe'};
+			}
 		}
-	}
-	JLGBody.register();
-</script>
+		JLGBody.register();
+
+	</script>
+</body>

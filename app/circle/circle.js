@@ -211,12 +211,14 @@
 			function handler(parentKey) {
 				return {
 					set(target, key, value) {
-						const absoluteKey = (parentKey) ? parentKey + '.' + key : key;
-						if (Array.isArray(target) && key === 'length') {
-							return true;
+						const absoluteKey = (parentKey) ? `${parentKey}['${key}']` : key;
+						if (Array.isArray(target)) {
+							if (key === 'length') {
+								return true;
+							}
 						}
 						if (value !== null && typeof value === 'object') {
-							target[key] = new Proxy(value, handler());
+							target[key] = new Proxy(value, handler(absoluteKey));
 						} else {
 							target[key] = value;
 						}
@@ -224,12 +226,11 @@
 						console.log('%d: %s: update %s to %s',
 							circle.digestId, self.constructor.name, absoluteKey, value);
 						self.digest(absoluteKey);
-
 						return true;
 					},
-
+			
 					deleteProperty(target, key) {
-						// TODO
+						// TODO: later...
 						return true;
 					}
 				};

@@ -9,11 +9,15 @@
 			<div>{{cities[0].name}}</div>
 			<div>{{cities[1].population}}</div>
 
+			<button onclick="circle.getComponent(this).hello()">Hello</button>
+
 			<o-for iterator="city" list="[cities]" >
 				<template>
-					<div>City name: {{city.name}}</div>
-					<div>City population: {{city.population}}</div>
-					<div>&nbsp;</div>
+					<div>
+						<span>City name: {{city.name}}</span>
+						<span>City population: {{city.population}}/span>
+						<span><button onclick="circle.getComponent(this, 'jlg-body').delete()"></button></span>
+					</div>
 				</template>
 			</o-for>
 		</div>
@@ -38,6 +42,10 @@
 					lastname: 'Doe',
 					firstname: 'John'
 				};
+			}
+
+			hello() {
+				alert('hello !!!');
 			}
 
 			connectedCallback() {

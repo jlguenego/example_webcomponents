@@ -318,6 +318,10 @@
 			var err = new Error();
 			return err.stack;
 		}
+
+		getComponent(element) {
+			return element.getRootNode().host;
+		}
 	}
 	window.circle = new Circle();
 

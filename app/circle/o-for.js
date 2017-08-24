@@ -46,14 +46,10 @@
 
 		render(digestId) {
 			console.log('about to render o-for-item');
-			const template = this.getParent().originalContent.querySelector('template');
-			console.log('template', template);
-			const clone = document.importNode(template.content, true);
+			const clone = document.importNode(this.getParent().originalContent, true);
 			this.parseExpr(clone);
 			this.root.innerHTML = '';
 			this.root.appendChild(clone);
-
-			// this.root.innerHTML = `toto<circle-expr expr="${this.model.index}"></circle-expr><br>`;
 		}
 	}
 

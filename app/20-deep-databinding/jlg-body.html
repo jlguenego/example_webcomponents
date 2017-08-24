@@ -15,7 +15,7 @@
 			<o-for iterator="city" list="[cities]" >
 				<template>
 					<div>
-						<!-- <span>index: {{$index}}</span> -->
+						<span>index: {{index}}</span>
 						<span>City name: {{city.name}}</span>
 						<span>City population: {{city.population}}</span>
 						<span><button onclick="circle.wc(this, 'jlg-body').delete(circle.wc(this).index)">Delete</button></span>

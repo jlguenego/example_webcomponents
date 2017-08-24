@@ -1,24 +1,29 @@
-<template id="jlg-body">
+<body>
+	<template id="jlg-body">
 	<div>
 		This is the body...<br>
 		<button onclick="this.getRootNode().host.toggle()">Show/Hide</button><br>
 		{{showContent}}
 		<o-if cond="[showContent]">
+			<template>
 			<jlg-stars note="4"></jlg-stars>
-		</o-if>
+			</template>
+	</o-if>
 	</div>
-</template>
+	</template>
 
-<script>
-	class JLGBody extends circle.Element {
-		constructor() {
-			super();
-			this.model.showContent = false;
+	<script>
+		class JLGBody extends circle.Element {
+			constructor() {
+				super();
+				this.model.showContent = false;
+			}
+			toggle() {
+				this.model.showContent = !this.model.showContent;
+			}
 		}
-		toggle() {
-			this.model.showContent = !this.model.showContent;
-		}
-	}
-	JLGBody.register();
-</script>
-<script src="jlg-stars.js"></script>
+		JLGBody.register();
+
+	</script>
+	<script src="jlg-stars.js"></script>
+</body>

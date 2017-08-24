@@ -32,6 +32,11 @@
 		return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 	}
 
+	function parseAbsoluteKey(key) {
+		const result = key.replace(/\.([^.]+)/g, '[\'$1\']');
+		return result;
+	}
+
 	/**
 	 * check if the user agent is Firefox
 	 * 
@@ -57,7 +62,6 @@
 	 * @param {any} elt 
 	 */
 	function parseExpr(elt) {
-		console.log('parseExpr');
 		const walk = document.createTreeWalker(elt, NodeFilter.SHOW_TEXT, null, false);
 		let array = [];
 		for (let node = walk.nextNode(); node !== null; node = walk.nextNode()) {
@@ -68,7 +72,6 @@
 		array.forEach((node) => {
 			const replacementNode = document.createElement('span');
 			replacementNode.innerHTML = node.data.replace(/{{(.*?)}}/g, (match, name) => {
-				console.log('parseExpr replace ' + name);
 				return `<circle-expr expr="[${name}]"></circle-expr>`;
 			});
 			const parentNode = node.parentNode;
@@ -101,7 +104,7 @@
 		}
 
 		static extractModelVar(value) {
-			return value.replace(/\[|\]/g, '');
+			return value.replace(/^\[\[?(.*?)\]?\]$/g, '$1');
 		}
 
 		static get scope() {
@@ -134,7 +137,9 @@
 		}
 
 		getModelVar(attr) {
-			return DBNotation.extractModelVar(this.elt.getAttribute(attr));
+			let expr = DBNotation.extractModelVar(this.elt.getAttribute(attr));
+			expr = parseAbsoluteKey(expr);
+			return expr;
 		}
 
 		connectedCallBack() {
@@ -143,7 +148,6 @@
 			for (let attr in this.scope) {
 				isEmpty = false;
 				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
-					console.log('about to get attribute literal %s to %s', attr, this.elt.getAttribute(attr));
 					this.elt.model[attr] = this.elt.getAttribute(attr);
 					continue;
 				}
@@ -164,8 +168,9 @@
 				}
 				const modelVar = this.getModelVar(attr);
 				if (modelVar === key) {
-					if (this.elt.model[attr] !== this.elt.getParent().model[key]) {
-						this.elt.model[attr] = this.elt.getParent().model[key];
+					const parentModelValue = this.elt.getParent().getModel(key);
+					if (this.elt.getModel(attr) !== parentModelValue) {
+						this.elt.setModel(attr, parentModelValue);
 						return;
 					}
 				}
@@ -176,7 +181,6 @@
 		digest(key) {
 			if (key in this.scope) {
 				if (this.scope[key] === DBNotation.scope.LITTERAL) {
-					console.log('about to set attribute literal %s to %s', key, this.elt.model[key]);
 					this.elt.setAttribute(key, this.elt.model[key]);
 				}
 				if (this.scope[key] === DBNotation.scope.TWO_WAYS) {
@@ -224,7 +228,7 @@
 						}
 						circle.digestId++;
 						console.log('%d: %s: update %s to %s',
-							circle.digestId, self.constructor.name, absoluteKey, value);
+							circle.digestId, self.constructor.name, absoluteKey, value, circle.stackTrace());
 						self.digest(absoluteKey);
 						return true;
 					},
@@ -249,8 +253,15 @@
 			parseExpr(node);
 		}
 		connectedCallback() {
+			
 			// o-if
-			this.originalContent = this.cloneNode(true);
+			const originalTemplate = this.querySelector('template');
+			console.log('originalTemplate', originalTemplate, this.constructor.name);
+			if (originalTemplate) {
+				this.originalContent = document.importNode(originalTemplate.content, true);
+				console.log('this.originalContent', this.originalContent, this.constructor.name);
+			}
+			
 			this.root = this.root || this.attachShadow({
 				mode: 'closed'
 			});
@@ -265,7 +276,6 @@
 				this.root.appendChild(clone);
 			}
 			this.databinding.connectedCallBack();
-			console.log('connectedCallback end', this.constructor.name);
 		}
 
 		render() {}
@@ -274,7 +284,6 @@
 			this.databinding.onDigest(key);
 		}
 		bindKey(key) {
-			console.log('bindKey %O', this.getParent());
 			const digestRegistry = this.getParent().digestRegistry;
 			if (digestRegistry[key] === undefined) {
 				digestRegistry[key] = [this];
@@ -290,6 +299,18 @@
 				});
 			}
 			this.databinding.digest(key);
+		}
+
+		getModel(absoluteKey) {
+			
+			const str = 'this.model.' + absoluteKey;
+			const result = eval(str);
+			return result;
+		}
+
+		setModel(absoluteKey, value) {
+			const str = 'this.model.' + absoluteKey + ' = value';
+			eval(str);
 		}
 	}
 
@@ -321,7 +342,6 @@
 	 */
 	class CircleExpr extends CircleElement {
 		render() {
-			console.log('this.model.expr', this.model.expr);
 			this.root.innerHTML = (this.model.expr === undefined) ? '' : this.model.expr;
 		}
 	}

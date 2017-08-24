@@ -296,7 +296,6 @@
 		}
 
 		getModel(absoluteKey) {
-			
 			const str = 'this.model.' + absoluteKey;
 			console.log('str', str);
 			const result = eval(str);
@@ -332,13 +331,11 @@
 				return element.getRootNode().host;				
 			}
 			let host = element.getRootNode().host;
-			let i = 0;
 			while (host.constructor.tag !== tag) {
 				host = host.getRootNode().host;
-				if (i > 10) {
-					throw new Error('circle.getComponent: cannot loop more than 10 times !');
+				if (!host) {
+					throw new Error('circle.wc: cannot find a component with tag ' + tag);
 				}
-				i++;
 			}
 			return host;
 		}

@@ -10,6 +10,9 @@
 
 	const handler = {
 		set(target, key, value) {
+			if (Array.isArray(target) && key === 'length') {
+				return true;
+			}
 			console.log(`Setting value ${key} as ${value}`, stackTrace());
 			if (value !== null && typeof value === 'object') {
 				target[key] = new Proxy(value, handler);
@@ -33,4 +36,7 @@
 	model.obj.hello = model.hello;
 	model.obj.foo = model.obj;
 	delete model.obj;
+
+	model.list = [{name: 'Paris', population: '2 000 000'}];
+	model.list.push({name: 'Nancy', population: '100 000'});
 })();

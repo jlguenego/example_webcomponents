@@ -1,15 +1,21 @@
 <body>
 	<template id="jlg-body">
-	<div>
-		This is the body...<br>
-		
-		<div>{{person.lastname}}</div>
-		<div>{{person.firstname}}</div>
+		<div>
+			This is the body...<br>
 
-		<div>{{cities[0].name}}</div>
-		<div>{{cities[1].population}}</div>
-	</div>
-</template>
+			<div>{{person.lastname}}</div>
+			<div>{{person.firstname}}</div>
+
+			<div>{{cities[0].name}}</div>
+			<div>{{cities[1].population}}</div>
+
+			<o-for list="[cities]" iterator="city">
+				<template>
+					<div>City: {{city.name}}</div>
+				</template>
+			</o-for>
+		</div>
+	</template>
 
 	<script>
 		class JLGBody extends circle.Element {
@@ -17,16 +23,19 @@
 				console.log('JLGBody constructor');
 				super();
 				this.model.cities = [{
-					name: 'Paris', 
+					name: 'Paris',
 					population: 2000000
 				}, {
 					name: 'Nancy',
 					population: 100000
 				}, {
-					name:  'Lunéville',
+					name: 'Lunéville',
 					population: 20000
 				}];
-				this.model.person = {lastname: 'Doe', firstname: 'John'};
+				this.model.person = {
+					lastname: 'Doe',
+					firstname: 'John'
+				};
 			}
 
 			connectedCallback() {

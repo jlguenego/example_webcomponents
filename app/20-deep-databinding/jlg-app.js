@@ -1,6 +1,6 @@
-(function () {
-    'use strict';
+(function() {
+	'use strict';
 
-    class JLGApp extends circle.Element {}
-    JLGApp.register();
+	class JLGApp extends circle.Element {}
+	JLGApp.register();
 })();

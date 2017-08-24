@@ -104,7 +104,7 @@
 		}
 
 		static extractModelVar(value) {
-			return value.replace(/^\[\[?(.*?)\]?\]$/g, '$1');
+			return value.replace(/^\[(.*?)\]$/g, '$1').replace(/^\[(.*?)\]$/g, '$1');
 		}
 
 		static get scope() {
@@ -304,6 +304,7 @@
 		getModel(absoluteKey) {
 			
 			const str = 'this.model.' + absoluteKey;
+			console.log('str', str);
 			const result = eval(str);
 			return result;
 		}

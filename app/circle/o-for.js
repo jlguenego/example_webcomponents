@@ -22,7 +22,7 @@
 			const array = this.model.list || [];
 			let html = '';
 			for (let i = 0; i < array.length; i++) {
-				html += `<o-for-item ${iterator}="${this.model.list[i]}" ></o-for-item>`;
+				html += `<o-for-item ${iterator}="[list[${i}]]" ></o-for-item>`;
 
 			}
 

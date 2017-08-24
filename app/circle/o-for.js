@@ -4,11 +4,12 @@
 	// Unfortunately, custom built-in element are not yet implemented.
 
 	class OFor extends circle.Element {
-
 		constructor() {
 			super();
 			console.log('o-for constructor');
 		}
+
+		static get observedAttributes() { return ['iterator', 'list']; }
 
 		connectedCallback() {
 			console.log('o-for connectedCallback');

@@ -161,6 +161,10 @@
 					}
 				}
 			}
+			// TODO
+			// if (this.elt.isModelInitialized()) {
+			// 	return;
+			// }
 			this.elt.render();
 		}
 

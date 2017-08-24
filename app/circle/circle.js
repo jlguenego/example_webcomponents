@@ -319,8 +319,20 @@
 			return err.stack;
 		}
 
-		getComponent(element) {
-			return element.getRootNode().host;
+		getComponent(element, tag) {
+			if (tag === undefined) {
+				return element.getRootNode().host;				
+			}
+			let host = element.getRootNode().host;
+			let i = 0;
+			while (host.constructor.tag !== tag) {
+				host = host.getRootNode().host;
+				if (i > 10) {
+					throw new Error('circle.getComponent: cannot loop more than 10 times !');
+				}
+				i++;
+			}
+			return host;
 		}
 	}
 	window.circle = new Circle();

@@ -10,13 +10,14 @@
 			<div>{{cities[1].population}}</div>
 
 			<button onclick="circle.getComponent(this).hello()">Hello</button>
+			<button onclick="circle.getComponent(this, 'jlg-app').hello()">Hello from jlg-app</button>
 
 			<o-for iterator="city" list="[cities]" >
 				<template>
 					<div>
 						<span>City name: {{city.name}}</span>
 						<span>City population: {{city.population}}/span>
-						<span><button onclick="circle.getComponent(this, 'jlg-body').delete()"></button></span>
+						<span><button onclick="circle.getComponent(this, 'jlg-body').delete()">Delete</button></span>
 					</div>
 				</template>
 			</o-for>

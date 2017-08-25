@@ -281,14 +281,22 @@
 			this.databinding.connectedCallBack();
 		}
 
+		/**
+		 * If we try to render to early, the render method may fail
+		 * because of all model variables are not being initialized.
+		 * 
+		 * So this method prevents calling render too early.
+		 * 
+		 * @returns 
+		 * @memberof CircleElement
+		 */
 		checkCanRender() {
 			if (this.canRender) {
 				return;
 			}
 			console.log('this.attributes', this.attributes);
-			const result = Array.prototype.filter
+			this.canRender = Array.prototype.filter
 				.call(this.attributes, n => !(n.name in this.model)).length === 0;
-			this.canRender = result;
 		}
 
 		render() {}

@@ -1,0 +1,16 @@
+[name=dj] {
+	animation: fade-in 5s;
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.leaving {
+    background-color: #eee;
+}

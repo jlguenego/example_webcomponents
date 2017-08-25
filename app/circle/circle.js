@@ -334,8 +334,6 @@
 			const str = 'this.model.' + absoluteKey + ' = value';
 			eval(str);
 		}
-
-
 	}
 
 	/**

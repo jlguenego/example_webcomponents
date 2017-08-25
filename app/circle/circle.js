@@ -142,7 +142,7 @@
 				this.elt.bindKey(modelVar);
 				this.elt.onDigest(modelVar);
 			}
-			if (isEmpty) {
+			if (isEmpty && this.elt.canRender) {
 				this.elt.render();
 			}
 		}
@@ -165,7 +165,9 @@
 			// if (this.elt.isModelInitialized()) {
 			// 	return;
 			// }
-			this.elt.render();
+			if (this.elt.canRender) {
+				this.elt.render();
+			}
 		}
 
 		digest(key) {
@@ -180,7 +182,9 @@
 					}
 				}
 			}
-			this.elt.render();
+			if (this.elt.canRender) {
+				this.elt.render();
+			}
 		}
 	}
 
@@ -222,7 +226,7 @@
 						self.digest(absoluteKey);
 						return true;
 					},
-			
+
 					deleteProperty(target, key) {
 						const absoluteKey = (parentKey) ? `${parentKey}['${key}']` : key;
 						delete target[key];
@@ -242,6 +246,7 @@
 			this.digestRegistry = {};
 			this.templateSelector = '#' + this.constructor.tag;
 			this.databinding = new Databinding(this);
+			this.canRender = false;
 		}
 
 		getParent() {
@@ -251,7 +256,7 @@
 			parseExpr(node);
 		}
 		connectedCallback() {
-			
+
 			// o-if
 			const originalTemplate = this.querySelector('template');
 			console.log('originalTemplate', originalTemplate, this.constructor.name);
@@ -259,7 +264,7 @@
 				this.originalContent = document.importNode(originalTemplate.content, true);
 				console.log('this.originalContent', this.originalContent, this.constructor.name);
 			}
-			
+
 			this.root = this.root || this.attachShadow({
 				mode: 'closed'
 			});
@@ -274,6 +279,16 @@
 				this.root.appendChild(clone);
 			}
 			this.databinding.connectedCallBack();
+		}
+
+		checkCanRender() {
+			if (this.canRender) {
+				return;
+			}
+			console.log('this.attributes', this.attributes);
+			const result = Array.prototype.filter
+				.call(this.attributes, n => !(n.name in this.model)).length === 0;
+			this.canRender = result;
 		}
 
 		render() {}
@@ -291,6 +306,7 @@
 		}
 
 		digest(key) {
+			this.checkCanRender();
 			if (this.digestRegistry[key]) {
 				this.digestRegistry[key].forEach((elt, index) => {
 					elt.onDigest(key);
@@ -310,6 +326,8 @@
 			const str = 'this.model.' + absoluteKey + ' = value';
 			eval(str);
 		}
+
+
 	}
 
 	/**
@@ -332,7 +350,7 @@
 
 		wc(element, tag) {
 			if (tag === undefined) {
-				return element.getRootNode().host;				
+				return element.getRootNode().host;
 			}
 			let host = element.getRootNode().host;
 			while (host.constructor.tag !== tag) {

@@ -13,7 +13,7 @@
 			<button onclick="circle.wc(this, 'jlg-app').hello()">Hello from jlg-app</button>
 			<button onclick="circle.wc(this, 'no-where').hello()">Hello from no-where (crash!)</button>
 
-			<o-for iterator="city" list="[cities]" >
+			<o-for list="[cities]" iterator="city">
 				<template>
 					<div>
 						<span>index: {{index}}</span>

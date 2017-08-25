@@ -9,8 +9,6 @@
 			console.log('o-for constructor');
 		}
 
-		static get observedAttributes() { return ['iterator', 'list']; }
-
 		connectedCallback() {
 			console.log('o-for connectedCallback');
 			super.connectedCallback();
@@ -28,7 +26,7 @@
 			let html = '';
 			console.log('new length: ', array.length);
 			for (let i = 0; i < array.length; i++) {
-				html += `<o-for-item  ${iterator}="[list[${i}]]" index="${i}" ></o-for-item>`;
+				html += `<o-for-item  index="${i}" ${iterator}="[list[${i}]]"></o-for-item>`;
 
 			}
 

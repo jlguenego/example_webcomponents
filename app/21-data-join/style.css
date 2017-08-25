@@ -1,16 +1,34 @@
 [name=dj] {
-	animation: fade-in 5s;
+	animation: fade-in 3s forwards;
+	background-color: #eee;
 }
 
 @keyframes fade-in {
 	from {
 		opacity: 0;
+		height: 0;
+		background-color: transparent;
 	}
 	to {
 		opacity: 1;
+		height: 50px;
+		background-color: #eee;
+	}
+}
+
+@keyframes fade-out {
+	from {
+		opacity: 1;
+		height: 50px;
+		background-color: #eee;
+	}
+	to {
+		opacity: 0;
+		height: 0;
+		background-color: transparent;
 	}
 }
 
 .leaving {
-    background-color: #eee;
+	animation: fade-out 3s forwards;
 }

@@ -1,5 +1,9 @@
+* {
+    font-size: 15px;
+}
+
 [name=dj] {
-	animation: fade-in 3s forwards;
+	animation: fade-in 1s forwards;
 	background-color: #eee;
 }
 
@@ -11,7 +15,7 @@
 	}
 	to {
 		opacity: 1;
-		height: 50px;
+		height: 20px;
 		background-color: #eee;
 	}
 }
@@ -19,7 +23,7 @@
 @keyframes fade-out {
 	from {
 		opacity: 1;
-		height: 50px;
+		height: 20px;
 		background-color: #eee;
 	}
 	to {
@@ -30,5 +34,5 @@
 }
 
 .leaving {
-	animation: fade-out 3s forwards;
+	animation: fade-out 1s forwards;
 }

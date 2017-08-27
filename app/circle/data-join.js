@@ -29,6 +29,15 @@
 			return html;
 		}
 
+		createElement(obj) {
+			const elt = document.createElement('data-join');
+			const root = elt.attachShadow({ mode: 'closed' });
+			const docFrag = document.importNode(this.template.content, true);
+			root.appendChild(docFrag);
+			elt.innerHTML = this.makeSlot(obj);
+			return elt;
+		}
+
 		/**
 		 * update the array of <data-join> that is joined to the DOM.
 		 * 
@@ -71,12 +80,8 @@
 				while (currentElt && currentElt.$data$.index < obj.index) {
 					i++;
 					currentElt = elts[i];
-				}
-				const elt = document.createElement('data-join');
-				const root = elt.attachShadow({ mode: 'closed' });
-				const docFrag = document.importNode(this.template.content, true);
-				root.appendChild(docFrag);
-				elt.innerHTML = this.makeSlot(obj);
+				}	
+				const elt = this.createElement(obj);
 				elt.$data$ = obj;
 				if (currentElt) {
 					this.element.insertBefore(elt, currentElt);

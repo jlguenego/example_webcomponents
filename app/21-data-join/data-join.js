@@ -26,13 +26,11 @@
 		makeSlot(obj) {
 			let html = '';
 			const nodes = this.template.content.querySelectorAll('slot');
-			console.log('nodes', nodes);
 			nodes.forEach(node => {
 				const name = node.getAttribute('name');
 				const value = eval('obj.' + name);
 				html += `<span slot="${name}">${value}</span>`;
 			});
-			console.log('html', html);
 			return html;
 		}
 

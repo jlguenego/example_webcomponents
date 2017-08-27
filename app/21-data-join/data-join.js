@@ -13,7 +13,6 @@
 	const a2 = a1.filter(n => n.value % 2);
 
 	class DJ {
-
 		constructor(selector, template) {
 			this.element = document.querySelector(selector);
 			this.template = this.element.querySelector('template');
@@ -23,6 +22,13 @@
 			this.data = [];
 		}
 
+		/**
+		 * Build the light DOM of a <data-join> element.
+		 * 
+		 * @param {any} obj 
+		 * @returns 
+		 * @memberof DJ
+		 */
 		makeSlot(obj) {
 			let html = '';
 			const nodes = this.template.content.querySelectorAll('slot');
@@ -35,7 +41,7 @@
 		}
 
 		/**
-		 * update the array that is joined to the DOM.
+		 * update the array of <data-join> that is joined to the DOM.
 		 * 
 		 * Step 1: remove the elements that will not appear in the new array
 		 * or that need to be moved in a lower index.
@@ -93,10 +99,26 @@
 			this.data = array;
 			return this;
 		}
+
+		/**
+		 * Specify the promise to be run just before a <data-join> being removed.
+		 * 
+		 * @param {any} promise 
+		 * @returns 
+		 * @memberof DJ
+		 */
 		onExit(promise) {
 			this.exit = promise;
 			return this;
 		}
+
+		/**
+		 * Specify the promise to be run just before a <data-join> being added.
+		 * 
+		 * @param {any} promise 
+		 * @returns 
+		 * @memberof DJ
+		 */
 		onEnter(promise) {
 			this.enter = promise;
 			return this;

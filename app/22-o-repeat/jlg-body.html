@@ -1,0 +1,37 @@
+<template id="jlg-body">
+	<div>
+		This is the body...<br>
+		<o-repeat list="[cities]" iterator="city">
+			<template>
+				<div>
+					<span>index: {{index}}</span>
+					<span>City name: {{city.name}}</span>
+					<span>City population: {{city.population}}</span>
+					<span><button onclick="circle.wc(this, 'jlg-body').delete(circle.wc(this).index)">Delete</button></span>
+					<span><button onclick="console.log(circle.wc(this).index);">Log</button></span>
+				</div>
+			</template>
+		</o-repeat>
+	</div>
+</template>
+
+<script>
+	class JLGBody extends circle.Element {
+		constructor() {
+			super();
+			this.model.cities = [{
+				name: 'Paris',
+				population: 2000000
+			}, {
+				name: 'Nancy',
+				population: 100000
+			}, {
+				name: 'Lunéville',
+				population: 20000
+			}];
+
+		}
+	}
+	JLGBody.register();
+
+</script>

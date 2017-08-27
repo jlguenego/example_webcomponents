@@ -9,7 +9,8 @@
 
 	const n = 10;
 	const a1 = Array.apply(null, { length: n }).map(Number.call, Number)
-	const a2 = a1.filter(n => n % 2);
+		.map(n => { return { value: n, value2: 2 * n }; });
+	const a2 = a1.filter(n => n.value % 2);
 
 	class DJ {
 
@@ -28,7 +29,8 @@
 			console.log('nodes', nodes);
 			nodes.forEach(node => {
 				const name = node.getAttribute('name');
-				html += `<span slot="${name}">${obj[name]}</span>`;
+				const value = eval('obj.' + name);
+				html += `<span slot="${name}">${value}</span>`;
 			});
 			console.log('html', html);
 			return html;
@@ -78,7 +80,7 @@
 					currentElt = elts[i];
 				}
 				const elt = document.createElement('data-join');
-				const root = elt.attachShadow({mode: 'closed'});
+				const root = elt.attachShadow({ mode: 'closed' });
 				const docFrag = document.importNode(this.template.content, true);
 				root.appendChild(docFrag);
 				elt.innerHTML = this.makeSlot(obj);

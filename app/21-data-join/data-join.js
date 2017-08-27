@@ -17,15 +17,12 @@
 			this.element = document.querySelector(selector);
 			this.template = document.querySelector(template);
 			if (!this.element || !this.template) {
-				throw new Error('cannot find the selector: %s', selector);
+				throw new Error('cannot find the selector or the template: %s %s', selector);
 			}
 			this.data = [];
 		}
 
 		update(array) {
-			console.log('origin', this.data);
-			console.log('destination', array);
-
 			// 1) remove
 			const elts = this.element.querySelectorAll('[name="dj"]');
 			let lastIndex = -1;
@@ -43,22 +40,13 @@
 					intersect.push({ item, index });
 					lastIndex = index;
 				}
-
 			}
-
-			console.log('intersect', intersect);
-
 
 			const newItems = array
 				.map((n, i) => { return { item: n, index: i }; })
 				.filter(obj => {
 					return !intersect.find(x => x.item === obj.item && x.index === obj.index);
 				});
-
-			console.log('newItems', newItems);
-
-
-			console.log('elts', elts);
 			let i = 0;
 			newItems.forEach((obj) => {
 				let currentElt = elts[i];
@@ -76,7 +64,6 @@
                     this.element.appendChild(elt);
                 }
                 this.enter(elt).then(() => {
-                    console.log('element added');
                 });
 
 			});
@@ -92,8 +79,6 @@
 			return this;
 		}
 	}
-
-
 
 	window.DJ = DJ;
 
@@ -125,8 +110,6 @@
     setInterval(() => {
 		dj.update(array);
 		array = (array === a1) ? a2 : a1;
-
 	}, 3000);
-
 
 })();

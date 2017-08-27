@@ -11,7 +11,7 @@
 	from {
 		opacity: 0;
 		height: 0;
-		background-color: transparent;
+		background-color: red;
 	}
 	to {
 		opacity: 1;

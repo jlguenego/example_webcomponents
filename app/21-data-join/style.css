@@ -2,7 +2,7 @@
     font-size: 15px;
 }
 
-[name=dj] {
+[data-join] {
 	animation: fade-in 1s forwards;
 	background-color: #eee;
 }

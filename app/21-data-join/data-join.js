@@ -22,22 +22,33 @@
 			this.data = [];
 		}
 
+		/**
+		 * update the array that is joined to the DOM.
+		 * 
+		 * Step 1: remove the elements that will not appear in the new array
+		 * or that need to be moved in a lower index.
+		 * 
+		 * @param {any} array 
+		 * @returns 
+		 * @memberof DJ
+		 */
 		update(array) {
-			// 1) remove
-			const elts = this.element.querySelectorAll('[name="dj"]');
+			// even if element are removed, this array will not be impacted.
+			const elts = this.element.querySelectorAll('[data-join]');
 			let lastIndex = -1;
-			const intersect = [];
+			const intersection = [];
 			for (let i = 0; i < elts.length; i++) {
 				const item = elts[i].$data$.item;
 				const index = array.indexOf(item, lastIndex + 1);
 				if (index === -1) {
-					console.log('not found', item);
+					// not found case
 					this.exit(elts[i]).then(() => {
 						this.element.removeChild(elts[i]);
 					});
 				} else {
+					// found case: keep the element in the intersect array
                     elts[i].$data$ = { item, index };
-					intersect.push({ item, index });
+					intersection.push({ item, index });
 					lastIndex = index;
 				}
 			}
@@ -45,7 +56,7 @@
 			const newItems = array
 				.map((n, i) => { return { item: n, index: i }; })
 				.filter(obj => {
-					return !intersect.find(x => x.item === obj.item && x.index === obj.index);
+					return !intersection.find(x => x.item === obj.item && x.index === obj.index);
 				});
 			let i = 0;
 			newItems.forEach((obj) => {
@@ -56,7 +67,7 @@
 				}
 				const doc = document.importNode(this.template.content, true);
                 doc.querySelector('[name="letter"]').innerHTML = obj.item;
-                const elt = doc.querySelector('[name="dj"]');
+                const elt = doc.querySelector('[data-join]');
 				elt.$data$ = obj;
 				if (currentElt) {
 					this.element.insertBefore(elt, currentElt);
@@ -94,7 +105,6 @@
     
     dj.onEnter(function(elt) {
 		return new Promise((fulfill, reject) => {
-            console.log('enter', elt);
 			elt.className += 'entering';
 			setTimeout(() => {
                 elt.classList.remove('entering');

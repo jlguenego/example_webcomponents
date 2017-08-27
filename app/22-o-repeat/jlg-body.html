@@ -3,14 +3,17 @@
 		This is the body...<br>
 		<o-repeat list="[cities]">
 			<template>
+				<link rel="stylesheet" href="cities.css" />
 				<div>
-					<span>index: {{index}}</span>
-					<span>City name: <slot name="item.name">{{city.name}}</slot></span>
+					<span>index: <slot name="index">index</slot></span>
+					<span class="city-name">City name: <slot name="item.name">{{city.name}}</slot></span>
 					<span>City population: <slot name="item.population">{{city.population}}</slot></span>
+					<span><button onclick="circle.wc(this, 'jlg-body').delete(2)">Delete</button></span>
+					<span><button onclick="console.log(circle.wc(this, 'jlg-body').model.cities[2]);">Log</button></span>
 				</div>
 			</template>
-		</o-repeat>
-	</div>
+</o-repeat>
+</div>
 </template>
 
 <script>
@@ -28,6 +31,10 @@
 				population: 20000
 			}];
 
+		}
+
+		delete(index) {
+			this.model.cities.splice(index, 1);
 		}
 	}
 	JLGBody.register();

@@ -2,11 +2,11 @@
 	'use strict';
 
 	class DJ {
-		constructor(element) {
+		constructor(element, template) {
 			this.element = element;
-			this.template = this.element.querySelector('template');
+			this.template = template;
 			if (!this.element || !this.template) {
-				throw new Error('cannot find the selector or the template: %s %s', selector);
+				throw new Error('cannot find the selector or the template: %O %O', element, template);
 			}
 			this.data = [];
 		}

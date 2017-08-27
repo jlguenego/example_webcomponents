@@ -12,9 +12,10 @@
 		.map(n => { return { value: n, value2: 2 * n }; });
 	const a2 = a1.filter(n => n.value % 2);
 
-    const element = document.querySelector('my-work-area');
+	const element = document.querySelector('my-work-area');
+	const template = element.querySelector('template');
     
-	const dj = new window.DJ(element);
+	const dj = new window.DJ(element, template);
 	dj.onExit(function(elt) {
 		return new Promise((fulfill, reject) => {
 			elt.className += 'leaving';

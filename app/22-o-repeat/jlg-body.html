@@ -1,14 +1,12 @@
 <template id="jlg-body">
 	<div>
 		This is the body...<br>
-		<o-repeat list="[cities]" iterator="city">
+		<o-repeat list="[cities]">
 			<template>
 				<div>
 					<span>index: {{index}}</span>
-					<span>City name: {{city.name}}</span>
-					<span>City population: {{city.population}}</span>
-					<span><button onclick="circle.wc(this, 'jlg-body').delete(circle.wc(this).index)">Delete</button></span>
-					<span><button onclick="console.log(circle.wc(this).index);">Log</button></span>
+					<span>City name: <slot name="item.name">{{city.name}}</slot></span>
+					<span>City population: <slot name="item.population">{{city.population}}</slot></span>
 				</div>
 			</template>
 		</o-repeat>

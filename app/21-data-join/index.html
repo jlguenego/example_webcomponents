@@ -9,12 +9,14 @@
 </head>
 
 <body>
-	<my-work-area></my-work-area>
-	<template id="cities">
-<div data-join>
-	<span name="letter"></span>
-</div>
-	</template>
+	<my-work-area>
+		<template>
+			<div>
+				<slot name="item">NEED_ITEM</slot>
+			</div>
+		</template>
+	</my-work-area>
+
 	<script src="data-join.js"></script>
 </body>
 

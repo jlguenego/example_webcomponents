@@ -2,24 +2,36 @@
 	'use strict';
 
 	// const a1 = ['A', 'A', 'A', 'B', 'C'];
-    // const a2 = ['A', 'B', 'A', 'D'];
+	// const a2 = ['A', 'B', 'A', 'D'];
 
-    // const a1 = ['A', 'B', 'A', 'D'];
-    // const a2 = ['A', 'A', 'A', 'B', 'C'];
+	// const a1 = ['A', 'B', 'A', 'D'];
+	// const a2 = ['A', 'A', 'A', 'B', 'C'];
 
-    const n = 10;
-    const a1 = Array.apply(null, {length: n}).map(Number.call, Number)
-    const a2 = a1.filter(n => n % 2);
-    
+	const n = 10;
+	const a1 = Array.apply(null, { length: n }).map(Number.call, Number)
+	const a2 = a1.filter(n => n % 2);
+
 	class DJ {
 
 		constructor(selector, template) {
 			this.element = document.querySelector(selector);
-			this.template = document.querySelector(template);
+			this.template = this.element.querySelector('template');
 			if (!this.element || !this.template) {
 				throw new Error('cannot find the selector or the template: %s %s', selector);
 			}
 			this.data = [];
+		}
+
+		makeSlot(obj) {
+			let html = '';
+			const nodes = this.template.content.querySelectorAll('slot');
+			console.log('nodes', nodes);
+			nodes.forEach(node => {
+				const name = node.getAttribute('name');
+				html += `<span slot="${name}">${obj[name]}</span>`;
+			});
+			console.log('html', html);
+			return html;
 		}
 
 		/**
@@ -34,49 +46,49 @@
 		 */
 		update(array) {
 			// even if element are removed, this array will not be impacted.
-			const elts = this.element.querySelectorAll('[data-join]');
+			const elts = this.element.querySelectorAll('data-join');
 			let lastIndex = -1;
 			const intersection = [];
-			for (let i = 0; i < elts.length; i++) {
-				const item = elts[i].$data$.item;
+			for (let elt of elts) {
+				const item = elt.$data$.item;
 				const index = array.indexOf(item, lastIndex + 1);
 				if (index === -1) {
 					// not found case
-					this.exit(elts[i]).then(() => {
-						this.element.removeChild(elts[i]);
+					this.exit(elt).then(() => {
+						this.element.removeChild(elt);
 					});
 				} else {
 					// found case: keep the element in the intersect array
-                    elts[i].$data$ = { item, index };
-					intersection.push({ item, index });
+					elt.$data$ = { item, index };
+					intersection.push(elt.$data$);
 					lastIndex = index;
 				}
 			}
 
 			const newItems = array
-				.map((n, i) => { return { item: n, index: i }; })
+				.map((item, index) => { return { item, index }; })
 				.filter(obj => {
 					return !intersection.find(x => x.item === obj.item && x.index === obj.index);
 				});
 			let i = 0;
-			newItems.forEach((obj) => {
+			newItems.forEach(obj => {
 				let currentElt = elts[i];
 				while (currentElt && currentElt.$data$.index < obj.index) {
 					i++;
 					currentElt = elts[i];
 				}
-				const doc = document.importNode(this.template.content, true);
-                doc.querySelector('[name="letter"]').innerHTML = obj.item;
-                const elt = doc.querySelector('[data-join]');
+				const elt = document.createElement('data-join');
+				const root = elt.attachShadow({mode: 'closed'});
+				const docFrag = document.importNode(this.template.content, true);
+				root.appendChild(docFrag);
+				elt.innerHTML = this.makeSlot(obj);
 				elt.$data$ = obj;
 				if (currentElt) {
 					this.element.insertBefore(elt, currentElt);
 				} else {
-                    this.element.appendChild(elt);
-                }
-                this.enter(elt).then(() => {
-                });
-
+					this.element.appendChild(elt);
+				}
+				this.enter(elt).then(() => {});
 			});
 			this.data = array;
 			return this;
@@ -84,8 +96,8 @@
 		onExit(promise) {
 			this.exit = promise;
 			return this;
-        }
-        onEnter(promise) {
+		}
+		onEnter(promise) {
 			this.enter = promise;
 			return this;
 		}
@@ -93,7 +105,7 @@
 
 	window.DJ = DJ;
 
-	const dj = new DJ('my-work-area', '#cities');
+	const dj = new DJ('my-work-area');
 	dj.onExit(function(elt) {
 		return new Promise((fulfill, reject) => {
 			elt.className += 'leaving';
@@ -101,23 +113,23 @@
 				fulfill();
 			}, 2000);
 		});
-    });
-    
-    dj.onEnter(function(elt) {
+	});
+
+	dj.onEnter(function(elt) {
 		return new Promise((fulfill, reject) => {
 			elt.className += 'entering';
 			setTimeout(() => {
-                elt.classList.remove('entering');
+				elt.classList.remove('entering');
 				fulfill();
 			}, 2000);
 		});
-    });
-    
+	});
+
 
 	let array = a1;
 	dj.update(array);
 	array = a2;
-    setInterval(() => {
+	setInterval(() => {
 		dj.update(array);
 		array = (array === a1) ? a2 : a1;
 	}, 3000);

@@ -2,7 +2,8 @@
     font-size: 15px;
 }
 
-[data-join] {
+data-join {
+	display: block;
 	animation: fade-in 1s forwards;
 	background-color: #eee;
 }

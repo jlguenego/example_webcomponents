@@ -9,8 +9,8 @@
 
 <body>
 	<jlg-definition>
-			<span slot="jlg-term">HTML</span>
-			<span slot="jlg-definition">Hyper Text Markup Language</span>
+		<span slot="jlg-term">HTML</span>
+		<span slot="jlg-definition">Hyper Text Markup Language</span>
 	</jlg-definition>
 	<button onclick="update()">Toggle definition</button>
 	<h2>Notes</h2>
@@ -19,17 +19,17 @@
 	</ul>
 	<script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 	<script>
+		var toggle = true;
 
-var toggle = true;
-function update() {
-	toggle = !toggle;
-	if (!toggle) {
-		document.querySelector('[slot="jlg-definition"]').innerHTML = 'This is the basic language of the web !';
-	} else {
-		document.querySelector('[slot="jlg-definition"]').innerHTML = 'Hyper Text Markup Language';
-	}
-}	
-	
+		function update() {
+			toggle = !toggle;
+			if (!toggle) {
+				document.querySelector('[slot="jlg-definition"]').innerHTML = 'This is the basic language of the web !';
+			} else {
+				document.querySelector('[slot="jlg-definition"]').innerHTML = 'Hyper Text Markup Language';
+			}
+		}
+
 	</script>
 </body>
 

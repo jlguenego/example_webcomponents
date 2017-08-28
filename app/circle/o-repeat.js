@@ -49,16 +49,13 @@
 		}
 
 		render(digestId) {
-			console.log('about to render o-repeat', this);
+			console.log('about to render o-repeat %O', this);
 
 			if (!this.dj) {
 				this.InitDJ();
 			}
 
-
-			const array = Object.assign([], this.model.list);
-			console.log('array', array);
-			this.dj.update(array);
+			this.dj.update(this.model.list);
 
 		}
 	}
@@ -68,6 +65,10 @@
 	class ORepeatItem extends circle.Element {
 
 		render(digestId) {
+			if (this.alreadyWentHere) {
+				return;
+			}
+			this.alreadyWentHere = true;
 			console.log('about to render o-repeat-item');
 			const clone = document.importNode(this.getParent().originalContent, true);
 			this.parseExpr(clone);

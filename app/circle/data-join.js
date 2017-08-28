@@ -4,7 +4,6 @@
 	class DJ {
 		constructor(element, selector) {
 			this.element = element;
-			this.data = [];
 			this.selector = selector;
 		}
 		
@@ -25,9 +24,10 @@
 			const intersection = [];
 			for (let elt of elts) {
 				const item = elt.$data$.item;
+				console.log('item', item);
 				const index = array.indexOf(item, lastIndex + 1);
 				if (index === -1) {
-					console.log('not found');
+					console.log('not found in', array);
 					// not found case
 					this.exit(elt).then(() => {
 						this.element.removeChild(elt);
@@ -39,6 +39,8 @@
 					lastIndex = index;
 				}
 			}
+
+			console.log('JLG array', array);
 
 			const newItems = array
 				.map((item, index) => { return { item, index }; })
@@ -61,7 +63,6 @@
 				}
 				this.enter(elt).then(() => {});
 			});
-			this.data = Object.assign([], array);
 			return this;
 		}
 

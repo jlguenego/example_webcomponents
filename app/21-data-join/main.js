@@ -7,13 +7,24 @@
 	// const a1 = ['A', 'B', 'A', 'D'];
 	// const a2 = ['A', 'A', 'A', 'B', 'C'];
 
-	const n = 10;
-	const a1 = Array.apply(null, { length: n }).map(Number.call, Number)
-		.map(n => { return { value: n, value2: 2 * n }; });
-	const a2 = a1.filter(n => n.value % 2);
+	// const n = 10;
+	// const a1 = Array.apply(null, { length: n }).map(Number.call, Number)
+	// 	.map(n => { return { value: n, value2: 2 * n }; });
+	// const a2 = a1.filter(n => n.value % 2);
 	const element = document.querySelector('my-work-area');
 	const template = element.querySelector('template');
-    
+
+	const a1 = new Proxy([new Proxy({
+		name: 'Paris',
+		population: 2000000
+	}, {}), new Proxy({
+		name: 'Nancy',
+		population: 100000
+	}, {}), new Proxy({
+		name: 'Lunéville',
+		population: 20000
+	}, {})], {});
+
 	const dj = new window.DJ(element, 'data-join');
 	dj.onExit(function(elt) {
 		return new Promise((fulfill, reject) => {
@@ -54,12 +65,18 @@
 		return elt;
 	});
 
-	let array = Object.assign([], a1);
-	dj.update(array);
-	array = Object.assign([], a2);
+	dj.update(a1);
+	a1.splice(0, 1);
 	setInterval(() => {
-		dj.update(array);
-		array = (array === a1) ? Object.assign([], a2) : Object.assign([], a1);;
+		dj.update(a1);
+		if (a1.length === 2) {
+			a1.unshift({
+				name: 'Paris',
+				population: 2000000
+			});
+		} else {
+			a1.splice(0, 1);
+		}
 	}, 3000);
 
 })();

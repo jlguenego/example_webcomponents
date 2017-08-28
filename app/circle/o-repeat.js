@@ -65,15 +65,17 @@
 	class ORepeatItem extends circle.Element {
 
 		render(digestId) {
-			if (this.alreadyWentHere) {
+			if (!this.alreadyWentHere) {
+				this.alreadyWentHere = true;
+				console.log('about to render for the first time o-repeat-item');
+				const clone = document.importNode(this.getParent().originalContent, true);
+				this.parseExpr(clone);
+				this.root.innerHTML = '';
+				this.root.appendChild(clone);
 				return;
 			}
-			this.alreadyWentHere = true;
-			console.log('about to render o-repeat-item');
-			const clone = document.importNode(this.getParent().originalContent, true);
-			this.parseExpr(clone);
-			this.root.innerHTML = '';
-			this.root.appendChild(clone);
+			
+			
 		}
 
 		get index() {

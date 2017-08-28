@@ -42,7 +42,7 @@
 			this.dj.onAddNewElement(function(obj) {
 				const elt = createElementFromString(
 					document,
-					`<o-repeat-item  index="${obj.index}" ${iterator}="[list[${obj.index}]]"></o-repeat-item>`);
+					`<o-repeat-item iterator="${iterator}" ></o-repeat-item>`);
 
 				return elt;
 			});
@@ -56,6 +56,11 @@
 			}
 
 			this.dj.update(this.model.list);
+			const items = this.root.querySelectorAll('o-repeat-item');
+			items.forEach(function(item) {
+				console.log('render item');
+				item.render(digestId);
+			});
 
 		}
 	}
@@ -65,8 +70,22 @@
 	class ORepeatItem extends circle.Element {
 
 		render(digestId) {
+			let update = false;
 			if (!this.alreadyWentHere) {
+				update = true;
 				this.alreadyWentHere = true;
+			}
+			if (this.model[this.model.iterator] !== this.$data$.item) {
+				this.model[this.model.iterator] = this.$data$.item;
+				update = true;
+			}
+			if (this.model.index !== this.$data$.index) {
+				this.model.index = this.$data$.index;
+				update = true;
+			}
+			
+			console.log('update', update);
+			if (update) {
 				console.log('about to render for the first time o-repeat-item');
 				const clone = document.importNode(this.getParent().originalContent, true);
 				this.parseExpr(clone);

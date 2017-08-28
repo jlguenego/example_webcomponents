@@ -148,11 +148,14 @@
 		}
 
 		onDigest(key) {
+			console.log('key', key);
+			console.log('this.scope', this.scope);
 			for (let attr in this.scope) {
 				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
 					continue;
 				}
 				const modelVar = this.getModelVar(attr);
+				console.log('modelVar', modelVar);
 				if (modelVar === key) {
 					const parentModelValue = this.elt.getParent().getModel(key);
 					if (this.elt.getModel(attr) !== parentModelValue) {
@@ -171,6 +174,7 @@
 		}
 
 		digest(key) {
+			console.log('key', key);
 			if (key in this.scope) {
 				if (this.scope[key] === DBNotation.scope.LITTERAL) {
 					this.elt.setAttribute(key, this.elt.model[key]);

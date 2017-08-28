@@ -27,7 +27,6 @@
 			for (let elt of elts) {
 				const item = elt.$data$.item;
 				const index = array.findIndex((n, i) => i > lastIndex && this.itemCmp(n, item));
-				console.log('JLG index', index);
 				if (index === -1) {
 					// not found case
 					this.exit(elt).then(() => {
@@ -41,8 +40,6 @@
 					this.updateElement(elt);
 				}
 			}
-
-			console.log('JLG intersection', intersection);
 
 			const newItems = array
 				.map((item, index) => { return { item, index }; })

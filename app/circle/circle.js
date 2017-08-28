@@ -148,17 +148,12 @@
 		}
 
 		onDigest(key) {
-			console.log('key', key);
-			console.log('this.scope', this.scope);
 			for (let attr in this.scope) {
 				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
 					continue;
 				}
 				const modelVar = this.getModelVar(attr);
-				console.log('modelVar', modelVar);
 				if (modelVar === key) {
-					console.log('this.elt.getParent()', this.elt.getParent());
-					console.log('this.elt', this.elt);
 					const parentModelValue = this.elt.getParent().getModel(key);
 					if (this.elt.getModel(attr) !== parentModelValue) {
 						this.elt.setModel(attr, parentModelValue);
@@ -176,7 +171,6 @@
 		}
 
 		digest(key) {
-			console.log('key', key);
 			if (key in this.scope) {
 				if (this.scope[key] === DBNotation.scope.LITTERAL) {
 					if (this.elt.getAttribute(key) !== this.elt.model[key]) {
@@ -265,7 +259,6 @@
 		}
 
 		getParent() {
-			console.log('elt getParent this.getRootNode() %O', this.getRootNode());
 			return this.getRootNode().host;
 		}
 		parseExpr(node) {
@@ -275,10 +268,8 @@
 
 			// o-if
 			const originalTemplate = this.querySelector('template');
-			console.log('originalTemplate', originalTemplate, this.constructor.name);
 			if (originalTemplate) {
 				this.originalContent = document.importNode(originalTemplate.content, true);
-				console.log('this.originalContent', this.originalContent, this.constructor.name);
 			}
 
 			this.root = this.root || this.attachShadow({
@@ -310,7 +301,6 @@
 			if (this.canRender) {
 				return;
 			}
-			console.log('this.attributes', this.attributes);
 			this.canRender = Array.prototype.filter
 				.call(this.attributes, n => !(n.name in this.model)).length === 0;
 		}
@@ -341,7 +331,6 @@
 
 		getModel(absoluteKey) {
 			const str = 'this.model.' + absoluteKey;
-			console.log('str', str);
 			const result = eval(str);
 			return result;
 		}

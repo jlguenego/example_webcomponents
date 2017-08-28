@@ -157,6 +157,8 @@
 				const modelVar = this.getModelVar(attr);
 				console.log('modelVar', modelVar);
 				if (modelVar === key) {
+					console.log('this.elt.getParent()', this.elt.getParent());
+					console.log('this.elt', this.elt);
 					const parentModelValue = this.elt.getParent().getModel(key);
 					if (this.elt.getModel(attr) !== parentModelValue) {
 						this.elt.setModel(attr, parentModelValue);
@@ -177,7 +179,10 @@
 			console.log('key', key);
 			if (key in this.scope) {
 				if (this.scope[key] === DBNotation.scope.LITTERAL) {
-					this.elt.setAttribute(key, this.elt.model[key]);
+					if (this.elt.getAttribute(key) !== this.elt.model[key]) {
+						this.elt.setAttribute(key, this.elt.model[key]);
+					}
+					
 				}
 				if (this.scope[key] === DBNotation.scope.TWO_WAYS) {
 					const modelVar = this.getModelVar(key);
@@ -260,6 +265,7 @@
 		}
 
 		getParent() {
+			console.log('elt getParent this.getRootNode() %O', this.getRootNode());
 			return this.getRootNode().host;
 		}
 		parseExpr(node) {

@@ -5,6 +5,7 @@
 		constructor(element, selector) {
 			this.element = element;
 			this.selector = selector;
+			this.updateElement = function() {};
 		}
 		
 		/**
@@ -35,6 +36,7 @@
 					elt.$data$ = { item, index };
 					intersection.push(elt.$data$);
 					lastIndex = index;
+					this.updateElement(elt);
 				}
 			}
 
@@ -88,6 +90,11 @@
 
 		onAddNewElement(addNewElement) {
 			this.addNewElement = addNewElement;
+			return this;
+		}
+
+		onUpdateElement(updateElement) {
+			this.updateElement = updateElement;
 			return this;
 		}
 	}

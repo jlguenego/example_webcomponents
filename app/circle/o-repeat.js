@@ -42,8 +42,16 @@
 			this.dj.onAddNewElement(function(obj) {
 				const elt = createElementFromString(
 					document,
-					`<o-repeat-item iterator="${iterator}" ></o-repeat-item>`);
+					`<o-repeat-item iterator="${iterator}" 
+						index="${obj.index}" 
+						${iterator}="[list[${obj.index}]]"></o-repeat-item>`);
 
+				return elt;
+			});
+
+			this.dj.onUpdateElement(function(elt) {
+				const index = elt.$data$.index;
+				elt.setAttribute('index', index);
 				return elt;
 			});
 		}
@@ -56,12 +64,6 @@
 			}
 
 			this.dj.update(this.model.list);
-			const items = this.root.querySelectorAll('o-repeat-item');
-			items.forEach(function(item) {
-				console.log('render item');
-				item.render(digestId);
-			});
-
 		}
 	}
 
@@ -69,23 +71,18 @@
 
 	class ORepeatItem extends circle.Element {
 
-		render(digestId) {
-			let update = false;
-			if (!this.alreadyWentHere) {
-				update = true;
-				this.alreadyWentHere = true;
-			}
-			if (this.model[this.model.iterator] !== this.$data$.item) {
-				this.model[this.model.iterator] = this.$data$.item;
-				update = true;
-			}
-			if (this.model.index !== this.$data$.index) {
-				this.model.index = this.$data$.index;
-				update = true;
+		static get observedAttributes() { return ['index']; }
+
+		attributeChangedCallback(attr, oldValue, newValue) {
+			if (attr === 'index') {
+				this.model.index = newValue;
 			}
 			
-			console.log('update', update);
-			if (update) {
+		}
+
+		render(digestId) {
+			if (!this.alreadyWentHere) {
+				this.alreadyWentHere = true;
 				console.log('about to render for the first time o-repeat-item');
 				const clone = document.importNode(this.getParent().originalContent, true);
 				this.parseExpr(clone);
@@ -93,8 +90,6 @@
 				this.root.appendChild(clone);
 				return;
 			}
-			
-			
 		}
 
 		get index() {

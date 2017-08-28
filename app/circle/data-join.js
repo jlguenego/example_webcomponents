@@ -6,8 +6,9 @@
 			this.element = element;
 			this.selector = selector;
 			this.updateElement = function() {};
+			this.itemCmp = (n, item) => n === item;
 		}
-		
+
 		/**
 		 * update the array of <data-join> that is joined to the DOM.
 		 * 
@@ -25,7 +26,8 @@
 			const intersection = [];
 			for (let elt of elts) {
 				const item = elt.$data$.item;
-				const index = array.indexOf(item, lastIndex + 1);
+				const index = array.findIndex((n, i) => i > lastIndex && this.itemCmp(n, item));
+				console.log('JLG index', index);
 				if (index === -1) {
 					// not found case
 					this.exit(elt).then(() => {
@@ -40,10 +42,12 @@
 				}
 			}
 
+			console.log('JLG intersection', intersection);
+
 			const newItems = array
 				.map((item, index) => { return { item, index }; })
 				.filter(obj => {
-					return !intersection.find(x => x.item === obj.item && x.index === obj.index);
+					return !intersection.find(x => this.itemCmp(x.item, obj.item) && x.index === obj.index);
 				});
 			let i = 0;
 			newItems.forEach(obj => {
@@ -51,7 +55,7 @@
 				while (currentElt && currentElt.$data$.index < obj.index) {
 					i++;
 					currentElt = elts[i];
-				}	
+				}
 				const elt = this.addNewElement(obj);
 				elt.$data$ = obj;
 				if (currentElt) {

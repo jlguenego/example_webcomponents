@@ -19,19 +19,16 @@
 	class JLGBody extends circle.Element {
 		constructor() {
 			super();
-			this.model.cities = [];
-			this.model.cities.push({
+			this.model.cities = [{
 				name: 'Paris',
 				population: 2000000
-			});
-			this.model.cities.push({
+			}, {
 				name: 'Nancy',
 				population: 100000
-			});
-			this.model.cities.push({
+			}, {
 				name: 'Lunéville',
 				population: 20000
-			});
+			}];
 
 		}
 

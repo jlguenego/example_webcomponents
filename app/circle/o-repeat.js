@@ -39,6 +39,18 @@
 				});
 			});
 
+			this.dj.itemCmp = (i1, i2) => {
+				console.log('compare ', i1, i2);
+				for (let prop in i1) {
+					if (i1[prop] !== i2[prop]) {
+						console.log('not equals ! ');
+						return false;
+					}
+				}
+				console.log('equals ! ');
+				return true;
+			};
+
 			this.dj.onAddNewElement(function(obj) {
 				const elt = createElementFromString(
 					document,
@@ -77,7 +89,7 @@
 			if (attr === 'index') {
 				this.model.index = newValue;
 			}
-			
+
 		}
 
 		render(digestId) {

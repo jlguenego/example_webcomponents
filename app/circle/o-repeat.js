@@ -25,7 +25,7 @@
 					elt.className += 'leaving';
 					setTimeout(() => {
 						fulfill();
-					}, 2000);
+					}, 500);
 				});
 			});
 
@@ -35,7 +35,7 @@
 					setTimeout(() => {
 						elt.classList.remove('entering');
 						fulfill();
-					}, 2000);
+					}, 500);
 				});
 			});
 

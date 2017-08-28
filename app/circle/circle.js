@@ -188,6 +188,8 @@
 		}
 	}
 
+	class CircleProxyType {}
+
 	/**
 	 * A component in circle must extends the circle.Element class
 	 * which is a pointer on the CircleElement class.
@@ -215,7 +217,7 @@
 								return true;
 							}
 						}
-						if (value !== null && typeof value === 'object') {
+						if (value !== null && typeof value === 'object' && !(value instanceof CircleProxyType)) {
 							target[key] = new Proxy(value, handler(absoluteKey));
 						} else {
 							target[key] = value;
@@ -238,6 +240,10 @@
 							circle.digestId, self.constructor.name, absoluteKey, circle.stackTrace());
 						self.digest(parentKey);
 						return true;
+					},
+
+					getPrototypeOf: function(key) {
+						return CircleProxyType.prototype;
 					}
 				};
 			}

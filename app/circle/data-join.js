@@ -1,6 +1,18 @@
 (function() {
 	'use strict';
 
+	function myIndexOf(array, item, start) {
+		for (let i = start; i < array.length; i++) {
+			console.log('JLG myIndexOf start', start);
+			console.log('JLG array[%d]', i, array[i]);
+			console.log('JLG item', item);
+			if (array[i] === item) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	class DJ {
 		constructor(element, selector) {
 			this.element = element;
@@ -25,14 +37,18 @@
 			for (let elt of elts) {
 				const item = elt.$data$.item;
 				console.log('item', item);
-				const index = array.indexOf(item, lastIndex + 1);
+				// const index = array.indexOf(item, lastIndex + 1);
+
+				const index = myIndexOf(array, item, lastIndex + 1);
+
 				if (index === -1) {
-					console.log('not found in', array);
+					console.log('JLG not found in', array);
 					// not found case
 					this.exit(elt).then(() => {
 						this.element.removeChild(elt);
 					});
 				} else {
+					console.log('JLG FOUND in', array);
 					// found case: keep the element in the intersect array
 					elt.$data$ = { item, index };
 					intersection.push(elt.$data$);
@@ -56,6 +72,7 @@
 				}	
 				const elt = this.addNewElement(obj);
 				elt.$data$ = obj;
+				console.log('JLG elt.$data$', elt.$data$);
 				if (currentElt) {
 					this.element.insertBefore(elt, currentElt);
 				} else {

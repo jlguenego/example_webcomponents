@@ -3,17 +3,16 @@
 		This is the body...<br>
 		<o-repeat list="[cities]" iterator="city">
 			<template>
-				<link rel="stylesheet" href="cities.css" />
 				<div>
-					<span>index: <slot name="index">index</slot></span>
-					<span class="city-name">City name: <slot name="item.name">{{city.name}}</slot></span>
-					<span>City population: <slot name="item.population">{{city.population}}</slot></span>
-					<span><button onclick="circle.wc(this, 'jlg-body').delete(2)">Delete</button></span>
-					<span><button onclick="console.log(circle.wc(this, 'jlg-body').model.cities[2]);">Log</button></span>
+					<span>index: {{index}}</span>
+					<span>City name: {{city.name}}</span>
+					<span>City population: {{city.population}}</span>
+					<span><button onclick="circle.wc(this, 'jlg-body').delete(circle.wc(this).index)">Delete</button></span>
+					<span><button onclick="console.log(circle.wc(this).index);">Log</button></span>
 				</div>
 			</template>
-</o-repeat>
-</div>
+		</o-repeat>
+	</div>
 </template>
 
 <script>

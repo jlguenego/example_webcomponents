@@ -1,6 +1,6 @@
-data-join {
+o-repeat-item {
 	display: block;
-	animation: fade-in 1s forwards;
+	animation: fade-in 3s forwards;
 	background-color: #eee;
 }
 
@@ -12,7 +12,7 @@ data-join {
 	}
 	to {
 		opacity: 1;
-		height: 20px;
+		height: 40px;
 		background-color: #eee;
 	}
 }
@@ -20,7 +20,7 @@ data-join {
 @keyframes fade-out {
 	from {
 		opacity: 1;
-		height: 20px;
+		height: 40px;
 		background-color: #eee;
 	}
 	to {
@@ -31,5 +31,5 @@ data-join {
 }
 
 .leaving {
-	animation: fade-out 1s forwards;
+	animation: fade-out 3s forwards;
 }

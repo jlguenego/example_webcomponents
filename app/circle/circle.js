@@ -20,7 +20,8 @@
 	}
 
 	/**
-	 * Transform hello.world.foo.bar in hello['world']['foo']['bar']
+	 * Transforms hello.world[3].foo.bar in hello['world'][3]['foo']['bar']
+	 * 
 	 * 
 	 * @param {any} key 
 	 * @returns 
@@ -72,6 +73,15 @@
 		});
 	}
 
+	/**
+	 * Class in charge of managing the databinding notation:
+	 * [] for one way databinding
+	 * [[]] for two way databinding
+	 * For internal scope notation (Angular like: '@' for litteral, '<' for simple DB,
+	 * '=' for 2 way DB)
+	 * 
+	 * @class DBNotation
+	 */
 	class DBNotation {
 		/**
 		 * Tests if the notation is a 2 ways data binding.
@@ -95,6 +105,14 @@
 			return value.match(/^\[.*\]$/);
 		}
 
+		/**
+		 * remove the [] or [[]].
+		 * 
+		 * @static
+		 * @param {any} value 
+		 * @returns 
+		 * @memberof DBNotation
+		 */
 		static extractModelVar(value) {
 			return value.replace(/^\[(.*?)\]$/g, '$1').replace(/^\[(.*?)\]$/g, '$1');
 		}

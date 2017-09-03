@@ -185,10 +185,6 @@
 					}
 				}
 			}
-			// TODO
-			// if (this.elt.isModelInitialized()) {
-			// 	return;
-			// }
 			if (this.elt.canRender) {
 				this.elt.render();
 			}

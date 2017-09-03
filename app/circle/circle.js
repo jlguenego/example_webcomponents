@@ -106,7 +106,7 @@
 		}
 
 		/**
-		 * remove the [] or [[]].
+		 * removes the [] or [[]].
 		 * 
 		 * @static
 		 * @param {any} value 

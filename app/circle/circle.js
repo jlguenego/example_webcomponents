@@ -19,6 +19,12 @@
 		return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 	}
 
+	/**
+	 * Transform hello.world.foo.bar in hello['world']['foo']['bar']
+	 * 
+	 * @param {any} key 
+	 * @returns 
+	 */
 	function parseAbsoluteKey(key) {
 		return key.replace(/\.([^.]+)/g, '[\'$1\']');
 	}

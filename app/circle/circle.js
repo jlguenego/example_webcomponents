@@ -372,6 +372,7 @@
 		constructor() {
 			this.Element = CircleElement;
 			this.digestId = 0;
+			this.serviceMap = {};
 		}
 
 		stackTrace() {
@@ -391,6 +392,14 @@
 				}
 			}
 			return host;
+		}
+
+		set(str, service) {
+			this.serviceMap[str] = service;
+		}
+
+		get(str) {
+			return this.serviceMap[str];
 		}
 	}
 	window.circle = new Circle();

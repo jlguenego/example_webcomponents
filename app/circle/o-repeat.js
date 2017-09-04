@@ -67,12 +67,9 @@
 		}
 
 		render(digestId) {
-			console.log('about to render o-repeat %O', this);
-
 			if (!this.dj) {
 				this.initDJ();
 			}
-
 			this.dj.update(this.model.list);
 		}
 	}
@@ -92,7 +89,6 @@
 		render(digestId) {
 			if (!this.alreadyWentHere) {
 				this.alreadyWentHere = true;
-				console.log('about to render for the first time o-repeat-item');
 				if (this.getParent().originalContent === undefined) {
 					throw new Error('o-repeat: Cannot find the template');
 				}

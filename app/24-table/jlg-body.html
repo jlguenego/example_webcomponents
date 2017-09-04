@@ -1,7 +1,7 @@
 <template id="jlg-body">
 	<div>
 		<button onclick="circle.wc(this).refresh()">Refresh</button>
-		<jlg-table table="[myTable]" onDelete="o(this).delete"></jlg-table>
+		<jlg-table table="[myTable]"></jlg-table>
 	</div>
 </template>
 
@@ -17,7 +17,7 @@
 			console.log('doAction start');
 			const http = circle.get('http');
 
-			http.get('content.json').then((response) => {
+			http.get('content.json?asdf').then((response) => {
 				console.log('response', response);
 				this.model.myTable = response.data.content;
 			}).catch((error) => {

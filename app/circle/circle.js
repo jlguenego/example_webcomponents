@@ -242,8 +242,8 @@
 							target[key] = value;
 						}
 						circle.digestId++;
-						console.log('%d: %s: update %s to %s',
-							circle.digestId, self.constructor.name, absoluteKey, value, circle.stackTrace());
+						// console.log('%d: %s: update %s to %s',
+						// 	circle.digestId, self.constructor.name, absoluteKey, value, circle.stackTrace());
 						self.digest(absoluteKey);
 						return true;
 					},
@@ -255,8 +255,8 @@
 							target.length--;
 						}
 						circle.digestId++;
-						console.log('%d: %s: delete %s',
-							circle.digestId, self.constructor.name, absoluteKey, circle.stackTrace());
+						// console.log('%d: %s: delete %s',
+						// 	circle.digestId, self.constructor.name, absoluteKey, circle.stackTrace());
 						self.digest(parentKey);
 						return true;
 					},

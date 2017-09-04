@@ -65,6 +65,9 @@
 	class JLGTable extends circle.Element {
 		connectedCallback() {
 			super.connectedCallback();
+			if (!(this.model.table && this.model.table.length > 0)) {
+				return;
+			}
 			this.model.headers = Object.keys(this.model.table[0]);
 			this.model.body = this.model.table.map(row => this.model.headers.map(header => row[header]));
 		}

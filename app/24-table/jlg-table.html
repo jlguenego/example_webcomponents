@@ -29,6 +29,15 @@
 			<span>{{header.name}}</span>
 		</template>
 	</o-repeat>
+	<o-repeat list="[body]" iterator="row">
+		<template>
+			<o-repeat list="[row]" iterator="cell">
+				<template>
+					<span>{{cell.value}}</span>
+				</template>
+			</o-repeat>
+		</template>
+	</o-repeat>
 </template>
 
 <script>
@@ -46,9 +55,9 @@
 
 			this.model.headers = Object.keys(this.model.table[0]).map(n => { return { name: n }; });
 			console.log('headers', this.model.headers);
+			this.model.body = this.model.table.map(row => this.model.headers.map(header => row[header.name]));
+			console.log('this.model.body', this.model.body);
 		}
-
-
 	}
 	JLGTable.register();
 

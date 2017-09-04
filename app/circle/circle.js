@@ -403,6 +403,7 @@
 		}
 	}
 	window.circle = new Circle();
+	window.o = window.circle.wc;
 
 	/**
 	 * CircleExpr is the component that allows displaying expressions.

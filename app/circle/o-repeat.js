@@ -4,7 +4,6 @@
 	function createElementFromString(document, str) {
 		const template = document.createElement('template');
 		template.innerHTML = str;
-		console.log('template.content.firstChild', template.content.firstChild);
 		return template.content.firstChild;
 	}
 
@@ -14,7 +13,7 @@
 			super();
 		}
 
-		InitDJ() {
+		initDJ() {
 			const iterator = this.model.iterator;
 
 			this.root.innerHTML = '<link rel="stylesheet" href="o-repeat.css" />';
@@ -72,7 +71,7 @@
 			console.log('about to render o-repeat %O', this);
 
 			if (!this.dj) {
-				this.InitDJ();
+				this.initDJ();
 			}
 
 			this.dj.update(this.model.list);

@@ -63,6 +63,35 @@
 			});
 		}
 
+		connectedCallback() {
+			super.connectedCallback();
+			if (this.hasAttribute('tmpl-header-selector')) {
+				const originalTemplate = this.myDoc.querySelector(this.getAttribute('tmpl-header-selector'));
+				if (originalTemplate) {
+					this.headerContent = document.importNode(originalTemplate.content, true);
+				}
+			} else {
+				const originalTemplate = this.querySelector('template[header]');
+				if (originalTemplate) {
+					this.headerContent = document.importNode(originalTemplate.content, true);
+				}
+			}
+
+			if (this.hasAttribute('tmpl-item-selector')) {
+				const originalTemplate = this.myDoc.querySelector(this.getAttribute('tmpl-item-selector'));
+				if (originalTemplate) {
+					this.originalContent = document.importNode(originalTemplate.content, true);
+				}
+			} else {
+				const originalTemplate = this.querySelector('template[item]');
+				if (originalTemplate) {
+					this.originalContent = document.importNode(originalTemplate.content, true);
+				}
+			}
+
+			
+		}
+
 		render(digestId) {
 			if (!this.dj) {
 				this.initDJ();

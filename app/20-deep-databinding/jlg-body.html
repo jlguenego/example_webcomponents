@@ -9,9 +9,9 @@
 			<div>{{cities[0].name}}</div>
 			<div>{{cities[1].population}}</div>
 
-			<button onclick="circle.wc(this).hello()">Hello</button>
-			<button onclick="circle.wc(this, 'jlg-app').hello()">Hello from jlg-app</button>
-			<button onclick="circle.wc(this, 'no-where').hello()">Hello from no-where (crash!)</button>
+			<button onclick="o(this).hello()">Hello</button>
+			<button onclick="o(this, 'jlg-app').hello()">Hello from jlg-app</button>
+			<button onclick="o(this, 'no-where').hello()">Hello from no-where (crash!)</button>
 
 			<o-for list="[cities]" iterator="city">
 				<template>

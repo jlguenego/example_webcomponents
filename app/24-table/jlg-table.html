@@ -20,7 +20,7 @@
 	</style>
 	<jlg-th>
 		<o-repeat list="[headers]" iterator="header">
-			<template>
+			<template item>
 				<style>
 					cell {
 						display: inline-block;
@@ -35,7 +35,7 @@
 		</o-repeat>
 	</jlg-th>
 	<o-repeat list="[body]" iterator="row" css="jlg-table.css">
-		<template>
+		<template item>
 			<style>
 				jlg-row {
 					display: block;
@@ -46,7 +46,7 @@
 			</style>
 			<jlg-row>
 				<o-repeat list="[row]" iterator="cell">
-					<template>
+					<template item>
 						<style>
 							cell {
 								display: inline-block;

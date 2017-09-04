@@ -1,9 +1,17 @@
-(function() {
+(function () {
 	'use strict';
 
 	// Unfortunately, custom built-in element are not yet implemented.
 
 	class OFor extends circle.Element {
+
+		connectedCallback() {
+			super.connectedCallback();
+			const originalTemplate = this.querySelector('template');
+			if (originalTemplate) {
+				this.originalContent = document.importNode(originalTemplate.content, true);
+			}
+		}
 
 		render(digestId) {
 			console.log('about to render o-for', this);

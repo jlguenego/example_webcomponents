@@ -282,28 +282,13 @@
 			parseExpr(node);
 		}
 		connectedCallback() {
-			const myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
-				doc : document.currentScript.ownerDocument;
-
-			// o-if and o-repeat
-			if (this.hasAttribute('tmpl-selector')) {
-				const originalTemplate = myDoc.querySelector(this.getAttribute('tmpl-selector'));
-				if (originalTemplate) {
-					this.originalContent = document.importNode(originalTemplate.content, true);
-				}
-			} else {
-				const originalTemplate = this.querySelector('template');
-				if (originalTemplate) {
-					this.originalContent = document.importNode(originalTemplate.content, true);
-				}
-			}
-
-
 			this.root = this.root || this.attachShadow({
 				mode: 'closed'
 			});
+			this.myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
+			doc : document.currentScript.ownerDocument;
 
-			const t = myDoc.querySelector(this.templateSelector);
+			const t = this.myDoc.querySelector(this.templateSelector);
 			if (t) {
 				const clone = document.importNode(t.content, true);
 				this.parseExpr(clone);

@@ -12,13 +12,11 @@
 		initDJ() {
 			const iterator = this.model.iterator;
 
-			this.root.innerHTML = '<link rel="stylesheet" href="../circle/o-repeat.css" />';
+			this.root.innerHTML = '';
 			if (this.model.css) {
 				this.root.innerHTML += `<link rel="stylesheet" href="${this.model.css}" />`;
 			}
 				
-			
-
 			this.dj = new window.DJ(this.root, 'o-repeat-item');
 			this.dj.onExit(function(elt) {
 				return new Promise((fulfill, reject) => {

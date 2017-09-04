@@ -166,8 +166,8 @@
 				this.elt.bindKey(modelVar);
 				this.elt.onDigest(modelVar);
 			}
-			if (isEmpty && this.elt.canRender) {
-				this.elt.render();
+			if (isEmpty) {
+				this.elt.askRendering();
 			}
 		}
 
@@ -185,9 +185,7 @@
 					}
 				}
 			}
-			if (this.elt.canRender) {
-				this.elt.render();
-			}
+			this.elt.askRendering();
 		}
 
 		digest(key) {
@@ -205,9 +203,7 @@
 					}
 				}
 			}
-			if (this.elt.canRender) {
-				this.elt.render();
-			}
+			this.elt.askRendering();
 		}
 	}
 
@@ -332,6 +328,14 @@
 			}
 			this.canRender = Array.prototype.filter
 				.call(this.attributes, n => !(n.name in this.model)).length === 0;
+		}
+
+		askRendering() {
+			if (this.canRender) {
+				setTimeout(() => {
+					this.render();
+				}, 0);
+			}
 		}
 
 		render() { }

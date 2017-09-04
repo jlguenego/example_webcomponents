@@ -1,12 +1,32 @@
 <template id="jlg-table">
-	<o-repeat list="[content]" iterator="row" css="o-repeat.css">
+	<style>
+		o-repeat {
+			display: table-row;
+			padding: 10px;
+			margin: 10px;
+			border: 1px solid black;
+		}
+
+		:host,
+		jlg-table {
+			display: table;
+			padding: 10px;
+			margin: 10px;
+			border: 1px solid black;
+		}
+	</style>
+	<o-repeat list="[headers]" iterator="header">
 		<template>
-			<div>
-				<span>{{index}}</span>
-				<span>{{row.name}}</span>
-				<span>{{row.population}}</span>
-				<span><button onclick="o(this, 'jlg-table').delete(o(this).index)">Delete</button></span>
-			</div>
+			<style>
+				o-repeat-item,
+				 :host {
+					display: table-cell;
+					padding: 10px;
+					margin: 10px;
+					background-color: hsl(0, 100%, 95%);
+				}
+			</style>
+			<span>{{header.name}}</span>
 		</template>
 	</o-repeat>
 </template>
@@ -17,6 +37,18 @@
 			super();
 			console.log('JLGTable');
 		}
+
+		connectedCallback() {
+			super.connectedCallback();
+			console.log('table', this.model.table);
+			console.log('table[0]', this.model.table[0]);
+			console.log('table[0]', this.getModel('table[0]'));
+
+			this.model.headers = Object.keys(this.model.table[0]).map(n => { return { name: n }; });
+			console.log('headers', this.model.headers);
+		}
+
+
 	}
 	JLGTable.register();
 

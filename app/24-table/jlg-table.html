@@ -1,39 +1,60 @@
 <template id="jlg-table">
 	<style>
-		o-repeat {
-			display: table-row;
+		:host,
+		jlg-table {
+			display: block;
+			width: 300px;
 			padding: 10px;
-			margin: 10px;
+			margin: 0px;
 			border: 1px solid black;
 		}
 
-		:host,
-		jlg-table {
-			display: table;
-			padding: 10px;
-			margin: 10px;
-			border: 1px solid black;
+		o-repeat[iterator=header] {
+			display: block;
+			width: 100%;
+			padding: 0px;
+			margin: 0px;
+			font-weight: bold;
+			background-color: hsl(0, 100%, 95%);
 		}
 	</style>
 	<o-repeat list="[headers]" iterator="header">
 		<template>
 			<style>
 				o-repeat-item,
-				 :host {
-					display: table-cell;
+				:host {
+					display: inline-block;
+					width: 130px;
 					padding: 10px;
-					margin: 10px;
-					background-color: hsl(0, 100%, 95%);
+					margin: 0px;
 				}
 			</style>
-			<span>{{header.name}}</span>
+			<span>{{header}}</span>
 		</template>
 	</o-repeat>
-	<o-repeat list="[body]" iterator="row">
+	<o-repeat list="[body]" iterator="row" css="jlg-table.css">
 		<template>
+			<style>
+				o-repeat-item,
+				:host {
+					display: block;
+					width: 100%;
+					padding: 0px;
+					margin: 0px;
+				}
+			</style>
 			<o-repeat list="[row]" iterator="cell">
 				<template>
-					<span>{{cell.value}}</span>
+					<style>
+						o-repeat-item,
+						:host {
+							display: inline-block;
+							width: 130px;
+							padding: 10px;
+							margin: 0px;
+						}
+					</style>
+					<span>{{cell}}</span>
 				</template>
 			</o-repeat>
 		</template>
@@ -42,21 +63,10 @@
 
 <script>
 	class JLGTable extends circle.Element {
-		constructor() {
-			super();
-			console.log('JLGTable');
-		}
-
 		connectedCallback() {
 			super.connectedCallback();
-			console.log('table', this.model.table);
-			console.log('table[0]', this.model.table[0]);
-			console.log('table[0]', this.getModel('table[0]'));
-
-			this.model.headers = Object.keys(this.model.table[0]).map(n => { return { name: n }; });
-			console.log('headers', this.model.headers);
-			this.model.body = this.model.table.map(row => this.model.headers.map(header => row[header.name]));
-			console.log('this.model.body', this.model.body);
+			this.model.headers = Object.keys(this.model.table[0]);
+			this.model.body = this.model.table.map(row => this.model.headers.map(header => row[header]));
 		}
 	}
 	JLGTable.register();

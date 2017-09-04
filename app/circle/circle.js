@@ -275,6 +275,7 @@
 			this.digestRegistry = {};
 			this.templateSelector = '#' + this.constructor.tag;
 			this.databinding = new Databinding(this);
+			// canRender will becomes true when all the model is loaded (see Databinding and digestion)
 			this.canRender = false;
 		}
 

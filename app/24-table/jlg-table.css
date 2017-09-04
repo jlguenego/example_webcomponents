@@ -2,7 +2,6 @@ o-repeat-item {
 	display: block;
 	animation: fade-in 0.5s forwards;
 	background-color: hsl(0, 0%, 95%);
-	border-bottom: 1px solid hsl(0, 0%, 90%);
 }
 
 @keyframes fade-in {

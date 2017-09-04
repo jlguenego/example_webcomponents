@@ -13,7 +13,9 @@
 						let json;
 						try {
 							json = JSON.parse(xhr.response);
-						} catch (e) {}
+						} catch (e) {
+							json = undefined;
+						}
 						if (json === undefined) {
 							response.data = xhr.response;
 						} else {

@@ -1,68 +1,65 @@
 <template id="jlg-table">
 	<style>
-		:host,
-		jlg-table {
-			display: block;
-			width: 300px;
-			padding: 10px;
-			margin: 0px;
-			border: none;
+		o-repeat[iterator=header] {
+			display: flex;
+			flex-flow: row nowrap;
+			background-color: red;
 		}
 
-		jlg-th {
-			display: block;
-			width: 100%;
-			padding: 0px;
-			margin: 0px;
-			font-weight: bold;
-			background-color: hsl(0, 100%, 95%);
+		[iterator=row] {
+			background-color: gray;
 		}
 	</style>
-	<jlg-th>
-		<o-repeat list="[headers]" iterator="header">
-			<template item>
-				<style>
-					cell {
-						display: inline-block;
-						width: 148px;
-						padding: 10px;
-						margin: 0px;
-						box-sizing: border-box;
-					}
-				</style>
-				<cell>{{header}}</cell>
-			</template>
-		</o-repeat>
-	</jlg-th>
-	<o-repeat list="[body]" iterator="row">
-		<template header>
-			<link rel="stylesheet" href="jlg-table.css" />
-		</template>
+
+	<o-repeat list="[headers]" iterator="header">
 		<template item>
 			<style>
-				jlg-row {
-					display: block;
-					width: 100%;
-					padding: 0px;
+				o-repeat-item,
+				:host {
+					flex-grow: 1;
+					flex-basis: 0;
+					background-color: green;
+					padding: 10px;
 					margin: 0px;
 				}
 			</style>
-			<jlg-row>
-				<o-repeat list="[row]" iterator="cell">
-					<template item>
-						<style>
-							cell {
-								display: inline-block;
-								width: 148px;
-								padding: 10px;
-								margin: 0px;
-								box-sizing: border-box;
-							}
-						</style>
-						<cell>{{cell}}</cell>
-					</template>
-				</o-repeat>
-			</jlg-row>
+			{{header}}
+		</template>
+	</o-repeat>
+
+	<o-repeat list="[body]" iterator="row">
+		<template header>
+			<link rel="stylesheet" href="jlg-table.css" />
+			<style>
+				o-repeat,
+				:host {
+					display: flex;
+					flex-flow: column wrap;
+				}
+			</style>
+		</template>
+		<template item>
+			<style>
+				o-repeat {
+					display: flex;
+					flex-flow: row nowrap;
+					border-bottom: 1px solid black;
+				}
+			</style>
+			<o-repeat list="[row]" iterator="cell">
+				<template item>
+					<style>
+						:host,
+						o-repeat-item {
+							flex-grow: 1;
+							flex-basis: 0;
+							padding: 10px;
+							margin: 0px;
+						}
+					</style>
+					{{cell}}
+				</template>
+			</o-repeat>
 		</template>
 	</o-repeat>
 </template>

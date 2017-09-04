@@ -9,10 +9,6 @@
 
 	class ORepeat extends circle.Element {
 
-		constructor() {
-			super();
-		}
-
 		initDJ() {
 			const iterator = this.model.iterator;
 
@@ -88,7 +84,6 @@
 			if (attr === 'index') {
 				this.model.index = newValue;
 			}
-
 		}
 
 		render(digestId) {
@@ -109,7 +104,5 @@
 	}
 
 	ORepeatItem.register();
-
-
 
 })();

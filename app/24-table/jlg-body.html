@@ -8,6 +8,11 @@
 <script>
 	class JLGBody extends circle.Element {
 
+		connectedCallback() {
+			super.connectedCallback();
+			this.refresh();
+		}
+
 		refresh() {
 			console.log('doAction start');
 			const http = circle.get('http');

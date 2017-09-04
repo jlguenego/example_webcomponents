@@ -1,7 +1,7 @@
 o-repeat-item {
 	display: block;
 	animation: fade-in 0.5s forwards;
-	background-color: #9DDE28;
+	background-color: #eee;
 }
 
 @keyframes fade-in {
@@ -13,7 +13,7 @@ o-repeat-item {
 	to {
 		opacity: 1;
 		height: 30px;
-		background-color: #9DDE28;
+		background-color: #eee;
 	}
 }
 
@@ -21,7 +21,7 @@ o-repeat-item {
 	from {
 		opacity: 1;
 		height: 30px;
-		background-color: #9DDE28;
+		background-color: #eee;
 	}
 	to {
 		opacity: 0;

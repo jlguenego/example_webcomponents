@@ -249,7 +249,6 @@
 					},
 
 					deleteProperty(target, key) {
-						const absoluteKey = (parentKey) ? `${parentKey}['${key}']` : key;
 						delete target[key];
 						if (Array.isArray(target)) {
 							target.length--;
@@ -316,6 +315,7 @@
 		}
 
 		askRendering() {
+			console.log('%s: ask rendering', this.constructor.name);
 			if (this.canRender) {
 				setTimeout(() => {
 					this.render();

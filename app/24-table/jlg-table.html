@@ -1,0 +1,23 @@
+<template id="jlg-table">
+	<o-repeat list="[content]" iterator="row" css="o-repeat.css">
+		<template>
+			<div>
+				<span>{{index}}</span>
+				<span>{{row.name}}</span>
+				<span>{{row.population}}</span>
+				<span><button onclick="o(this, 'jlg-table').delete(o(this).index)">Delete</button></span>
+			</div>
+		</template>
+	</o-repeat>
+</template>
+
+<script>
+	class JLGTable extends circle.Element {
+		constructor() {
+			super();
+			console.log('JLGTable');
+		}
+	}
+	JLGTable.register();
+
+</script>

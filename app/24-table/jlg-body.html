@@ -1,0 +1,30 @@
+<template id="jlg-body">
+	<div>
+		<button onclick="circle.wc(this).refresh()">Refresh</button>
+		<jlg-table content="[content]" onDelete="o(this).delete"></jlg-table>
+	</div>
+</template>
+
+<script>
+	class JLGBody extends circle.Element {
+
+		refresh() {
+			console.log('doAction start');
+			const http = circle.get('http');
+
+			http.get('content.json').then((response) => {
+				console.log('response', response);
+				this.model.content = response.data;
+			}).catch((error) => {
+				console.log('error', error);
+			});
+		}
+
+		delete(index) {
+			console.log('delete', index);
+			this.model.content.splice(index, 1);
+		}
+	}
+	JLGBody.register();
+
+</script>

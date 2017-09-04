@@ -23,6 +23,7 @@
 						resolve(response);
 					} else {
 						reject({
+							config,
 							status: this.status,
 							statusText: xhr.statusText
 						});
@@ -30,6 +31,7 @@
 				};
 				xhr.onerror = function() {
 					reject({
+						config,
 						status: this.status,
 						statusText: xhr.statusText
 					});

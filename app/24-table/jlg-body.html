@@ -8,18 +8,17 @@
 <script>
 	class JLGBody extends circle.Element {
 
-		connectedCallback() {
-			super.connectedCallback();
-			this.refresh();
-		}
-
 		refresh() {
 			console.log('doAction start');
 			const http = circle.get('http');
 
 			http.get('content.json?asdf').then((response) => {
 				console.log('response', response);
-				this.model.myTable = response.data.content;
+				const array = response.data.content;
+				const random = Math.floor(Math.random() * 4);
+				array.splice(random, 1);
+				this.model.myTable = array;
+				console.log('array', array);
 			}).catch((error) => {
 				console.log('error', error);
 			});

@@ -9,7 +9,7 @@
 			border: 1px solid black;
 		}
 
-		o-repeat[iterator=header] {
+		jlg-th {
 			display: block;
 			width: 100%;
 			padding: 0px;
@@ -18,45 +18,46 @@
 			background-color: hsl(0, 100%, 95%);
 		}
 	</style>
-	<o-repeat list="[headers]" iterator="header">
-		<template>
-			<style>
-				o-repeat-item,
-				:host {
-					display: inline-block;
-					width: 130px;
-					padding: 10px;
-					margin: 0px;
-				}
-			</style>
-			<span>{{header}}</span>
-		</template>
-	</o-repeat>
+	<jlg-th>
+		<o-repeat list="[headers]" iterator="header">
+			<template>
+				<style>
+					cell {
+						display: inline-block;
+						width: 128px;
+						padding: 10px;
+						margin: 0px;
+					}
+				</style>
+				<cell>{{header}}</cell>
+			</template>
+		</o-repeat>
+	</jlg-th>
 	<o-repeat list="[body]" iterator="row" css="jlg-table.css">
 		<template>
 			<style>
-				o-repeat-item,
-				:host {
+				jlg-row {
 					display: block;
 					width: 100%;
 					padding: 0px;
 					margin: 0px;
 				}
 			</style>
-			<o-repeat list="[row]" iterator="cell">
-				<template>
-					<style>
-						o-repeat-item,
-						:host {
-							display: inline-block;
-							width: 130px;
-							padding: 10px;
-							margin: 0px;
-						}
-					</style>
-					<span>{{cell}}</span>
-				</template>
-			</o-repeat>
+			<jlg-row>
+				<o-repeat list="[row]" iterator="cell">
+					<template>
+						<style>
+							cell {
+								display: inline-block;
+								width: 128px;
+								padding: 10px;
+								margin: 0px;
+							}
+						</style>
+						<cell>{{cell}}</cell>
+					</template>
+				</o-repeat>
+			</jlg-row>
 		</template>
 	</o-repeat>
 </template>
@@ -65,12 +66,25 @@
 	class JLGTable extends circle.Element {
 		connectedCallback() {
 			super.connectedCallback();
+			
+		}
+
+		digest(key) {
+			if (key !== 'table') {
+				super.digest(key);
+				return;
+			}
+			console.log('digest key', key);
 			if (!(this.model.table && this.model.table.length > 0)) {
 				return;
 			}
 			this.model.headers = Object.keys(this.model.table[0]);
 			this.model.body = this.model.table.map(row => this.model.headers.map(header => row[header]));
+			super.digest(key);
 		}
+
+
+		
 	}
 	JLGTable.register();
 

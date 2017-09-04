@@ -34,7 +34,10 @@
 			</template>
 		</o-repeat>
 	</jlg-th>
-	<o-repeat list="[body]" iterator="row" css="jlg-table.css">
+	<o-repeat list="[body]" iterator="row">
+		<template header>
+			<link rel="stylesheet" href="jlg-table.css" />
+		</template>
 		<template item>
 			<style>
 				jlg-row {
@@ -82,7 +85,7 @@
 		}
 
 
-		
+
 	}
 	JLGTable.register();
 

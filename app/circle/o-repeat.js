@@ -13,8 +13,8 @@
 			const iterator = this.model.iterator;
 
 			this.root.innerHTML = '';
-			if (this.model.css) {
-				this.root.innerHTML += `<link rel="stylesheet" href="${this.model.css}" />`;
+			if (this.headerContent) {
+				this.root.appendChild(this.headerContent);
 			}
 				
 			this.dj = new window.DJ(this.root, 'o-repeat-item');

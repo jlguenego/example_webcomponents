@@ -1,4 +1,4 @@
-(function() {
+(function () {
 	'use strict';
 
 	// Firefox and Edge does not understand well currentScript after init.
@@ -196,7 +196,7 @@
 					if (this.elt.getAttribute(key) !== this.elt.model[key]) {
 						this.elt.setAttribute(key, this.elt.model[key]);
 					}
-					
+
 				}
 				if (this.scope[key] === DBNotation.scope.TWO_WAYS) {
 					const modelVar = this.getModelVar(key);
@@ -211,7 +211,7 @@
 		}
 	}
 
-	class CircleProxyType {}
+	class CircleProxyType { }
 
 	/**
 	 * A component in circle must extends the circle.Element class
@@ -265,7 +265,7 @@
 						return true;
 					},
 
-					getPrototypeOf: function(key) {
+					getPrototypeOf: function (key) {
 						return CircleProxyType.prototype;
 					}
 				};
@@ -285,19 +285,27 @@
 			parseExpr(node);
 		}
 		connectedCallback() {
+			const myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
+				doc : document.currentScript.ownerDocument;
 
-			// o-if
-			const originalTemplate = this.querySelector('template');
-			if (originalTemplate) {
-				this.originalContent = document.importNode(originalTemplate.content, true);
+			// o-if and o-repeat
+			if (this.hasAttribute('tmpl-selector')) {
+				const originalTemplate = myDoc.querySelector(this.getAttribute('tmpl-selector'));
+				if (originalTemplate) {
+					this.originalContent = document.importNode(originalTemplate.content, true);
+				}
+			} else {
+				const originalTemplate = this.querySelector('template');
+				if (originalTemplate) {
+					this.originalContent = document.importNode(originalTemplate.content, true);
+				}
 			}
+
 
 			this.root = this.root || this.attachShadow({
 				mode: 'closed'
 			});
-			// to find the template, Firefox works differently.
-			const myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
-				doc : document.currentScript.ownerDocument;
+
 			const t = myDoc.querySelector(this.templateSelector);
 			if (t) {
 				const clone = document.importNode(t.content, true);
@@ -325,7 +333,7 @@
 				.call(this.attributes, n => !(n.name in this.model)).length === 0;
 		}
 
-		render() {}
+		render() { }
 
 		onDigest(key) {
 			this.databinding.onDigest(key);

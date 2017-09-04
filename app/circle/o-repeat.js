@@ -95,6 +95,9 @@
 			if (!this.alreadyWentHere) {
 				this.alreadyWentHere = true;
 				console.log('about to render for the first time o-repeat-item');
+				if (this.getParent().originalContent === undefined) {
+					throw new Error('o-repeat: Cannot find the template');
+				}
 				const clone = document.importNode(this.getParent().originalContent, true);
 				this.parseExpr(clone);
 				this.root.innerHTML = '';

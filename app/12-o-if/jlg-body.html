@@ -1,15 +1,12 @@
 <body>
 	<template id="jlg-body">
-	<div>
-		This is the body...<br>
-		<button onclick="this.getRootNode().host.toggle()">Show/Hide</button><br>
-		{{showContent}}
-		<o-if cond="[showContent]">
-			<template>
-			<jlg-stars note="4"></jlg-stars>
-			</template>
-	</o-if>
-	</div>
+		<div>
+			This is the body...<br>
+			<button onclick="this.getRootNode().host.toggle()">Show/Hide</button><br> {{showContent}}
+			<o-if cond="[showContent]">
+				<jlg-stars note="4"></jlg-stars>
+			</o-if>
+		</div>
 	</template>
 
 	<script>
@@ -23,7 +20,6 @@
 			}
 		}
 		JLGBody.register();
-
 	</script>
 	<script src="jlg-stars.js"></script>
 </body>

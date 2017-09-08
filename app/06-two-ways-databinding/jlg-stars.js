@@ -26,11 +26,9 @@
 			for (let i = 0; i < this.note; i++) {
 				html += '<img src="../img/yellow_star.png">';
 			}
-
 			for (let i = this.note; i < 5; i++) {
 				html += '<img src="../img/white_star.png">';
 			}
-
 			this.root.innerHTML = html;
 			const images = this.root.querySelectorAll('img');
 			console.log('images', images);

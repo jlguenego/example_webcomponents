@@ -315,7 +315,6 @@
 		}
 
 		askRendering() {
-			console.log('%s: ask rendering', this.constructor.name);
 			if (this.canRender) {
 				setTimeout(() => {
 					this.render();

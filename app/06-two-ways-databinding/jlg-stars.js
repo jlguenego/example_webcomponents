@@ -5,9 +5,7 @@
 		constructor() {
 			super();
 			console.log('Hello constructor');
-
 			this.note = 1;
-
 			this.root = this.attachShadow({
 				mode: 'closed'
 			});
@@ -38,13 +36,14 @@
 			console.log('images', images);
 			const self = this;
 			images.forEach((img, i) => {
-				let eventname = 'click';
-				if ('ontouchstart' in document.documentElement) {
-					eventname = 'touchstart';
-				}
-				img.addEventListener(eventname, function () {
+				img.addEventListener('click', function () {
 					self.update(i + 1);
 				});
+				if ('ontouchstart' in document.documentElement) {
+					img.addEventListener('touchstart', function () {
+						self.update(i + 1);
+					});
+				}
 			});
 		}
 

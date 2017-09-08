@@ -26,9 +26,7 @@
 		}
 
 		render() {
-			const string = doc.querySelector('#hw').innerHTML.replace(/{{name}}/g, this.name);
-			
-			this.root.innerHTML = string;
+			this.root.innerHTML = doc.querySelector('#hw').innerHTML.replace(/{{name}}/g, this.name);
 		}
 	}
 

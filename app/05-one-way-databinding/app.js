@@ -6,11 +6,6 @@
 	class JLGHello extends HTMLElement {
 		constructor() {
 			super();
-			console.log('Hello constructor');
-			
-			this.template = doc.querySelector('#hw').innerHTML;
-			this.name = '';
-
 			this.root = this.attachShadow({
 				mode: 'open'
 			});
@@ -20,6 +15,10 @@
 			return ['name'];
 		}
 
+		connectedCallback() {
+			console.log('connectedCallback', arguments);
+		}
+
 		attributeChangedCallback(name, oldValue, newValue) {
 			console.log('attributeChangedCallback', arguments)
 			this.name = newValue;
@@ -27,7 +26,7 @@
 		}
 
 		render() {
-			const string = this.template.replace(/{{name}}/g, this.name);
+			const string = doc.querySelector('#hw').innerHTML.replace(/{{name}}/g, this.name);
 			
 			this.root.innerHTML = string;
 		}

@@ -1,17 +1,13 @@
 (function() {
 	'use strict';
+	const doc = document.currentScript.ownerDocument;
 
 	class JLGDefinition extends HTMLElement {
-		constructor() {
-			super();
-		}
-
 		connectedCallback() {
-			console.log('JLGDefinition constructor');
 			const shadowRoot = this.attachShadow({
-				mode: 'closed'
+				mode: 'open'
 			});
-			shadowRoot.innerHTML = document.currentScript.ownerDocument.querySelector('template').innerHTML;
+			shadowRoot.innerHTML = doc.querySelector('template').innerHTML;
 		}
 	}
 

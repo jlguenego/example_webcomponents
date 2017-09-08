@@ -15,7 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "paper-button": "2.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#1.0.7"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.10",
+    "paper-button": "^2.0.0"
   }
 }

@@ -19,11 +19,6 @@
 		}
 
 		render() {
-
-			let eventname = 'onclick'
-			if ('ontouchstart' in document.documentElement) {
-				eventname = 'ontouchstart';
-			}
 			let html = `
 <style>
 	jlg-stars {
@@ -35,11 +30,19 @@
 </style>
 			`;
 			for (let i = 0; i < this.model.note; i++) {
-				html += `<img ${eventname}="this.getRootNode().host.update(${i+1})" src="../img/yellow_star.png">`;
+				let update = `onclick="this.getRootNode().host.update(${i+1})"`;
+				if ('ontouchstart' in document.documentElement) {
+					update += ` ontouchstart="this.getRootNode().host.update(${i+1})"`;
+				}
+				html += `<img ${update} src="../img/yellow_star.png">`;
 			}
 
 			for (let i = this.model.note; i < 5; i++) {
-				html += `<img ${eventname}="this.getRootNode().host.update(${i+1})" src="../img/white_star.png">`;
+				let update = `onclick="this.getRootNode().host.update(${i+1})"`;
+				if ('ontouchstart' in document.documentElement) {
+					update += ` ontouchstart="this.getRootNode().host.update(${i+1})"`;
+				}
+				html += `<img ${update} src="../img/white_star.png">`;
 			}
 			this.root.innerHTML = html;
 		}

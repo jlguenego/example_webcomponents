@@ -9,6 +9,10 @@
 			</div>
 		</div>
 		<iframe src="about:blank"></iframe>
+		<h2>Notes</h2>
+		<ul>
+			<li>Does not work well on Firefox.</li>
+		</ul>
 	</div>
 </template>
 
@@ -28,15 +32,22 @@
 			}
 			const frame = this.root.querySelector('iframe');
 			const frameDoc = frame.contentDocument;
+			console.log('frame', frame);
+			console.log('frameDoc', frameDoc);
 			if (this.model.showContent) {
 				const div = this.root.querySelector('#tobeMoved');
+				div.remove(); // Firefox/Edge needs to explicitly remove the div before transfering it.
 				frameDoc.body.appendChild(div);
 			} else {
 				const div = frameDoc.querySelector('#tobeMoved');
+				console.log('div', div);
 				if (!div) {
 					return;
 				}
-				this.root.querySelector('#home').appendChild(div);
+				const home = this.root.querySelector('#home');
+				console.log('home', home);
+				div.remove(); // Firefox/Edge needs to explicitly remove the div before transfering it.
+				home.appendChild(div);
 			}
 		}
 	}

@@ -76,7 +76,6 @@
 				super.digest(key);
 				return;
 			}
-			console.log('digest key', key);
 			if (!(this.model.table && this.model.table.length > 0)) {
 				return;
 			}
@@ -84,9 +83,6 @@
 			this.model.body = this.model.table.map(row => this.model.headers.map(header => row[header]));
 			super.digest(key);
 		}
-
-
-
 	}
 	JLGTable.register();
 

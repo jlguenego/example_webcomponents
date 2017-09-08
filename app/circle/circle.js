@@ -282,7 +282,9 @@
 		}
 		connectedCallback() {
 			this.root = this.root || this.attachShadow({
-				mode: 'closed'
+				// see https://developers.google.com/web/fundamentals/architecture/building-components/shadowdom
+				// Eric B. explain why it is better to use open mode.
+				mode: 'open'
 			});
 			this.myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
 			doc : document.currentScript.ownerDocument;

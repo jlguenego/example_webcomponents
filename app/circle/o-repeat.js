@@ -88,14 +88,10 @@
 					this.originalContent = document.importNode(originalTemplate.content, true);
 				}
 			}
-
-			
+			this.initDJ();
 		}
 
 		render(digestId) {
-			if (!this.dj) {
-				this.initDJ();
-			}
 			this.dj.update(this.model.list);
 		}
 	}

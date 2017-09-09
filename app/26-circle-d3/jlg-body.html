@@ -1,15 +1,7 @@
 <template id="jlg-body">
-	<style>
-		jlg-table {
-			display: block;
-			width: 500px;
-			--header-bg-color: hsl(120, 100%, 90%);
-		}
-
-	</style>
 	<div>
 		<button onclick="o(this).refresh()">Refresh</button>
-		<jlg-bubble-chart csv="[csv]"></jlg-bubble-chart>
+		<jlg-bubble-chart data="[data]"></jlg-bubble-chart>
 	</div>
 </template>
 
@@ -22,12 +14,27 @@
 		refresh() {
 			const http = circle.get('http');
 
-			http.get('data.csv').then((response) => {
-				this.model.csv = response.data;
+			http.get('Table_Ciqual_2016.csv').then((response) => {
+				this.model.data = d3.dsvFormat(';').parse(response.data, (d) => {
+					// console.log('d', d);
+					if (d['ORIGGPCD'] !== '01.2') {
+						return;
+					}
+					const result = {
+						id: d['ORIGFDCD'],
+						labels: d['ORIGFDNM'].split(/(.{8,}?\s+)/).filter((d) => d !== ''),
+						value: +d['Energie, Règlement UE N° 1169/2011 (kcal/100g)'],
+						tooltip: `${d['ORIGFDNM']}
+${d['Energie, Règlement UE N° 1169/2011 (kcal/100g)'].trim()} kcal/100g`
+					};
+					// console.log('result', result);
+					return result;
+				});
 			}).catch((error) => {
 				console.log('error', error);
 			});
 		}
 	}
 	JLGBody.register();
+
 </script>

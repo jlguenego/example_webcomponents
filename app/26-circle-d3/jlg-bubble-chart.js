@@ -3,15 +3,12 @@
 
 	class JLGBubbleChart extends circle.Element {
 		render() {
-			console.log('bubble render');
 			this.root.innerHTML =
 				'<svg width="400" height="400" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>';
 			const svgNode = this.root.querySelector('svg');
 			const svg = d3.select(svgNode);
 			const width = +svg.attr('width');
 			const height = +svg.attr('height');
-			console.log('width', width);
-			console.log('height', height);
 
 			const format = d3.format(',d');
 
@@ -26,12 +23,10 @@
 				return;
 			}
 
-			console.log('csv', csv);
 			const data = d3.csvParse(csv, function(d) {
 				d.value = +d.value;
 				return d;
 			});
-			console.log('data', data);
 
 			const root = d3.hierarchy({ children: data })
 				.sum(function(d) { return d.value; })

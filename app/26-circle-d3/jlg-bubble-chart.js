@@ -32,13 +32,8 @@
 				return d;
 			});
 			console.log('data', data);
-			
 
-
-
-
-
-			var root = d3.hierarchy({ children: data })
+			const root = d3.hierarchy({ children: data })
 				.sum(function(d) { return d.value; })
 				.each(function(d) {
 					var id;
@@ -50,7 +45,7 @@
 					}
 				});
 
-			var node = svg.selectAll('.node')
+			const node = svg.selectAll('.node')
 				.data(pack(root).leaves())
 				.enter().append('g')
 				.attr('class', 'node')

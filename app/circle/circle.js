@@ -154,9 +154,7 @@
 
 		connectedCallBack() {
 			this.initScope();
-			let isEmpty = true;
 			for (let attr in this.scope) {
-				isEmpty = false;
 				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
 					this.elt.model[attr] = this.elt.getAttribute(attr);
 					continue;
@@ -166,9 +164,7 @@
 				this.elt.bindKey(modelVar);
 				this.elt.onDigest(modelVar);
 			}
-			if (isEmpty) {
-				this.elt.askRendering();
-			}
+			this.elt.askRendering();
 		}
 
 		onDigest(key) {
@@ -270,8 +266,7 @@
 			this.digestRegistry = {};
 			this.templateSelector = '#' + this.constructor.tag;
 			this.databinding = new Databinding(this);
-			// canRender will becomes true when all the model is loaded (see Databinding and digestion)
-			this.canRender = false;
+			this.isRenderingAsked = false;
 		}
 
 		getParent() {
@@ -287,7 +282,7 @@
 				mode: 'open'
 			});
 			this.myDoc = (isFirefox() || isEdge() || (document.currentScript === null)) ?
-			doc : document.currentScript.ownerDocument;
+				doc : document.currentScript.ownerDocument;
 
 			const t = this.myDoc.querySelector(this.templateSelector);
 			if (t) {
@@ -299,27 +294,12 @@
 			this.databinding.connectedCallBack();
 		}
 
-		/**
-		 * If we try to render to early, the render method may fail
-		 * because of all model variables are not being initialized.
-		 * 
-		 * So this method prevents calling render too early.
-		 * 
-		 * @returns 
-		 * @memberof CircleElement
-		 */
-		checkCanRender() {
-			if (this.canRender) {
-				return;
-			}
-			this.canRender = Array.prototype.filter
-				.call(this.attributes, n => !(n.name in this.model)).length === 0;
-		}
-
 		askRendering() {
-			if (this.canRender) {
+			if (!this.isRenderingAsked) {
+				this.isRenderingAsked = true;
 				setTimeout(() => {
 					this.render();
+					this.isRenderingAsked = false;
 				}, 0);
 			}
 		}
@@ -339,7 +319,6 @@
 		}
 
 		digest(key) {
-			this.checkCanRender();
 			if (this.digestRegistry[key]) {
 				this.digestRegistry[key].forEach((elt, index) => {
 					elt.onDigest(key);

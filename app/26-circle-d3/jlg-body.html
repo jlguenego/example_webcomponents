@@ -1,5 +1,14 @@
 <template id="jlg-body">
 	<div>
+		<o-select model="[[type]]">
+			<select>
+				<option value="volvo">Volvo</option>
+				<option value="saab">Saab</option>
+				<option value="mercedes">Mercedes</option>
+				<option value="audi">Audi</option>
+			</select>
+		</o-select>
+		{{type}}
 		<button onclick="o(this).refresh()">Refresh</button>
 		<jlg-bubble-chart data="[data]"></jlg-bubble-chart>
 	</div>
@@ -9,7 +18,6 @@
 	class JLGBody extends circle.Element {
 		constructor() {
 			super();
-			this.model.csv = '';
 		}
 		refresh() {
 			const http = circle.get('http');

@@ -3,14 +3,15 @@
 
 	class JLGBubbleChart extends circle.Element {
 		render() {
+			if (!this.model.data) {
+				return;
+			}
 			this.root.innerHTML =
 				'<svg width="600" height="600" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>';
 			const svgNode = this.root.querySelector('svg');
 			const svg = d3.select(svgNode);
 			const width = +svg.attr('width');
 			const height = +svg.attr('height');
-
-			const format = d3.format(',d');
 
 			const color = d3.scaleOrdinal(d3.schemeCategory20c);
 

@@ -8,12 +8,18 @@
 			this.root.innerHTML = '<slot></slot>';
 			const select = this.querySelector('select');
 			console.log('select %O', select);
-			const value = select.selectedOptions[0].value;
+			const value = select.value;
 			console.log('value', value);
 			// init case.
-			if (this.model.value === undefined && value !== undefined) {
+			if ('value' in this.model) {
+				if (value !== this.model.value) {
+					console.log('rendering the new value');
+					select.value = this.model.value;
+				}
+			} else {
 				this.update(value);
 			}
+			
 
 			// program events
 			select.addEventListener('change', () => {

@@ -295,6 +295,8 @@
 		}
 
 		askRendering() {
+			console.log('%s askRendering', this.constructor.name);
+			console.log('%s this.isRenderingAsked', this.constructor.name, this.isRenderingAsked);
 			if (!this.isRenderingAsked) {
 				this.isRenderingAsked = true;
 				setTimeout(() => {

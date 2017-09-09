@@ -27,5 +27,6 @@ module.exports = {
 		circle: true,
 		Promise: true,
 		Proxy: true,
+		d3: true,
 	}
 };

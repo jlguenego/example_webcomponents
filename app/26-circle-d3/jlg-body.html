@@ -1,0 +1,33 @@
+<template id="jlg-body">
+	<style>
+		jlg-table {
+			display: block;
+			width: 500px;
+			--header-bg-color: hsl(120, 100%, 90%);
+		}
+
+	</style>
+	<div>
+		<button onclick="o(this).refresh()">Refresh</button>
+		<jlg-bubble-chart csv="[csv]"></jlg-bubble-chart>
+	</div>
+</template>
+
+<script>
+	class JLGBody extends circle.Element {
+		constructor() {
+			super();
+			this.model.csv = '';
+		}
+		refresh() {
+			const http = circle.get('http');
+
+			http.get('data.csv').then((response) => {
+				this.model.csv = response.data;
+			}).catch((error) => {
+				console.log('error', error);
+			});
+		}
+	}
+	JLGBody.register();
+</script>

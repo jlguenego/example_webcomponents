@@ -8,7 +8,6 @@
 				xhr.open(config.method, config.url);
 				xhr.onload = function() {
 					if (this.status >= 200 && this.status < 300) {
-						console.log('xhr', xhr);
 						const response = {};
 						let json;
 						try {

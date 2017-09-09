@@ -26,7 +26,6 @@
 				});
 
 			const bubbleData = pack(root).leaves();
-			console.log('bubbleData', bubbleData);
 
 			const node = svg.selectAll('.node')
 				.data(bubbleData)
@@ -49,7 +48,6 @@
 				.selectAll('tspan')
 				.data(function(d) { 
 					const result = d.data.labels; 
-					console.log('result', result);
 					return result;
 				}).enter().append('tspan')
 				.attr('x', 0)

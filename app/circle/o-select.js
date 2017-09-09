@@ -1,36 +1,19 @@
-(function() {
+(function () {
 	'use strict';
 
 	class OSelect extends circle.Element {
-		
-		render(digestId) {
-			console.log('o-select render');
+		connectedCallback() {
+			super.connectedCallback();
 			this.root.innerHTML = '<slot></slot>';
-			const select = this.querySelector('select');
-			console.log('select %O', select);
-			const value = select.value;
-			console.log('value', value);
-			// init case.
-			if ('value' in this.model) {
-				if (value !== this.model.value) {
-					console.log('rendering the new value');
-					select.value = this.model.value;
-				}
-			} else {
-				this.update(value);
-			}
-			
+			this.select = this.querySelector('select');
+			this.model.value = this.select.value;
 
-			// program events
-			select.addEventListener('change', () => {
-				const value = select.selectedOptions[0].value;
-				console.log('value', value);
-				this.update(value);
+			this.select.addEventListener('change', () => {
+				this.model.value = this.select.value;
 			});
 		}
-
-		update(value) {
-			this.model.value = value;
+		render() {
+			this.select.value = this.model.value;
 		}
 	}
 	OSelect.register();

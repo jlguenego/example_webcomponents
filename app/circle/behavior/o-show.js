@@ -8,7 +8,7 @@ class OShow {
         console.log('this.expr', this.expr);
         this.wc = elt.getRootNode().host;        
         console.log('wc', this.wc);
-        this.bindKey(this.expr);
+        this.wc.bindKey(this.expr, this);
         this.onDigest(this.expr);
     }
 
@@ -20,15 +20,6 @@ class OShow {
             this.elt.classList.remove('o-hide');
         } else {
             this.elt.classList.add('o-hide');
-        }
-    }
-
-    bindKey(key) {
-        const digestRegistry = this.wc.digestRegistry;
-        if (digestRegistry[key] === undefined) {
-            digestRegistry[key] = [this];
-        } else {
-            digestRegistry[key].push(this);
         }
     }
 }

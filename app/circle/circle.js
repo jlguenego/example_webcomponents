@@ -19,6 +19,13 @@
 		return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 	}
 
+	function dirname(absoluteKey) {
+		if (absoluteKey.match(/\[/)) {
+			return absoluteKey.replace(/\[([^]+)\]$/, '');
+		}
+		return '';
+	}
+
 	/**
 	 * Transforms hello.world[3].foo.bar in hello['world'][3]['foo']['bar']
 	 * 
@@ -250,13 +257,11 @@
 						circle.digestId++;
 						// console.log('%d: %s: update %s to %s',
 						// 	circle.digestId, self.constructor.name, absoluteKey, value, circle.stackTrace());
-						self.digest(absoluteKey);
-						// TODO : dirname recursive
-						if (absoluteKey.match(/\[/)) {
-							const parentKey = absoluteKey.replace(/\[.*\]/, '');
-							self.digest(parentKey);
+						let k = absoluteKey;
+						while (k !== '') {
+							self.digest(k);
+							k = dirname(k);
 						}
-						// END TODO
 						return true;
 					},
 

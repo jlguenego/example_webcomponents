@@ -73,6 +73,30 @@
 		});
 	}
 
+	function applyBehavior(elt) {
+		const behaviorClass = window.circle.behaviorRegistry['o-show'];
+		new behaviorClass(elt);
+	}
+
+	function parseBehavior(elt) {
+		console.log('parseBehavior', elt);
+		const filter = {
+			acceptNode: function (node) {
+				console.log('node', node);
+				const result = node.hasAttribute('o-show');
+				console.log('result', result);
+				return node.hasAttribute('o-show');
+			}
+		};
+		const walk = document.createTreeWalker(elt, NodeFilter.SHOW_ELEMENT, filter, false);
+		let array = [];
+		for (let node = walk.nextNode(); node !== null; node = walk.nextNode()) {
+				array.push(node);
+				applyBehavior(node);
+		}
+		console.log('array', array);
+	}
+
 	/**
 	 * Class in charge of managing the databinding notation:
 	 * [] for one way databinding
@@ -285,6 +309,7 @@
 			if (t) {
 				const clone = document.importNode(t.content, true);
 				parseExpr(clone);
+				parseBehavior(clone);
 				this.root.innerHTML = '';
 				this.root.appendChild(clone);
 			}
@@ -348,6 +373,7 @@
 			this.Element = CircleElement;
 			this.digestId = 0;
 			this.serviceMap = {};
+			this.behaviorRegistry = {};
 		}
 
 		stackTrace() {
@@ -376,6 +402,8 @@
 		get(str) {
 			return this.serviceMap[str];
 		}
+
+		
 	}
 	window.circle = new Circle();
 	window.o = window.circle.wc;

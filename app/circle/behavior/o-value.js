@@ -7,10 +7,13 @@
                 console.log('input event');
                 this.host.setModel(this.key, this.elt.value);
             });
-            this.elt.form.addEventListener('reset', () => {
-                console.log('reset event', this.key, '');
-                this.host.setModel(this.key, '');
-            });
+            if (this.elt.form) {
+                this.elt.form.addEventListener('reset', () => {
+                    console.log('reset event', this.key, '');
+                    this.host.setModel(this.key, '');
+                });
+            }
+
         }
 
         onDigest(key) {

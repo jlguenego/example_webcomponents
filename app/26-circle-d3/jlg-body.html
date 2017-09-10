@@ -1,22 +1,17 @@
 <template id="jlg-body">
 	<div>
-		<o-select value="[[type]]" choices="[choices]">
-			<select>
-				<option value="volvo">Volvo</option>
-				<option value="saab">Saab</option>
-				<option value="mercedes">Mercedes</option>
-				<option value="audi">Audi</option>
-			</select>
-		</o-select>
-		<o-select value="[type]" choices="[choices]">
-				<select>
-					<option value="volvo">Volvo</option>
-					<option value="saab">Saab</option>
-					<option value="mercedes">Mercedes</option>
-					<option value="audi">Audi</option>
-				</select>
-			</o-select>
-		Type: {{type}}
+		<select o-value="[type]">
+			<option value="volvo">Volvo</option>
+			<option value="saab">Saab</option>
+			<option value="mercedes">Mercedes</option>
+			<option value="audi">Audi</option>
+		</select>
+		<select o-value="[type]">
+			<option value="volvo">Volvo</option>
+			<option value="saab">Saab</option>
+			<option value="mercedes">Mercedes</option>
+			<option value="audi">Audi</option>
+		</select> Type: {{type}}
 		<button onclick="o(this).refresh()">Refresh</button>
 		<jlg-bubble-chart data="[data]"></jlg-bubble-chart>
 	</div>

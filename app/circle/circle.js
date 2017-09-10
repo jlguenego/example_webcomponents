@@ -21,7 +21,7 @@
 
 	function dirname(absoluteKey) {
 		if (absoluteKey.match(/\[/)) {
-			return absoluteKey.replace(/\[([^]+)\]$/, '');
+			return absoluteKey.replace(/^(.*)\[[^[]+?\]$/, '$1');
 		}
 		return undefined;
 	}
@@ -34,7 +34,8 @@
 	 * @returns 
 	 */
 	function parseAbsoluteKey(key) {
-		return key.replace(/\.([^.]+)/g, '[\'$1\']');
+		const result = key.replace(/\.([^.]+)/g, '[\'$1\']');
+		return result;
 	}
 
 	/**
@@ -347,9 +348,14 @@
 		}
 
 		getModel(absoluteKey) {
+			console.log('getModel absoluteKey', absoluteKey);
 			const str = 'this.model.' + absoluteKey;
-
-			console.log('str', str);
+			const k = dirname(absoluteKey);
+			console.log('getModel k', k);
+			if (k && (typeof this.getModel(k) !== 'object')) {
+				this.setModel(k, {});
+			}
+			console.log('getModel str', str);
 			const result = eval(str);
 			return result;
 		}

@@ -13,7 +13,6 @@
                     this.host.setModel(this.key, '');
                 });
             }
-
         }
 
         onDigest(key) {

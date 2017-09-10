@@ -252,6 +252,12 @@
 						// console.log('%d: %s: update %s to %s',
 						// 	circle.digestId, self.constructor.name, absoluteKey, value, circle.stackTrace());
 						self.digest(absoluteKey);
+						// TODO : dirname recursive
+						if (absoluteKey.match(/\[/)) {
+							const parentKey = absoluteKey.replace(/\[.*\]/, '');
+							self.digest(parentKey);
+						}
+						// END TODO
 						return true;
 					},
 
@@ -418,7 +424,9 @@
 	 */
 	class CircleExpr extends CircleElement {
 		render() {
-			this.root.innerHTML = (this.model.expr === undefined) ? '' : this.model.expr;
+			let str = (this.model.expr === undefined) ? '' : this.model.expr;
+			str = (typeof str === 'object') ? JSON.stringify(str) : str;
+			this.root.innerHTML = str;
 		}
 	}
 	CircleExpr.register();

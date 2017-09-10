@@ -201,7 +201,6 @@
 					if (this.elt.getAttribute(key) !== this.elt.model[key]) {
 						this.elt.setAttribute(key, this.elt.model[key]);
 					}
-
 				}
 				if (this.scope[key] === DBNotation.scope.TWO_WAYS) {
 					const modelVar = this.getModelVar(key);
@@ -364,8 +363,19 @@
 
 		constructor(elt) {
 			this.elt = elt;
-            this.host = elt.getRootNode().host;
+			this.host = elt.getRootNode().host;
+			this.key = this.getModelVar(this.constructor.tag);
+            this.host.bindKey(this.key, this);
+            this.onDigest(this.key);
 		}
+
+		getModelVar(attr) {
+			let expr = DBNotation.extractModelVar(this.elt.getAttribute(attr));
+			expr = parseAbsoluteKey(expr);
+			return expr;
+		}
+
+		onDigest() {}
 	}
 
 	/**

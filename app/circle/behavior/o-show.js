@@ -1,12 +1,5 @@
 (function () {
     class OShow extends circle.Behavior {
-        constructor(elt) {
-            super(elt);
-            
-            this.key = this.elt.getAttribute('o-show').replace(/^\[(.*)\]$/g, '$1');
-            this.host.bindKey(this.key, this);
-            this.onDigest(this.key);
-        }
 
         onDigest(key) {
             this.render();

@@ -173,7 +173,10 @@
 				}
 
 				const modelVar = this.getModelVar(attr);
-				this.elt.bindKey(modelVar);
+				const parent = this.elt.getParent();
+				if (parent) {
+					parent.bindKey(modelVar, this.elt);
+				}
 				this.elt.onDigest(modelVar);
 			}
 			this.elt.askRendering();
@@ -319,12 +322,12 @@
 		onDigest(key) {
 			this.databinding.onDigest(key);
 		}
-		bindKey(key) {
-			const digestRegistry = this.getParent().digestRegistry;
+		bindKey(key, elt) {
+			const digestRegistry = this.digestRegistry;
 			if (digestRegistry[key] === undefined) {
-				digestRegistry[key] = [this];
+				digestRegistry[key] = [elt];
 			} else {
-				digestRegistry[key].push(this);
+				digestRegistry[key].push(elt);
 			}
 		}
 

@@ -80,21 +80,9 @@
 
 	function parseBehavior(elt) {
 		console.log('parseBehavior', elt);
-		const filter = {
-			acceptNode: function (node) {
-				console.log('node', node);
-				const result = node.hasAttribute('o-show');
-				console.log('result', result);
-				return node.hasAttribute('o-show');
-			}
-		};
-		const walk = document.createTreeWalker(elt, NodeFilter.SHOW_ELEMENT, filter, false);
-		let array = [];
-		for (let node = walk.nextNode(); node !== null; node = walk.nextNode()) {
-				array.push(node);
-				applyBehavior(node);
-		}
+		const array = elt.querySelectorAll('[o-show]');
 		console.log('array', array);
+		array.forEach(applyBehavior);
 	}
 
 	/**
@@ -309,9 +297,9 @@
 			if (t) {
 				const clone = document.importNode(t.content, true);
 				parseExpr(clone);
-				parseBehavior(clone);
 				this.root.innerHTML = '';
 				this.root.appendChild(clone);
+				parseBehavior(this.root);
 			}
 			this.databinding.connectedCallBack();
 		}

@@ -1,4 +1,9 @@
 <template id="jlg-body">
+	<style>
+		.o-hide {
+			display: none;
+		}
+	</style>
 	<form onsubmit="return o(this).submit();">
 		<o-choice value="[[type]]" choices="[choices]"></o-choice>
 		<o-choice value="[type]" choices="[choices]"></o-choice>
@@ -9,7 +14,8 @@
 		<o-input value="[[person.name]]"></o-input>Name: {{person.name}}<br>
 		<button type="submit">Submit</button>
 	</form>
-	<div o-show="[show]">ok</div>
+	<button onclick="o(this).toggle()">Toggle</button>
+	<div o-show="[show]">ok</div>{{show}}
 </template>
 
 <script>
@@ -18,6 +24,7 @@
 			super();
 			this.refresh();
 			this.model.person = {};
+			this.model.show = false;
 		}
 		refresh() {
 			const http = circle.get('http');
@@ -46,6 +53,10 @@
 		submit() {
 			console.log('form submit', this.model.type);
 			return false;
+		}
+
+		toggle() {
+			this.model.show = !this.model.show;
 		}
 	}
 	JLGBody.register();

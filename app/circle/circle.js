@@ -20,7 +20,7 @@
 	}
 
 	function spinal2Camel(str) {
-		return str.replace(/(-[a-z])/g, function($1){return $1.toUpperCase().replace('-','');});
+		return str.replace(/(-[a-z])/g, function ($1) { return $1.toUpperCase().replace('-', ''); });
 	}
 
 	function dirname(absoluteKey) {
@@ -90,7 +90,7 @@
 			rootElt.querySelectorAll(`[${tag}]`).forEach(elt => {
 				new window.circle.behaviorRegistry[tag](elt);
 			});
-		}	
+		}
 	}
 
 	/**
@@ -198,10 +198,7 @@
 				const modelVar = this.getModelVar(attr);
 				if (modelVar === key) {
 					const parentModelValue = this.elt.getParent().getModel(key);
-					if (this.elt.getModel(spinal2Camel(attr)) !== parentModelValue) {
-						this.elt.setModel(spinal2Camel(attr), parentModelValue);
-						return;
-					}
+					this.elt.setModel(spinal2Camel(attr), parentModelValue);
 				}
 			}
 			this.elt.askRendering();
@@ -210,15 +207,11 @@
 		digest(key) {
 			if (key in this.scope) {
 				if (this.scope[key] === DBNotation.scope.LITTERAL) {
-					if (this.elt.getAttribute(key) !== this.elt.getModel(spinal2Camel(key))) {
-						this.elt.setAttribute(key, this.elt.getModel(spinal2Camel(key)));
-					}
+					this.elt.setAttribute(key, this.elt.getModel(spinal2Camel(key)));
 				}
 				if (this.scope[key] === DBNotation.scope.TWO_WAYS) {
 					const modelVar = this.getModelVar(key);
-					if (this.elt.getParent().getModel(modelVar) !== this.elt.getModel(spinal2Camel(key))) {
-						this.elt.getParent().setModel(modelVar, this.elt.getModel(spinal2Camel(key)));
-					}
+					this.elt.getParent().setModel(modelVar, this.elt.getModel(spinal2Camel(key)));
 				}
 			}
 			this.elt.askRendering();
@@ -363,6 +356,9 @@
 		}
 
 		setModel(absoluteKey, value) {
+			if (this.getModel(absoluteKey) === value) {
+				return;
+			}
 			const str = 'this.model.' + absoluteKey + ' = value';
 			eval(str);
 		}
@@ -386,7 +382,7 @@
 				this.host.bindKey(k, this);
 				k = dirname(k);
 			}
-            this.onDigest(this.key);
+			this.onDigest(this.key);
 		}
 
 		getModelVar(attr) {
@@ -395,7 +391,7 @@
 			return expr;
 		}
 
-		onDigest() {}
+		onDigest() { }
 	}
 
 	/**
@@ -441,7 +437,7 @@
 			return this.serviceMap[str];
 		}
 
-		
+
 	}
 	window.circle = new Circle();
 	window.o = window.circle.wc;

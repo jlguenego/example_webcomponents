@@ -1,4 +1,5 @@
 (function () {
+    'use strict';
     class OValue extends circle.Behavior {
         constructor(elt) {
             super(elt);

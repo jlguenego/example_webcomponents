@@ -1,4 +1,5 @@
 (function () {
+    'use strict';
     class OShow extends circle.Behavior {
 
         onDigest(key) {

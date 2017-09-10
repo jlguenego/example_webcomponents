@@ -1,4 +1,5 @@
 (function () {
+    'use strict';
     class OSelectList extends circle.Behavior {
 
         onDigest(key) {

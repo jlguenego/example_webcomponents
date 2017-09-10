@@ -6,8 +6,6 @@
 			super.connectedCallback();
 			this.root.innerHTML = '<select></select>';
 			this.select = this.root.querySelector('select');
-			this.model.value = this.select.value;
-
 			this.select.addEventListener('change', () => {
 				this.model.value = this.select.value;
 			});

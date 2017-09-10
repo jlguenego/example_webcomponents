@@ -1,9 +1,11 @@
 <template id="jlg-body">
-	<div>
+	<form onsubmit="return o(this).submit();">
 		<o-choice value="[[type]]" choices="[choices]"></o-choice>
 		<o-choice value="[type]" choices="[choices]"></o-choice>
-		Type: {{type}}
-	</div>
+		Type: {{type}}<br/>
+		<o-input value="[[name]]"></o-input>Name: {{name}}<br>
+		<button type="submit">Submit</button>
+	</form>
 </template>
 
 <script>
@@ -28,10 +30,17 @@
 					return result;
 				}, []);
 				console.log('data', data);
+				data.unshift('');
 				this.model.choices = data;
+				this.model.type = data[0];
 			}).catch((error) => {
 				console.log('error', error);
 			});
+		}
+
+		submit() {
+			console.log('form submit', this.model.type);
+			return false;
 		}
 	}
 	JLGBody.register();

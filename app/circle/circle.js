@@ -429,15 +429,9 @@
 			return host;
 		}
 
-		set(str, service) {
-			this.serviceMap[str] = service;
-		}
+		set(str, service) { this.serviceMap[str] = service; }
 
-		get(str) {
-			return this.serviceMap[str];
-		}
-
-
+		get(str) { return this.serviceMap[str]; }
 	}
 	window.circle = new Circle();
 	window.o = window.circle.wc;

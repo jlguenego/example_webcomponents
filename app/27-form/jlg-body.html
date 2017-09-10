@@ -4,6 +4,9 @@
 		<o-choice value="[type]" choices="[choices]"></o-choice>
 		Type: {{type}}<br/>
 		<o-input value="[[name]]"></o-input>Name: {{name}}<br>
+		<o-input value="[[name]]"></o-input>Name: {{name}}<br>
+		<o-input value="[[name]]"></o-input>Name: {{name}}<br>
+		<o-input value="[[person.name]]"></o-input>Name: {{person.name}}<br>
 		<button type="submit">Submit</button>
 	</form>
 </template>
@@ -13,6 +16,7 @@
 		constructor() {
 			super();
 			this.refresh();
+			this.model.person = {};
 		}
 		refresh() {
 			const http = circle.get('http');

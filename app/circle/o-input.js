@@ -6,12 +6,12 @@
 			super.connectedCallback();
 			this.root.innerHTML = '<input type="text" value="">';
 			this.input = this.root.querySelector('input');
-			this.input.addEventListener('change', () => {
+			this.input.addEventListener('input', () => {
 				this.model.value = this.input.value;
 			});
 		}
 		render() {
-			this.input.value = this.model.value;
+			this.input.value = this.model.value || '';
 		}
 	}
 	OInput.register();

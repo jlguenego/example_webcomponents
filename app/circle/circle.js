@@ -73,16 +73,12 @@
 		});
 	}
 
-	function applyBehavior(elt) {
-		const behaviorClass = window.circle.behaviorRegistry['o-show'];
-		new behaviorClass(elt);
-	}
-
-	function parseBehavior(elt) {
-		console.log('parseBehavior', elt);
-		const array = elt.querySelectorAll('[o-show]');
-		console.log('array', array);
-		array.forEach(applyBehavior);
+	function parseBehavior(rootElt) {
+		for (let tag in window.circle.behaviorRegistry) {
+			rootElt.querySelectorAll(`[${tag}]`).forEach(elt => {
+				new window.circle.behaviorRegistry[tag](elt);
+			});
+		}	
 	}
 
 	/**
@@ -353,6 +349,13 @@
 	}
 
 	class CircleBehavior {
+		static get tag() {
+			return camel2Spinal(this.name);
+		}
+		static register() {
+			window.circle.behaviorRegistry[this.tag] = this;
+		}
+
 		constructor(elt) {
 			this.elt = elt;
             this.host = elt.getRootNode().host;

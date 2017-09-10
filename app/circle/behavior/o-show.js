@@ -21,5 +21,5 @@
             }
         }
     }
-    circle.behaviorRegistry['o-show'] = OShow;
+    OShow.register();
 })();

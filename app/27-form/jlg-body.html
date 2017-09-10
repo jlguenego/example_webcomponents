@@ -8,13 +8,22 @@
 		<o-choice value="[[type]]" choices="[choices]"></o-choice>
 		<o-choice value="[type]" choices="[choices]"></o-choice>
 		Type: {{type}}<br/>
-		<input name="firstname" o-value="[person.firstname]"/><br>
+		<input name="firstname" o-value="[person.firstname]" /><br>
 		<input name="lastname" o-value="[person.lastname]" /><br>
 		<input name="lastname" o-value="[person.lastname]" /><br>
 		<input name="email" type="email" o-value="[person.address.nice.beautiful.hello.email]" /><br>
+		<select o-value="[person.type]">
+			<option value="male">Male</option>
+			<option value="female">Female</option>
+			<option value="other">Other</option>
+		</select>
+		<select o-value="[person.type]">
+			<option value="male">Male</option>
+			<option value="female">Female</option>
+			<option value="other">Other</option>
+		</select>
 		<button type="submit">Submit</button>
-		<button type="reset">Reset</button>
-		Person: {{person}}
+		<button type="reset">Reset</button> Person: {{person}}
 	</form>
 	<button onclick="o(this).toggle()">Toggle</button>
 	<div o-show="[show]">ok</div>{{show}}

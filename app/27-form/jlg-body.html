@@ -18,9 +18,12 @@
 	</form>
 	<button onclick="o(this).toggle()">Toggle</button>
 	<div o-show="[show]">ok</div>{{show}}
+	<hello-world my-first-attr="[toto]" my-second-attr="[[tata]]" my-third-attr="hello"></hello-world>
 </template>
 
 <script>
+	class HelloWorld extends circle.Element {}
+	HelloWorld.register();
 	class JLGBody extends circle.Element {
 		constructor() {
 			super();

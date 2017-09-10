@@ -19,6 +19,10 @@
 		return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 	}
 
+	function spinal2Camel(str) {
+		return str.replace(/(-[a-z])/g, function($1){return $1.toUpperCase().replace('-','');});
+	}
+
 	function dirname(absoluteKey) {
 		if (absoluteKey.match(/\[/)) {
 			return absoluteKey.replace(/^(.*)\[[^[]+?\]$/, '$1');
@@ -172,7 +176,7 @@
 			this.initScope();
 			for (let attr in this.scope) {
 				if (this.scope[attr] === DBNotation.scope.LITTERAL) {
-					this.elt.model[attr] = this.elt.getAttribute(attr);
+					this.elt.setModel(spinal2Camel(attr), this.elt.getAttribute(attr));
 					continue;
 				}
 
@@ -194,8 +198,8 @@
 				const modelVar = this.getModelVar(attr);
 				if (modelVar === key) {
 					const parentModelValue = this.elt.getParent().getModel(key);
-					if (this.elt.getModel(attr) !== parentModelValue) {
-						this.elt.setModel(attr, parentModelValue);
+					if (this.elt.getModel(spinal2Camel(attr)) !== parentModelValue) {
+						this.elt.setModel(spinal2Camel(attr), parentModelValue);
 						return;
 					}
 				}
@@ -206,14 +210,14 @@
 		digest(key) {
 			if (key in this.scope) {
 				if (this.scope[key] === DBNotation.scope.LITTERAL) {
-					if (this.elt.getAttribute(key) !== this.elt.model[key]) {
-						this.elt.setAttribute(key, this.elt.model[key]);
+					if (this.elt.getAttribute(key) !== this.elt.getModel(spinal2Camel(key))) {
+						this.elt.setAttribute(key, this.elt.getModel(spinal2Camel(key)));
 					}
 				}
 				if (this.scope[key] === DBNotation.scope.TWO_WAYS) {
 					const modelVar = this.getModelVar(key);
-					if (this.elt.getParent().getModel(modelVar) !== this.elt.model[key]) {
-						this.elt.getParent().setModel(modelVar, this.elt.model[key]);
+					if (this.elt.getParent().getModel(modelVar) !== this.elt.getModel(spinal2Camel(key))) {
+						this.elt.getParent().setModel(modelVar, this.elt.getModel(spinal2Camel(key)));
 					}
 				}
 			}
@@ -348,11 +352,12 @@
 		}
 
 		getModel(absoluteKey) {
-			const str = 'this.model.' + absoluteKey;
 			const k = dirname(absoluteKey);
 			if (k && (typeof this.getModel(k) !== 'object')) {
 				this.setModel(k, {});
 			}
+			const str = 'this.model.' + absoluteKey;
+			// console.log('getModel str', str);
 			const result = eval(str);
 			return result;
 		}

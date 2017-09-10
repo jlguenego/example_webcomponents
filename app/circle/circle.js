@@ -272,9 +272,6 @@
 		getParent() {
 			return this.getRootNode().host;
 		}
-		parseExpr(node) {
-			parseExpr(node);
-		}
 		connectedCallback() {
 			this.root = this.root || this.attachShadow({
 				// see https://developers.google.com/web/fundamentals/architecture/building-components/shadowdom
@@ -287,7 +284,7 @@
 			const t = this.myDoc.querySelector(this.templateSelector);
 			if (t) {
 				const clone = document.importNode(t.content, true);
-				this.parseExpr(clone);
+				parseExpr(clone);
 				this.root.innerHTML = '';
 				this.root.appendChild(clone);
 			}

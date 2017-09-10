@@ -54,6 +54,7 @@
 
 		submit() {
 			console.log('form submit', this.model.type);
+			this.model.person = {};
 			return false;
 		}
 

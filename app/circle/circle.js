@@ -365,7 +365,11 @@
 			this.elt = elt;
 			this.host = elt.getRootNode().host;
 			this.key = this.getModelVar(this.constructor.tag);
-            this.host.bindKey(this.key, this);
+			this.host.bindKey(this.key, this);
+			if (this.key.match(/\[/)) {
+				const parentKey = this.key.replace(/\[.*\]/, '');
+				this.host.bindKey(parentKey, this);
+			}
             this.onDigest(this.key);
 		}
 

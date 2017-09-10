@@ -12,6 +12,14 @@
                 this.host.setModel(this.key, '');
             });
         }
+
+        onDigest(key) {
+            this.render();
+        }
+
+        render() {
+            this.elt.value = this.host.getModel(this.key) || '';
+        }
     }
     OValue.register();
 })();

@@ -353,7 +353,10 @@
 	}
 
 	class CircleBehavior {
-		constructor(elt) {}
+		constructor(elt) {
+			this.elt = elt;
+            this.host = elt.getRootNode().host;
+		}
 	}
 
 	/**

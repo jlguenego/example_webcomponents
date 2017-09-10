@@ -2,9 +2,7 @@
     class OShow extends circle.Behavior {
         constructor(elt) {
             super(elt);
-            console.log('%s constructor', this.constructor.name, elt);
-            this.elt = elt;
-            this.host = elt.getRootNode().host;
+            
             const key = this.elt.getAttribute('o-show').replace(/^\[(.*)\]$/g, '$1');
             this.host.bindKey(key, this);
             this.onDigest(key);

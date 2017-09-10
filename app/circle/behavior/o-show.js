@@ -1,26 +1,23 @@
-class OShow {
-    constructor(elt) {
-        console.log('%s constructor', this.constructor.name, elt);
-        this.elt = elt;
-        this.expr = this.elt.getAttribute('o-show');
-        console.log('this.expr', this.expr);
-        this.expr = this.expr.replace(/^\[(.*)\]$/g, '$1');
-        console.log('this.expr', this.expr);
-        this.wc = elt.getRootNode().host;        
-        console.log('wc', this.wc);
-        this.wc.bindKey(this.expr, this);
-        this.onDigest(this.expr);
-    }
+(function () {
+    class OShow extends circle.Behavior {
+        constructor(elt) {
+            super(elt);
+            console.log('%s constructor', this.constructor.name, elt);
+            this.elt = elt;
+            this.host = elt.getRootNode().host;
+            const key = this.elt.getAttribute('o-show').replace(/^\[(.*)\]$/g, '$1');
+            this.host.bindKey(key, this);
+            this.onDigest(key);
+        }
 
-    onDigest(key) {
-        const show = this.wc.model[this.expr];
-        console.log('show', show);
-        if (show) {
-            console.log('we want to show');
-            this.elt.classList.remove('o-hide');
-        } else {
-            this.elt.classList.add('o-hide');
+        onDigest(key) {
+            const show = this.host.model[key];
+            if (show) {
+                this.elt.classList.remove('o-hide');
+            } else {
+                this.elt.classList.add('o-hide');
+            }
         }
     }
-}
-circle.behaviorRegistry['o-show'] = OShow;
+    circle.behaviorRegistry['o-show'] = OShow;
+})();

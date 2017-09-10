@@ -352,6 +352,10 @@
 		}
 	}
 
+	class CircleBehavior {
+		constructor(elt) {}
+	}
+
 	/**
 	 * The Circle class is the exposed class of the library.
 	 * The circle.js produces a global variable window.circle which is the hook
@@ -362,6 +366,7 @@
 	class Circle {
 		constructor() {
 			this.Element = CircleElement;
+			this.Behavior = CircleBehavior;
 			this.digestId = 0;
 			this.serviceMap = {};
 			this.behaviorRegistry = {};

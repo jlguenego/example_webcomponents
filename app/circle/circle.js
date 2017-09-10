@@ -194,8 +194,8 @@
 				}
 				if (this.scope[key] === DBNotation.scope.TWO_WAYS) {
 					const modelVar = this.getModelVar(key);
-					if (this.elt.getParent().model[modelVar] !== this.elt.model[key]) {
-						this.elt.getParent().model[modelVar] = this.elt.model[key];
+					if (this.elt.getParent().getModel(modelVar) !== this.elt.model[key]) {
+						this.elt.getParent().setModel(modelVar, this.elt.model[key]);
 					}
 				}
 			}

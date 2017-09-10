@@ -348,14 +348,11 @@
 		}
 
 		getModel(absoluteKey) {
-			console.log('getModel absoluteKey', absoluteKey);
 			const str = 'this.model.' + absoluteKey;
 			const k = dirname(absoluteKey);
-			console.log('getModel k', k);
 			if (k && (typeof this.getModel(k) !== 'object')) {
 				this.setModel(k, {});
 			}
-			console.log('getModel str', str);
 			const result = eval(str);
 			return result;
 		}

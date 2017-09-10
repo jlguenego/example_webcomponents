@@ -134,7 +134,9 @@
 		 * @memberof DBNotation
 		 */
 		static extractModelVar(value) {
-			return value.replace(/^\[(.*?)\]$/g, '$1').replace(/^\[(.*?)\]$/g, '$1');
+			let expr = value.replace(/^\[(.*?)\]$/g, '$1').replace(/^\[(.*?)\]$/g, '$1');
+			expr = parseAbsoluteKey(expr);
+			return expr;
 		}
 
 		static get scope() {
@@ -167,9 +169,7 @@
 		}
 
 		getModelVar(attr) {
-			let expr = DBNotation.extractModelVar(this.elt.getAttribute(attr));
-			expr = parseAbsoluteKey(expr);
-			return expr;
+			return DBNotation.extractModelVar(this.elt.getAttribute(attr));
 		}
 
 		connectedCallBack() {
@@ -386,9 +386,7 @@
 		}
 
 		getModelVar(attr) {
-			let expr = DBNotation.extractModelVar(this.elt.getAttribute(attr));
-			expr = parseAbsoluteKey(expr);
-			return expr;
+			return DBNotation.extractModelVar(this.elt.getAttribute(attr));
 		}
 
 		onDigest() { }

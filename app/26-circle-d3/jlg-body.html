@@ -65,7 +65,6 @@ ${d['Energie, Règlement UE N° 1169/2011 (kcal/100g)'].trim()} kcal/100g`
 
 		digest(key) {
 			super.digest(key);
-			console.log('digest key', key);
 			if (key === 'type') {
 				this.refresh();
 			}

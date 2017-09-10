@@ -22,7 +22,11 @@
 </template>
 
 <script>
-	class HelloWorld extends circle.Element {}
+	class HelloWorld extends circle.Element {
+		render() {
+			console.log('HelloWorld', this.model);
+		}
+	}
 	HelloWorld.register();
 	class JLGBody extends circle.Element {
 		constructor() {
@@ -30,6 +34,8 @@
 			this.refresh();
 			this.model.person = {};
 			this.model.show = false;
+			this.model.toto = 45;
+			this.model.tata = 67;
 		}
 		refresh() {
 			const http = circle.get('http');

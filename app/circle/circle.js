@@ -23,7 +23,7 @@
 		if (absoluteKey.match(/\[/)) {
 			return absoluteKey.replace(/\[([^]+)\]$/, '');
 		}
-		return '';
+		return undefined;
 	}
 
 	/**
@@ -258,7 +258,7 @@
 						// console.log('%d: %s: update %s to %s',
 						// 	circle.digestId, self.constructor.name, absoluteKey, value, circle.stackTrace());
 						let k = absoluteKey;
-						while (k !== '') {
+						while (k) {
 							self.digest(k);
 							k = dirname(k);
 						}
@@ -348,6 +348,8 @@
 
 		getModel(absoluteKey) {
 			const str = 'this.model.' + absoluteKey;
+
+			console.log('str', str);
 			const result = eval(str);
 			return result;
 		}
@@ -372,7 +374,7 @@
 			this.key = this.getModelVar(this.constructor.tag);
 			this.host.bindKey(this.key, this);
 			let k = this.key;
-			while (k !== '') {
+			while (k) {
 				this.host.bindKey(k, this);
 				k = dirname(k);
 			}

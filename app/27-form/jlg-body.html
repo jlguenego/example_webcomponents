@@ -31,13 +31,13 @@
 </template>
 
 <script>
-	class HelloWorld extends circle.Element {
+	class HelloWorld extends o.Element {
 		render() {
 			console.log('HelloWorld', this.model);
 		}
 	}
-	HelloWorld.register();
-	class JLGBody extends circle.Element {
+	HelloWorld.reg;
+	class JLGBody extends o.Element {
 		constructor() {
 			super();
 			this.refresh();
@@ -47,9 +47,9 @@
 			this.model.tata = 67;
 		}
 		refresh() {
-			const http = circle.get('http');
+			const xhr = o.di('xhr');
 
-			http.get('../data/Table_Ciqual_2016.csv').then((response) => {
+			xhr.get('../data/Table_Ciqual_2016.csv').then((response) => {
 				const data = d3.dsvFormat(';').parse(response.data, (d) => {
 					return {
 						'ORIGGPFR': d['ORIGGPFR'],
@@ -80,6 +80,6 @@
 			this.model.show = !this.model.show;
 		}
 	}
-	JLGBody.register();
+	JLGBody.reg;
 
 </script>

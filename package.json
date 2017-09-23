@@ -18,7 +18,7 @@
     "serve-index": "^1.9.0"
   },
   "dependencies": {
-    "@jlguenego/circle": "0.0.1",
+    "@jlguenego/circle": "0.0.3",
     "d3": "^4.10.2",
     "gulp": "^3.9.1",
     "gulp-debug": "^3.1.0",

@@ -1,10 +1,10 @@
-class JLGBody extends circle.Element {
+class JLGBody extends o.Element {
 
 	doAction() {
 		console.log('doAction start');
-		const http = circle.get('http');
+		const xhr = o.di('xhr');
 
-		http.get('content.json').then((response) => {
+		xhr.get('content.json').then((response) => {
 			const div = this.root.querySelector('#content');
 			div.innerHTML = response.data.content;
 		}).catch((error) => {
@@ -18,4 +18,4 @@ class JLGBody extends circle.Element {
 		div.innerHTML = '';
 	}
 }
-JLGBody.register();
+JLGBody.reg;

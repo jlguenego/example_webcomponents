@@ -2,23 +2,17 @@
 	<div>
 		<select o-value="[type]" o-select-list="[list]">
 		</select><br>
-		<!-- <select o-value="[type]" o-select-list="[list]">
-		</select> Type: {{type}} -->
-		<!-- <button onclick="o(this).refresh()">Refresh</button> -->
 		<jlg-bubble-chart data="[data]"></jlg-bubble-chart>
 	</div>
 </template>
 
 <script>
-	class JLGBody extends circle.Element {
-		constructor() {
-			super();
-			this.init();
-		}
+	class JLGBody extends o.Element {
+		
 		init() {
-			const http = circle.get('http');
+			const xhr = o.di('xhr');
 
-			http.get('../data/Table_Ciqual_2016.csv').then((response) => {
+			xhr.get('../data/Table_Ciqual_2016.csv').then((response) => {
 
 				this.data = response.data;
 
@@ -36,16 +30,16 @@
 				this.model.list = data;
 				this.model.type = data[0];
 
-
-
-
-
 			}).catch((error) => {
 				console.log('error', error);
 			});
 		}
 
 		refresh() {
+			if (!this.data) {
+				this.model.data = undefined;
+				return;
+			}
 			this.model.data = d3.dsvFormat(';').parse(this.data, (d) => {
 				// console.log('d', d);
 				if (d['ORIGGPCD'] !== this.model.type) {
@@ -71,6 +65,6 @@ ${d['Energie, Règlement UE N° 1169/2011 (kcal/100g)'].trim()} kcal/100g`
 			
 		}
 	}
-	JLGBody.register();
+	JLGBody.reg;
 
 </script>

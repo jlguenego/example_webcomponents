@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	class JLGBubbleChart extends circle.Element {
+	class JLGBubbleChart extends o.Element {
 		render() {
 			if (!this.model.data) {
 				return;
@@ -59,7 +59,7 @@
 
 		}
 	}
-	JLGBubbleChart.register();
+	JLGBubbleChart.reg;
 
 
 })();

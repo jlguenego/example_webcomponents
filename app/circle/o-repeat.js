@@ -7,7 +7,7 @@
 		return template.content.firstChild;
 	}
 
-	class ORepeat extends circle.Element {
+	class ORepeat extends o.Element {
 
 		initDJ() {
 			const iterator = this.model.iterator;
@@ -92,13 +92,16 @@
 		}
 
 		render(digestId) {
+			if (!this.model.list) {
+				return;
+			}
 			this.dj.update(this.model.list);
 		}
 	}
 
-	ORepeat.register();
+	ORepeat.reg;
 
-	class ORepeatItem extends circle.Element {
+	class ORepeatItem extends o.Element {
 
 		static get observedAttributes() { return ['index']; }
 
@@ -127,6 +130,6 @@
 		}
 	}
 
-	ORepeatItem.register();
+	ORepeatItem.reg;
 
 })();

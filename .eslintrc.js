@@ -25,6 +25,7 @@ module.exports = {
 	},
 	globals: {
 		circle: true,
+		o: true,
 		Promise: true,
 		Proxy: true,
 		d3: true,

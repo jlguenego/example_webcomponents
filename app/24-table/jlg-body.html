@@ -14,12 +14,12 @@
 </template>
 
 <script>
-	class JLGBody extends circle.Element {
+	class JLGBody extends o.Element {
 
 		refresh() {
-			const http = circle.get('http');
+			const xhr = o.di('xhr');
 
-			http.get('content.json?asdf').then((response) => {
+			xhr.get('content.json?asdf').then((response) => {
 				const array = response.data.content;
 				const random = Math.floor(Math.random() * 4);
 				array.splice(random, 1);
@@ -34,7 +34,7 @@
 			this.model.myTable.splice(index, 1);
 		}
 	}
-	JLGBody.register();
+	JLGBody.reg;
 
 </script>
 

@@ -13,8 +13,11 @@
 			<button onclick="o(this, 'jlg-app').hello()">Hello from jlg-app</button>
 			<button onclick="o(this, 'no-where').hello()">Hello from no-where (crash!)</button>
 
-			<o-for list="[cities]" iterator="city">
-				<template>
+			<o-repeat list="[cities]" iterator="city">
+				<template header>
+					<!-- <link rel="stylesheet" href="../../node_modules/@jlguenego/circle/src/o-repeat.css" /> -->
+				</template>
+				<template item>
 					<div>
 						<span>index: {{index}}</span>
 						<span>City name: {{city.name}}</span>
@@ -23,12 +26,12 @@
 						<span><button onclick="console.log(o(this).index);">Log</button></span>
 					</div>
 				</template>
-			</o-for>
+			</o-repeat>
 		</div>
 	</template>
 
 	<script>
-		class JLGBody extends circle.Element {
+		class JLGBody extends o.Element {
 			constructor() {
 				console.log('JLGBody constructor');
 				super();
@@ -56,7 +59,7 @@
 				this.model.cities.splice(index, 1);
 			}
 		}
-		JLGBody.register();
+		JLGBody.reg;
 
 	</script>
 </body>

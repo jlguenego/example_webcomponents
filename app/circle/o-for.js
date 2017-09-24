@@ -3,7 +3,7 @@
 
 	// Unfortunately, custom built-in element are not yet implemented.
 
-	class OFor extends circle.Element {
+	class OFor extends o.Element {
 
 		connectedCallback() {
 			super.connectedCallback();
@@ -33,9 +33,9 @@
 		}
 	}
 
-	OFor.register();
+	OFor.reg;
 
-	class OForItem extends circle.Element {
+	class OForItem extends o.Element {
 
 		constructor() {
 			super();
@@ -60,5 +60,5 @@
 		}
 	}
 
-	OForItem.register();
+	OForItem.reg;
 })();
